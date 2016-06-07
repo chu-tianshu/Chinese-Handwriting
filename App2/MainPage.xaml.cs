@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -22,12 +23,20 @@ namespace App2
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        #region Initializers
+
         public MainPage()
         {
             this.InitializeComponent();
 
-            myInkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Mouse | Windows.UI.Core.CoreInputDeviceTypes.Pen;
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
+
+            myInkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Mouse 
+                | Windows.UI.Core.CoreInputDeviceTypes.Pen
+                | Windows.UI.Core.CoreInputDeviceTypes.Touch;
         }
+
+        #endregion
 
         private void clearButton_Click(object sender, RoutedEventArgs e)
         {
@@ -39,14 +48,16 @@ namespace App2
             
         }
 
-        private void redoButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private void finishButton_Click(object sender, RoutedEventArgs e)
         {
 
         }
+
+        #region fields
+
+        private List<long> myTimes;
+        private List<List<long>> myTimeCollection;
+
+        #endregion
     }
 }

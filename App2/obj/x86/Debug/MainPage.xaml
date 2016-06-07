@@ -1,4 +1,4 @@
-﻿<Page 
+﻿<Page x:ConnectionId='1' 
     x:Name="myPage"
     x:Class="App2.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -9,29 +9,29 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Button 
+        <Button x:ConnectionId='2' 
             x:Name="clearButton"
         	Content="Clear"
         	HorizontalAlignment="Left"
         	VerticalAlignment="Top"
         	Height="150"
         	Width="150" 
-        	Click="clearButton_Click" 
+        	                          
         	FontSize="40"
             Margin="220,1243,0,0"
             />
-        <Button 
+        <Button x:ConnectionId='3' 
             x:Name="undoButton" 
         	Content="Undo" 
         	HorizontalAlignment="Left" 
         	VerticalAlignment="Top" 
         	Height="150" 
         	Width="150" 
-        	Click="undoButton_Click"
+        	                        
         	FontSize="40"
             Margin="495,1243,0,0"
             />
-        <Button 
+        <Button x:ConnectionId='4' 
             x:Name="finishButton" 
         	Content="Finish" 
         	HorizontalAlignment="Left" 
@@ -39,10 +39,10 @@
         	Height="150" 
         	Width="150"
         	FontSize="40" 
-        	Click="finishButton_Click"
+        	                          
             Margin="770,1243,0,0"
             />
-        <Border 
+        <Border x:ConnectionId='5' 
             x:Name="myCanvasBorder" 
             BorderBrush="Black" 
             BorderThickness="10" 
@@ -52,9 +52,10 @@
             Margin="120,300,0,0" 
             VerticalAlignment="Top"
             >
-            <InkCanvas 
+            <InkCanvas x:ConnectionId='6' 
                 x:Name="myInkCanvas"
                 />
         </Border>
     </Grid>
 </Page>
+
