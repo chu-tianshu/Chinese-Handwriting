@@ -27,7 +27,7 @@ namespace App2
 
         public MainPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
 
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
 
@@ -38,20 +38,32 @@ namespace App2
 
         #endregion
 
+        #region button interations
+
         private void clearButton_Click(object sender, RoutedEventArgs e)
         {
             myInkCanvas.InkPresenter.StrokeContainer.Clear();
+            myTimeCollection = new List<List<long>>();
         }
 
         private void undoButton_Click(object sender, RoutedEventArgs e)
         {
-            
+            var strokes = myInkCanvas.InkPresenter.StrokeContainer.GetStrokes();
+
+            if (strokes.Count != 0)
+            {
+                strokes[strokes.Count - 1].Selected = true;
+                myInkCanvas.InkPresenter.StrokeContainer.DeleteSelected();
+                myTimeCollection.RemoveAt(strokes.Count - 1);
+            }
         }
 
         private void finishButton_Click(object sender, RoutedEventArgs e)
         {
 
         }
+
+        #endregion
 
         #region fields
 
