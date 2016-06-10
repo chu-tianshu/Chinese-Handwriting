@@ -1,4 +1,4 @@
-﻿<Page 
+﻿<Page x:ConnectionId='1' 
     x:Name="myPage"
     x:Class="App2.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -10,28 +10,28 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <RelativePanel Margin="220,1243,1640,47">
-            <Button 
+            <Button x:ConnectionId='5' 
     			x:Name="clearButton"
     			Content="Clear"
     			HorizontalAlignment="Left"
     			VerticalAlignment="Top"
     			Height="150"
     			Width="150" 
-    			Click="clearButton_Click" 
+    			                          
     			FontSize="40"
             />
-            <Button 
+            <Button x:ConnectionId='6' 
     			x:Name="undoButton" 
     			Content="Undo" 
     			HorizontalAlignment="Left" 
     			VerticalAlignment="Top" 
     			Height="150" 
     			Width="150" 
-    			Click="undoButton_Click"
+    			                        
     			FontSize="40"
     			Margin="275,0,0,0"
             />
-            <Button 
+            <Button x:ConnectionId='7' 
     			x:Name="finishButton" 
     			Content="Finish" 
     			HorizontalAlignment="Left" 
@@ -39,11 +39,11 @@
     			Height="150" 
     			Width="150"
     			FontSize="40" 
-    			Click="finishButton_Click"
+    			                          
     			Margin="550,0,0,0"
             />
         </RelativePanel>
-        <Border 
+        <Border x:ConnectionId='2' 
             x:Name="myCanvasBorder" 
             BorderBrush="Black" 
             BorderThickness="10" 
@@ -53,10 +53,11 @@
             Margin="120,300,0,0" 
             VerticalAlignment="Top"
             >
-            <InkCanvas 
+            <InkCanvas x:ConnectionId='4' 
                 x:Name="myInkCanvas"
                 />
         </Border>
-        <TextBox x:Name="instructions" HorizontalAlignment="Left" Margin="120,80,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="167" Width="2350"/>
+        <TextBox x:ConnectionId='3' x:Name="instructions" HorizontalAlignment="Left" Margin="120,80,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Height="167" Width="2350"/>
     </Grid>
 </Page>
+
