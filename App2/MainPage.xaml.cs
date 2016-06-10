@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Xml.Linq;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -65,10 +67,55 @@ namespace App2
 
         #endregion
 
+        #region helper methods
+
+        private async void ReadInTemplateXML(StorageFile file)
+        {
+            string label = "";
+            List<SketchStroke> sketch = new List<SketchStroke>();
+
+            // create a new XML document
+            // get the text from the XML file
+            // load the file's text into an XML document 
+            string text = await FileIO.ReadTextAsync(file);
+            XDocument document = XDocument.Parse(text);
+
+            label = document.Root.Attribute("label").Value;
+
+            // itereate through each stroke element
+            foreach (XElement element in document.Root.Elements())
+            {
+                // initialize the stroke
+                SketchStroke stroke = new SketchStroke();
+
+                // iterate through each point element
+                double x, y;
+                long t;
+
+                foreach (XElement pointElement in element.Elements())
+                {
+                    x = Double.Parse(pointElement.Attribute("x").Value);
+                    y = Double.Parse(pointElement.Attribute("y").Value);
+                    t = Int64.Parse(pointElement.Attribute("time").Value);
+
+                    SketchPoint point = new SketchPoint(x, y, t);
+
+                    stroke.AppendPoint(point);
+                }
+
+                sketch.Add(stroke);
+            }
+
+            templates.Add(label, sketch);
+        }
+
+        #endregion
+
         #region fields
 
         private List<long> myTimes;
         private List<List<long>> myTimeCollection;
+        private Dictionary<string, List<SketchStroke>> templates;
 
         #endregion
     }
