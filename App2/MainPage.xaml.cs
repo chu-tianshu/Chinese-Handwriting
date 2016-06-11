@@ -31,36 +31,42 @@ namespace App2
         {
             InitializeComponent();
 
-            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
+            ApplicationView.PreferredLaunchViewSize = new Size { Height = 216, Width = 384 };
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
 
-            myInkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Mouse 
+            MyInkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Mouse 
                 | Windows.UI.Core.CoreInputDeviceTypes.Pen
                 | Windows.UI.Core.CoreInputDeviceTypes.Touch;
+        }
+
+        private void MyPage_Loaded(object sender, RoutedEventArgs e)
+        {
+
         }
 
         #endregion
 
         #region button interations
 
-        private void clearButton_Click(object sender, RoutedEventArgs e)
+        private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
-            myInkCanvas.InkPresenter.StrokeContainer.Clear();
+            MyInkCanvas.InkPresenter.StrokeContainer.Clear();
             myTimeCollection = new List<List<long>>();
         }
 
-        private void undoButton_Click(object sender, RoutedEventArgs e)
+        private void UndoButton_Click(object sender, RoutedEventArgs e)
         {
-            var strokes = myInkCanvas.InkPresenter.StrokeContainer.GetStrokes();
+            var strokes = MyInkCanvas.InkPresenter.StrokeContainer.GetStrokes();
 
             if (strokes.Count != 0)
             {
                 strokes[strokes.Count - 1].Selected = true;
-                myInkCanvas.InkPresenter.StrokeContainer.DeleteSelected();
+                MyInkCanvas.InkPresenter.StrokeContainer.DeleteSelected();
                 myTimeCollection.RemoveAt(strokes.Count - 1);
             }
         }
 
-        private void finishButton_Click(object sender, RoutedEventArgs e)
+        private void FinishButton_Click(object sender, RoutedEventArgs e)
         {
 
         }
@@ -98,9 +104,10 @@ namespace App2
                     y = Double.Parse(pointElement.Attribute("y").Value);
                     t = Int64.Parse(pointElement.Attribute("time").Value);
 
-                    SketchPoint point = new SketchPoint(x, y, t);
+                    SketchPoint point = new SketchPoint(x, y);
 
                     stroke.AppendPoint(point);
+                    stroke.AppendTime(t);
                 }
 
                 sketch.Add(stroke);
@@ -115,6 +122,7 @@ namespace App2
 
         private List<long> myTimes;
         private List<List<long>> myTimeCollection;
+        private List<StorageFile> templateXMLs;
         private Dictionary<string, List<SketchStroke>> templates;
 
         #endregion

@@ -6,26 +6,26 @@
 
         public SketchPoint() { }
 
-        public SketchPoint(double xVal, double yVal, long tVal)
+        public SketchPoint(double xVal, double yVal)
         {
             x = xVal;
             y = yVal;
-            t = tVal;
         }
 
         #endregion
 
-        #region setters
+        #region properties
 
-        public void SetLocation(double xVal, double yVal)
+        public double X
         {
-            x = xVal;
-            y = yVal;
+            get { return x; }
+            set { x = value; }
         }
 
-        public void SetTime(long tVal)
+        public double Y
         {
-            t = tVal;
+            get { return y; }
+            set { y = value;}
         }
 
         #endregion
@@ -34,7 +34,6 @@
 
         double x;
         double y;
-        long t;
 
         #endregion
     }

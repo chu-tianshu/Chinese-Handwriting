@@ -7,38 +7,50 @@ namespace App2
     {
         #region initializers
 
-        public SketchStroke() { }
+        public SketchStroke()
+        {
+            points = new List<SketchPoint>();
+            timeStamp = new List<long>();
+        }
+
+        public SketchStroke(List<SketchPoint> ps, List<long> ts)
+        {
+            points = ps;
+            timeStamp = ts;
+        }
 
         #endregion
 
-        #region setters
+        #region modifiers
 
         public void AppendPoint(SketchPoint p)
         {
             points.Add(p);
         }
 
+        public void AppendTime(long t)
+        {
+            timeStamp.Add(t);
+        }
+
         #endregion
 
-        #region getters
+        #region properties
 
-        public List<SketchPoint> GetPoints()
+        public List<SketchPoint> Points
         {
-            return points;
+            get
+            {
+                return points;
+            }
         }
 
-        public SketchPoint GetFirstPoint()
+        public List<long> TimeStamp
         {
-            if (points.Count == 0) throw new Exception("Current stroke is empty.");
-
-            return (points[0]);
-        }
-
-        public SketchPoint GetLastPoint()
-        {
-            if (points.Count == 0) throw new Exception("Current stroke is empty.");
-
-            return (points[points.Count - 1]);
+            get
+            {
+                return timeStamp;
+            }
         }
 
         #endregion
@@ -46,6 +58,7 @@ namespace App2
         #region fields
 
         private List<SketchPoint> points;
+        private List<long> timeStamp;
 
         #endregion
     }
