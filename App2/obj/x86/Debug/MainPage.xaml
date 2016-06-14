@@ -9,64 +9,127 @@
     mc:Ignorable="d"                       >
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <RelativePanel Margin="220,1243,1640,47">
-            <Button x:ConnectionId='5' 
-    			x:Name="ClearButton"
-    			Content="Clear"
-    			HorizontalAlignment="Left"
-    			VerticalAlignment="Top"
-    			Height="150"
-    			Width="150" 
-    			                          
-    			FontSize="40"
-            />
-            <Button x:ConnectionId='6' 
-    			x:Name="UndoButton" 
-    			Content="Undo" 
-    			HorizontalAlignment="Left" 
-    			VerticalAlignment="Top" 
-    			Height="150" 
-    			Width="150" 
-    			                        
-    			FontSize="40"
-    			Margin="275,0,0,0"
-            />
-            <Button x:ConnectionId='7' 
-    			x:Name="FinishButton" 
-    			Content="Finish" 
-    			HorizontalAlignment="Left" 
-    			VerticalAlignment="Top" 
-    			Height="150" 
-    			Width="150"
-    			FontSize="40" 
-    			                          
-    			Margin="550,0,0,0"
-            />
-        </RelativePanel>
-        <Border x:ConnectionId='2' 
-            x:Name="MyCanvasBorder" 
-            BorderBrush="Black" 
-            BorderThickness="10" 
-            HorizontalAlignment="Left" 
-            Height="900" 
-            Width="900" 
-            Margin="120,300,0,0" 
-            VerticalAlignment="Top"
-            >
-            <InkCanvas x:ConnectionId='4' 
-                x:Name="MyInkCanvas"
-                />
-        </Border>
-        <TextBlock x:ConnectionId='3' 
-            x:Name="InstructionTextBlock" 
-            HorizontalAlignment="Left" 
-            Margin="120,59,0,0" 
-            TextWrapping="Wrap" 
-            Text="TextBlock" 
-            VerticalAlignment="Top" 
-            Width="2276" 
-            Height="160"
-            />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="16*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Background="LightGray">
+            <Border x:ConnectionId='11' Name="InstructionBorder">
+                <Grid HorizontalAlignment="Left">
+                    <Viewbox>
+                        <TextBlock x:ConnectionId='12' Name="InstructionTextBlock"/>
+                    </Viewbox>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Border x:ConnectionId='9' Name="WritingBorder" BorderBrush="Gray" BorderThickness="3" Height="800" Width="800">
+                    <InkCanvas x:ConnectionId='10' Name="WritingInkCanvas"/>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Column="1">
+                <Border x:ConnectionId='7' Name="FeedbackBorder" BorderBrush="Gray" BorderThickness="15">
+                    <TextBlock x:ConnectionId='8' Name="FeedbackTextBlock"/>
+                </Border>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="2" Background="LightGray">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
+                    <Button x:ConnectionId='6'
+                        Name="UndoButton"
+                        Content="Undo"
+                                                
+                        BorderBrush="Black"
+                        BorderThickness="3"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        FontSize="50"
+                        />
+                </Grid>
+
+                <Grid Grid.Column="1">
+                    <Button x:ConnectionId='5'
+                        Name="ClearButton"
+                        Content="Clear"
+                                                 
+                        BorderBrush="Black"
+                        BorderThickness="3"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        FontSize="50"
+                        />
+                </Grid>
+
+                <Grid Grid.Column="2">
+                    <Button x:ConnectionId='4'
+                        Name="FinishButton"
+                        Content="Finish"
+                                                  
+                        BorderBrush="Black"
+                        BorderThickness="3"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        FontSize="50"
+                        />
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
+                    <Button x:ConnectionId='3'
+                        Name="PreviousButton"
+                        Content="Previous"
+                                                    
+                        BorderBrush="Black"
+                        BorderThickness="3"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        FontSize="50"
+                        />
+                </Grid>
+
+                <Grid Grid.Column="1">
+                    <Button x:ConnectionId='2'
+                        Name="NextButton"
+                        Content="Next"
+                                                
+                        BorderBrush="Black"
+                        BorderThickness="3"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        FontSize="50"
+                        />
+                </Grid>
+            </Grid>
+        </Grid>
     </Grid>
 </Page>
 

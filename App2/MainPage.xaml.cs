@@ -31,10 +31,9 @@ namespace App2
         {
             InitializeComponent();
 
-            ApplicationView.PreferredLaunchViewSize = new Size { Height = 216, Width = 384 };
-            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
 
-            MyInkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Mouse 
+            WritingInkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Mouse 
                 | Windows.UI.Core.CoreInputDeviceTypes.Pen
                 | Windows.UI.Core.CoreInputDeviceTypes.Touch;
         }
@@ -50,23 +49,33 @@ namespace App2
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
-            MyInkCanvas.InkPresenter.StrokeContainer.Clear();
+            WritingInkCanvas.InkPresenter.StrokeContainer.Clear();
             myTimeCollection = new List<List<long>>();
         }
 
         private void UndoButton_Click(object sender, RoutedEventArgs e)
         {
-            var strokes = MyInkCanvas.InkPresenter.StrokeContainer.GetStrokes();
+            var strokes = WritingInkCanvas.InkPresenter.StrokeContainer.GetStrokes();
 
             if (strokes.Count != 0)
             {
                 strokes[strokes.Count - 1].Selected = true;
-                MyInkCanvas.InkPresenter.StrokeContainer.DeleteSelected();
+                WritingInkCanvas.InkPresenter.StrokeContainer.DeleteSelected();
                 myTimeCollection.RemoveAt(strokes.Count - 1);
             }
         }
 
         private void FinishButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void PreviousButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void NextButton_Click(object sender, RoutedEventArgs e)
         {
 
         }

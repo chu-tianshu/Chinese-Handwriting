@@ -9,63 +9,126 @@
     mc:Ignorable="d" Loaded="MyPage_Loaded">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <RelativePanel Margin="220,1243,1640,47">
-            <Button 
-    			x:Name="ClearButton"
-    			Content="Clear"
-    			HorizontalAlignment="Left"
-    			VerticalAlignment="Top"
-    			Height="150"
-    			Width="150" 
-    			Click="ClearButton_Click" 
-    			FontSize="40"
-            />
-            <Button 
-    			x:Name="UndoButton" 
-    			Content="Undo" 
-    			HorizontalAlignment="Left" 
-    			VerticalAlignment="Top" 
-    			Height="150" 
-    			Width="150" 
-    			Click="UndoButton_Click"
-    			FontSize="40"
-    			Margin="275,0,0,0"
-            />
-            <Button 
-    			x:Name="FinishButton" 
-    			Content="Finish" 
-    			HorizontalAlignment="Left" 
-    			VerticalAlignment="Top" 
-    			Height="150" 
-    			Width="150"
-    			FontSize="40" 
-    			Click="FinishButton_Click"
-    			Margin="550,0,0,0"
-            />
-        </RelativePanel>
-        <Border 
-            x:Name="MyCanvasBorder" 
-            BorderBrush="Black" 
-            BorderThickness="10" 
-            HorizontalAlignment="Left" 
-            Height="900" 
-            Width="900" 
-            Margin="120,300,0,0" 
-            VerticalAlignment="Top"
-            >
-            <InkCanvas 
-                x:Name="MyInkCanvas"
-                />
-        </Border>
-        <TextBlock 
-            x:Name="InstructionTextBlock" 
-            HorizontalAlignment="Left" 
-            Margin="120,59,0,0" 
-            TextWrapping="Wrap" 
-            Text="TextBlock" 
-            VerticalAlignment="Top" 
-            Width="2276" 
-            Height="160"
-            />
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="16*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Background="LightGray">
+            <Border Name="InstructionBorder">
+                <Grid HorizontalAlignment="Left">
+                    <Viewbox>
+                        <TextBlock Name="InstructionTextBlock"/>
+                    </Viewbox>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Border Name="WritingBorder" BorderBrush="Gray" BorderThickness="3" Height="800" Width="800">
+                    <InkCanvas Name="WritingInkCanvas"/>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Column="1">
+                <Border Name="FeedbackBorder" BorderBrush="Gray" BorderThickness="15">
+                    <TextBlock Name="FeedbackTextBlock"/>
+                </Border>
+            </Grid>
+        </Grid>
+
+        <Grid Grid.Row="2" Background="LightGray">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
+                    <Button
+                        Name="UndoButton"
+                        Content="Undo"
+                        Click="UndoButton_Click"
+                        BorderBrush="Black"
+                        BorderThickness="3"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        FontSize="50"
+                        />
+                </Grid>
+
+                <Grid Grid.Column="1">
+                    <Button
+                        Name="ClearButton"
+                        Content="Clear"
+                        Click="ClearButton_Click"
+                        BorderBrush="Black"
+                        BorderThickness="3"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        FontSize="50"
+                        />
+                </Grid>
+
+                <Grid Grid.Column="2">
+                    <Button
+                        Name="FinishButton"
+                        Content="Finish"
+                        Click="FinishButton_Click"
+                        BorderBrush="Black"
+                        BorderThickness="3"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        FontSize="50"
+                        />
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Column="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="0">
+                    <Button
+                        Name="PreviousButton"
+                        Content="Previous"
+                        Click="PreviousButton_Click"
+                        BorderBrush="Black"
+                        BorderThickness="3"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        FontSize="50"
+                        />
+                </Grid>
+
+                <Grid Grid.Column="1">
+                    <Button
+                        Name="NextButton"
+                        Content="Next"
+                        Click="NextButton_Click"
+                        BorderBrush="Black"
+                        BorderThickness="3"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        FontSize="50"
+                        />
+                </Grid>
+            </Grid>
+        </Grid>
     </Grid>
 </Page>
