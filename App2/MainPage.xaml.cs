@@ -16,13 +16,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
-
 namespace App2
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
     public sealed partial class MainPage : Page
     {
         #region Initializers
@@ -30,17 +25,40 @@ namespace App2
         public MainPage()
         {
             InitializeComponent();
+            InitializeWritingInkCanvas();
 
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
-
-            WritingInkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Mouse 
-                | Windows.UI.Core.CoreInputDeviceTypes.Pen
-                | Windows.UI.Core.CoreInputDeviceTypes.Touch;
         }
 
         private void MyPage_Loaded(object sender, RoutedEventArgs e)
         {
+            timeCollection = new List<List<long>>();
 
+            loadTemplates();
+        }
+
+        private async void loadTemplates()
+        {
+            //StorageFolder localFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
+            StorageFolder assetsFolder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync("Assets");
+            StorageFolder templatesFolder = await assetsFolder.GetFolderAsync("Templates");
+
+            //StorageFolder templateFolder = await localFolder.GetFolderAsync("Templates");
+            StorageFolder strokeTemplateFolder = await templatesFolder.GetFolderAsync(@"\StrokeData");
+            StorageFolder imageTemplateFolder = await templatesFolder.GetFolderAsync(@"\Images");
+
+            var strokeTemplateFiles = await strokeTemplateFolder.GetFilesAsync();
+            foreach (var strokeTemplateFile in strokeTemplateFiles) ReadInTemplateXML(strokeTemplateFile);
+        }
+
+        private void InitializeWritingInkCanvas()
+        {
+            WritingInkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Mouse 
+                | Windows.UI.Core.CoreInputDeviceTypes.Pen 
+                | Windows.UI.Core.CoreInputDeviceTypes.Touch;
+            WritingInkCanvas.InkPresenter.StrokeInput.StrokeStarted += StrokeInput_StrokeStarted;
+            WritingInkCanvas.InkPresenter.StrokeInput.StrokeContinued += StrokeInput_StrokeContinued;
+            WritingInkCanvas.InkPresenter.StrokeInput.StrokeEnded += StrokeInput_StrokeEnded;
         }
 
         #endregion
@@ -50,7 +68,7 @@ namespace App2
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
             WritingInkCanvas.InkPresenter.StrokeContainer.Clear();
-            myTimeCollection = new List<List<long>>();
+            timeCollection = new List<List<long>>();
         }
 
         private void UndoButton_Click(object sender, RoutedEventArgs e)
@@ -61,7 +79,7 @@ namespace App2
             {
                 strokes[strokes.Count - 1].Selected = true;
                 WritingInkCanvas.InkPresenter.StrokeContainer.DeleteSelected();
-                myTimeCollection.RemoveAt(strokes.Count - 1);
+                timeCollection.RemoveAt(timeCollection.Count - 1);
             }
         }
 
@@ -82,28 +100,48 @@ namespace App2
 
         #endregion
 
+        #region stroke interaction methods
+
+        private void StrokeInput_StrokeStarted(Windows.UI.Input.Inking.InkStrokeInput sender, Windows.UI.Core.PointerEventArgs args)
+        {
+            UpdateTime(true, false);
+        }
+
+        private void StrokeInput_StrokeContinued(Windows.UI.Input.Inking.InkStrokeInput sender, Windows.UI.Core.PointerEventArgs args)
+        {
+            UpdateTime(false, false);
+        }
+
+        private void StrokeInput_StrokeEnded(Windows.UI.Input.Inking.InkStrokeInput sender, Windows.UI.Core.PointerEventArgs args)
+        {
+            UpdateTime(false, true);
+        }
+
+        #endregion
+
         #region helper methods
 
         private async void ReadInTemplateXML(StorageFile file)
         {
             string label = "";
             List<SketchStroke> sketch = new List<SketchStroke>();
-
-            // create a new XML document
-            // get the text from the XML file
-            // load the file's text into an XML document 
+            
+            /* Creates a new XML document
+             * Gets the text from the XML file
+             * Loads the file's text into an XML document 
+             */
             string text = await FileIO.ReadTextAsync(file);
             XDocument document = XDocument.Parse(text);
 
             label = document.Root.Attribute("label").Value;
 
-            // itereate through each stroke element
+            // Itereates through each stroke element
             foreach (XElement element in document.Root.Elements())
             {
-                // initialize the stroke
+                // Initializes the stroke
                 SketchStroke stroke = new SketchStroke();
 
-                // iterate through each point element
+                // Iterates through each point element
                 double x, y;
                 long t;
 
@@ -122,17 +160,34 @@ namespace App2
                 sketch.Add(stroke);
             }
 
-            templates.Add(label, sketch);
+            strokeTemplates.Add(label, sketch);
         }
+
+        private void UpdateTime(bool hasStarted, bool hasEnded)
+        {
+            if (hasStarted && hasEnded) { throw new Exception("Cannot start and end stroke at the same time."); }
+
+            if (hasStarted) { times = new List<long>(); }
+
+            long time = DateTime.Now.Ticks - DateTimeOffset;
+            times.Add(time);
+
+            if (hasEnded) { timeCollection.Add(times); }
+        }
+
+        #endregion
+
+        #region properties
+
+        private long DateTimeOffset { get; set; }
 
         #endregion
 
         #region fields
 
-        private List<long> myTimes;
-        private List<List<long>> myTimeCollection;
-        private List<StorageFile> templateXMLs;
-        private Dictionary<string, List<SketchStroke>> templates;
+        private List<long> times;
+        private List<List<long>> timeCollection;
+        private Dictionary<string, List<SketchStroke>> strokeTemplates;
 
         #endregion
     }
