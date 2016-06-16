@@ -342,8 +342,125 @@
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\ApplicationInsights.config">
       <PackagePath>ApplicationInsights.config</PackagePath>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Properties\Default.rd.xml">
-      <PackagePath>Properties\Default.rd.xml</PackagePath>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._ba.png">
+      <PackagePath>Templates\Images\._ba.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._bu.png">
+      <PackagePath>Templates\Images\._bu.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._er.png">
+      <PackagePath>Templates\Images\._er.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._hao.png">
+      <PackagePath>Templates\Images\._hao.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._jiu.png">
+      <PackagePath>Templates\Images\._jiu.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._liu.png">
+      <PackagePath>Templates\Images\._liu.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._ma.png">
+      <PackagePath>Templates\Images\._ma.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._ni.png">
+      <PackagePath>Templates\Images\._ni.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._niu.png">
+      <PackagePath>Templates\Images\._niu.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._nv.png">
+      <PackagePath>Templates\Images\._nv.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._qi.png">
+      <PackagePath>Templates\Images\._qi.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._ren.png">
+      <PackagePath>Templates\Images\._ren.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._san.png">
+      <PackagePath>Templates\Images\._san.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._shi.png">
+      <PackagePath>Templates\Images\._shi.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._si.png">
+      <PackagePath>Templates\Images\._si.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._ta.png">
+      <PackagePath>Templates\Images\._ta.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._wo.png">
+      <PackagePath>Templates\Images\._wo.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._wu.png">
+      <PackagePath>Templates\Images\._wu.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._Yi.png">
+      <PackagePath>Templates\Images\._Yi.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._zi.png">
+      <PackagePath>Templates\Images\._zi.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\ba.png">
+      <PackagePath>Templates\Images\ba.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\bu.png">
+      <PackagePath>Templates\Images\bu.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\er.png">
+      <PackagePath>Templates\Images\er.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\hao.png">
+      <PackagePath>Templates\Images\hao.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\jiu.png">
+      <PackagePath>Templates\Images\jiu.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\liu.png">
+      <PackagePath>Templates\Images\liu.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\ma.png">
+      <PackagePath>Templates\Images\ma.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\ni.png">
+      <PackagePath>Templates\Images\ni.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\niu.png">
+      <PackagePath>Templates\Images\niu.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\nv.png">
+      <PackagePath>Templates\Images\nv.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\qi.png">
+      <PackagePath>Templates\Images\qi.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\ren.png">
+      <PackagePath>Templates\Images\ren.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\san.png">
+      <PackagePath>Templates\Images\san.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\shi.png">
+      <PackagePath>Templates\Images\shi.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\si.png">
+      <PackagePath>Templates\Images\si.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\ta.png">
+      <PackagePath>Templates\Images\ta.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\wo.png">
+      <PackagePath>Templates\Images\wo.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\wu.png">
+      <PackagePath>Templates\Images\wu.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\Yi.png">
+      <PackagePath>Templates\Images\Yi.png</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\zi.png">
+      <PackagePath>Templates\Images\zi.png</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Assets\LockScreenLogo.scale-200.png">
       <PackagePath>Assets\LockScreenLogo.scale-200.png</PackagePath>
@@ -371,6 +488,69 @@
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Assets\Wide310x150Logo.scale-200.png">
       <PackagePath>Assets\Wide310x150Logo.scale-200.png</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\ba_636011181316677873.xml">
+      <PackagePath>Templates\StrokeData\ba_636011181316677873.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\bu_636011219798660530.xml">
+      <PackagePath>Templates\StrokeData\bu_636011219798660530.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\er_636011219893356233.xml">
+      <PackagePath>Templates\StrokeData\er_636011219893356233.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\hao_636011275540414782.xml">
+      <PackagePath>Templates\StrokeData\hao_636011275540414782.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\jiu_636011277000300303.xml">
+      <PackagePath>Templates\StrokeData\jiu_636011277000300303.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\liu_636011277572693762.xml">
+      <PackagePath>Templates\StrokeData\liu_636011277572693762.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\ma_636011277921768552.xml">
+      <PackagePath>Templates\StrokeData\ma_636011277921768552.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\niu_636011279048894582.xml">
+      <PackagePath>Templates\StrokeData\niu_636011279048894582.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\ni_636011278536614624.xml">
+      <PackagePath>Templates\StrokeData\ni_636011278536614624.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\nv_636011279378774433.xml">
+      <PackagePath>Templates\StrokeData\nv_636011279378774433.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\qi_636011279515500372.xml">
+      <PackagePath>Templates\StrokeData\qi_636011279515500372.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\ren_636011279615978371.xml">
+      <PackagePath>Templates\StrokeData\ren_636011279615978371.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\san_636011280168933741.xml">
+      <PackagePath>Templates\StrokeData\san_636011280168933741.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\shi_636011280687734296.xml">
+      <PackagePath>Templates\StrokeData\shi_636011280687734296.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\si_636011281629855921.xml">
+      <PackagePath>Templates\StrokeData\si_636011281629855921.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\ta_636011282170614163.xml">
+      <PackagePath>Templates\StrokeData\ta_636011282170614163.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\wo_636011283961813983.xml">
+      <PackagePath>Templates\StrokeData\wo_636011283961813983.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\wu_636011284181292062.xml">
+      <PackagePath>Templates\StrokeData\wu_636011284181292062.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\Yi_636011284244055132.xml">
+      <PackagePath>Templates\StrokeData\Yi_636011284244055132.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\zi_636011284544893955.xml">
+      <PackagePath>Templates\StrokeData\zi_636011284544893955.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Properties\Default.rd.xml">
+      <PackagePath>Properties\Default.rd.xml</PackagePath>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\bin\x86\Debug\App2.xr.xml">
       <PackagePath>App2.xr.xml</PackagePath>

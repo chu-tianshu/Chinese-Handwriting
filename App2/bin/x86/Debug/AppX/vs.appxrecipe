@@ -22,13 +22,13 @@
     <AppXManifest Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\bin\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2016-06-15T13:38:59.137</Modified>
+      <Modified>2016-06-16T12:54:28.380</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\bin\x86\Debug\App2.exe">
       <PackagePath>entrypoint\App2.exe</PackagePath>
-      <Modified>2016-06-15T13:38:58.896</Modified>
+      <Modified>2016-06-16T12:54:28.119</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\.nuget\packages\Microsoft.ApplicationInsights\1.0.0\lib\portable-win81+wpa81\Microsoft.ApplicationInsights.dll">
       <PackagePath>Microsoft.ApplicationInsights.dll</PackagePath>
@@ -458,9 +458,165 @@
       <PackagePath>ApplicationInsights.config</PackagePath>
       <Modified>2016-05-23T20:20:16.052</Modified>
     </AppxPackagedFile>
-    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Properties\Default.rd.xml">
-      <PackagePath>Properties\Default.rd.xml</PackagePath>
-      <Modified>2016-05-23T20:19:58.255</Modified>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._ba.png">
+      <PackagePath>Templates\Images\._ba.png</PackagePath>
+      <Modified>2016-06-10T03:08:44.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._bu.png">
+      <PackagePath>Templates\Images\._bu.png</PackagePath>
+      <Modified>2016-06-10T03:08:44.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._er.png">
+      <PackagePath>Templates\Images\._er.png</PackagePath>
+      <Modified>2016-06-10T03:08:44.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._hao.png">
+      <PackagePath>Templates\Images\._hao.png</PackagePath>
+      <Modified>2016-06-10T03:08:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._jiu.png">
+      <PackagePath>Templates\Images\._jiu.png</PackagePath>
+      <Modified>2016-06-10T03:08:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._liu.png">
+      <PackagePath>Templates\Images\._liu.png</PackagePath>
+      <Modified>2016-06-10T03:08:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._ma.png">
+      <PackagePath>Templates\Images\._ma.png</PackagePath>
+      <Modified>2016-06-10T03:08:52.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._ni.png">
+      <PackagePath>Templates\Images\._ni.png</PackagePath>
+      <Modified>2016-06-10T03:08:52.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._niu.png">
+      <PackagePath>Templates\Images\._niu.png</PackagePath>
+      <Modified>2016-06-10T03:08:52.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._nv.png">
+      <PackagePath>Templates\Images\._nv.png</PackagePath>
+      <Modified>2016-06-10T03:08:52.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._qi.png">
+      <PackagePath>Templates\Images\._qi.png</PackagePath>
+      <Modified>2016-06-10T03:08:52.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._ren.png">
+      <PackagePath>Templates\Images\._ren.png</PackagePath>
+      <Modified>2016-06-10T03:08:52.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._san.png">
+      <PackagePath>Templates\Images\._san.png</PackagePath>
+      <Modified>2016-06-10T03:08:52.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._shi.png">
+      <PackagePath>Templates\Images\._shi.png</PackagePath>
+      <Modified>2016-06-10T03:08:54.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._si.png">
+      <PackagePath>Templates\Images\._si.png</PackagePath>
+      <Modified>2016-06-10T03:08:54.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._ta.png">
+      <PackagePath>Templates\Images\._ta.png</PackagePath>
+      <Modified>2016-06-10T03:08:54.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._wo.png">
+      <PackagePath>Templates\Images\._wo.png</PackagePath>
+      <Modified>2016-06-10T03:08:54.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._wu.png">
+      <PackagePath>Templates\Images\._wu.png</PackagePath>
+      <Modified>2016-06-10T03:08:54.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._Yi.png">
+      <PackagePath>Templates\Images\._Yi.png</PackagePath>
+      <Modified>2016-06-10T03:08:54.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\._zi.png">
+      <PackagePath>Templates\Images\._zi.png</PackagePath>
+      <Modified>2016-06-10T03:08:54.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\ba.png">
+      <PackagePath>Templates\Images\ba.png</PackagePath>
+      <Modified>2016-06-10T02:49:54.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\bu.png">
+      <PackagePath>Templates\Images\bu.png</PackagePath>
+      <Modified>2016-06-10T02:52:00.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\er.png">
+      <PackagePath>Templates\Images\er.png</PackagePath>
+      <Modified>2016-06-10T02:48:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\hao.png">
+      <PackagePath>Templates\Images\hao.png</PackagePath>
+      <Modified>2016-06-10T02:52:48.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\jiu.png">
+      <PackagePath>Templates\Images\jiu.png</PackagePath>
+      <Modified>2016-06-10T02:50:30.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\liu.png">
+      <PackagePath>Templates\Images\liu.png</PackagePath>
+      <Modified>2016-06-10T02:49:26.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\ma.png">
+      <PackagePath>Templates\Images\ma.png</PackagePath>
+      <Modified>2016-06-10T02:52:24.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\ni.png">
+      <PackagePath>Templates\Images\ni.png</PackagePath>
+      <Modified>2016-06-10T02:51:02.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\niu.png">
+      <PackagePath>Templates\Images\niu.png</PackagePath>
+      <Modified>2016-06-10T02:52:14.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\nv.png">
+      <PackagePath>Templates\Images\nv.png</PackagePath>
+      <Modified>2016-06-10T02:51:34.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\qi.png">
+      <PackagePath>Templates\Images\qi.png</PackagePath>
+      <Modified>2016-06-10T02:49:32.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\ren.png">
+      <PackagePath>Templates\Images\ren.png</PackagePath>
+      <Modified>2016-06-10T02:52:42.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\san.png">
+      <PackagePath>Templates\Images\san.png</PackagePath>
+      <Modified>2016-06-10T02:48:56.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\shi.png">
+      <PackagePath>Templates\Images\shi.png</PackagePath>
+      <Modified>2016-06-10T02:50:42.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\si.png">
+      <PackagePath>Templates\Images\si.png</PackagePath>
+      <Modified>2016-06-10T02:49:12.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\ta.png">
+      <PackagePath>Templates\Images\ta.png</PackagePath>
+      <Modified>2016-06-10T02:51:22.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\wo.png">
+      <PackagePath>Templates\Images\wo.png</PackagePath>
+      <Modified>2016-06-10T02:50:54.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\wu.png">
+      <PackagePath>Templates\Images\wu.png</PackagePath>
+      <Modified>2016-06-10T02:49:20.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\Yi.png">
+      <PackagePath>Templates\Images\Yi.png</PackagePath>
+      <Modified>2016-06-10T02:48:16.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\Images\zi.png">
+      <PackagePath>Templates\Images\zi.png</PackagePath>
+      <Modified>2016-06-10T02:51:40.000</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Assets\LockScreenLogo.scale-200.png">
       <PackagePath>Assets\LockScreenLogo.scale-200.png</PackagePath>
@@ -496,6 +652,90 @@
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
       <Modified>2015-07-21T02:06:24.000</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\ba_636011181316677873.xml">
+      <PackagePath>Templates\StrokeData\ba_636011181316677873.xml</PackagePath>
+      <Modified>2016-06-10T08:15:31.761</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\bu_636011219798660530.xml">
+      <PackagePath>Templates\StrokeData\bu_636011219798660530.xml</PackagePath>
+      <Modified>2016-06-10T09:19:39.912</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\er_636011219893356233.xml">
+      <PackagePath>Templates\StrokeData\er_636011219893356233.xml</PackagePath>
+      <Modified>2016-06-10T09:19:49.351</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\hao_636011275540414782.xml">
+      <PackagePath>Templates\StrokeData\hao_636011275540414782.xml</PackagePath>
+      <Modified>2016-06-10T10:52:34.125</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\jiu_636011277000300303.xml">
+      <PackagePath>Templates\StrokeData\jiu_636011277000300303.xml</PackagePath>
+      <Modified>2016-06-10T10:55:00.057</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\liu_636011277572693762.xml">
+      <PackagePath>Templates\StrokeData\liu_636011277572693762.xml</PackagePath>
+      <Modified>2016-06-10T10:55:57.291</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\ma_636011277921768552.xml">
+      <PackagePath>Templates\StrokeData\ma_636011277921768552.xml</PackagePath>
+      <Modified>2016-06-10T10:56:32.202</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\niu_636011279048894582.xml">
+      <PackagePath>Templates\StrokeData\niu_636011279048894582.xml</PackagePath>
+      <Modified>2016-06-10T10:58:24.919</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\ni_636011278536614624.xml">
+      <PackagePath>Templates\StrokeData\ni_636011278536614624.xml</PackagePath>
+      <Modified>2016-06-10T10:57:33.689</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\nv_636011279378774433.xml">
+      <PackagePath>Templates\StrokeData\nv_636011279378774433.xml</PackagePath>
+      <Modified>2016-06-10T10:58:57.903</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\qi_636011279515500372.xml">
+      <PackagePath>Templates\StrokeData\qi_636011279515500372.xml</PackagePath>
+      <Modified>2016-06-10T10:59:11.571</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\ren_636011279615978371.xml">
+      <PackagePath>Templates\StrokeData\ren_636011279615978371.xml</PackagePath>
+      <Modified>2016-06-10T10:59:21.621</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\san_636011280168933741.xml">
+      <PackagePath>Templates\StrokeData\san_636011280168933741.xml</PackagePath>
+      <Modified>2016-06-10T11:00:16.918</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\shi_636011280687734296.xml">
+      <PackagePath>Templates\StrokeData\shi_636011280687734296.xml</PackagePath>
+      <Modified>2016-06-10T11:01:08.795</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\si_636011281629855921.xml">
+      <PackagePath>Templates\StrokeData\si_636011281629855921.xml</PackagePath>
+      <Modified>2016-06-10T11:02:43.015</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\ta_636011282170614163.xml">
+      <PackagePath>Templates\StrokeData\ta_636011282170614163.xml</PackagePath>
+      <Modified>2016-06-10T11:03:37.087</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\wo_636011283961813983.xml">
+      <PackagePath>Templates\StrokeData\wo_636011283961813983.xml</PackagePath>
+      <Modified>2016-06-10T11:06:36.211</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\wu_636011284181292062.xml">
+      <PackagePath>Templates\StrokeData\wu_636011284181292062.xml</PackagePath>
+      <Modified>2016-06-10T11:06:58.153</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\Yi_636011284244055132.xml">
+      <PackagePath>Templates\StrokeData\Yi_636011284244055132.xml</PackagePath>
+      <Modified>2016-06-10T11:07:04.426</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\zi_636011284544893955.xml">
+      <PackagePath>Templates\StrokeData\zi_636011284544893955.xml</PackagePath>
+      <Modified>2016-06-10T11:07:34.511</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Properties\Default.rd.xml">
+      <PackagePath>Properties\Default.rd.xml</PackagePath>
+      <Modified>2016-05-23T20:19:58.255</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\bin\x86\Debug\App2.xr.xml">
       <PackagePath>App2.xr.xml</PackagePath>
       <Modified>2016-06-14T14:30:56.255</Modified>
@@ -506,11 +746,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\bin\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2016-06-14T14:30:56.802</Modified>
+      <Modified>2016-06-16T12:50:04.527</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\bin\x86\Debug\Core\App2.exe">
       <PackagePath>App2.exe</PackagePath>
-      <Modified>2016-06-15T13:38:59.135</Modified>
+      <Modified>2016-06-16T12:54:28.377</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

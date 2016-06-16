@@ -33,19 +33,17 @@ namespace App2
         private void MyPage_Loaded(object sender, RoutedEventArgs e)
         {
             timeCollection = new List<List<long>>();
+            strokeTemplates = new Dictionary<string, List<SketchStroke>>();
 
             loadTemplates();
         }
 
         private async void loadTemplates()
         {
-            //StorageFolder localFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
-            StorageFolder assetsFolder = await Windows.ApplicationModel.Package.Current.InstalledLocation.GetFolderAsync("Assets");
-            StorageFolder templatesFolder = await assetsFolder.GetFolderAsync("Templates");
-
-            //StorageFolder templateFolder = await localFolder.GetFolderAsync("Templates");
-            StorageFolder strokeTemplateFolder = await templatesFolder.GetFolderAsync(@"\StrokeData");
-            StorageFolder imageTemplateFolder = await templatesFolder.GetFolderAsync(@"\Images");
+            StorageFolder localFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
+            StorageFolder templatesFolder = await localFolder.GetFolderAsync("Templates");
+            StorageFolder strokeTemplateFolder = await templatesFolder.GetFolderAsync("StrokeData");
+            StorageFolder imageTemplateFolder = await templatesFolder.GetFolderAsync("Images");
 
             var strokeTemplateFiles = await strokeTemplateFolder.GetFilesAsync();
             foreach (var strokeTemplateFile in strokeTemplateFiles) ReadInTemplateXML(strokeTemplateFile);
