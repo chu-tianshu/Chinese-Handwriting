@@ -7,6 +7,8 @@ using System.Xml.Linq;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.UI;
+using Windows.UI.Input.Inking;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -34,6 +36,7 @@ namespace App2
         {
             timeCollection = new List<List<long>>();
             strokeTemplates = new Dictionary<string, List<SketchStroke>>();
+            sketchStrokes = new List<SketchStroke>();
 
             loadTemplates();
         }
@@ -54,9 +57,18 @@ namespace App2
             WritingInkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Mouse 
                 | Windows.UI.Core.CoreInputDeviceTypes.Pen 
                 | Windows.UI.Core.CoreInputDeviceTypes.Touch;
+
             WritingInkCanvas.InkPresenter.StrokeInput.StrokeStarted += StrokeInput_StrokeStarted;
             WritingInkCanvas.InkPresenter.StrokeInput.StrokeContinued += StrokeInput_StrokeContinued;
             WritingInkCanvas.InkPresenter.StrokeInput.StrokeEnded += StrokeInput_StrokeEnded;
+
+            StrokeVisuals = new InkDrawingAttributes();
+            StrokeVisuals.Color = Colors.Black;
+            StrokeVisuals.IgnorePressure = true;
+            StrokeVisuals.PenTip = PenTipShape.Circle;
+            StrokeVisuals.Size = new Size(20, 20);
+
+            WritingInkCanvas.InkPresenter.UpdateDefaultDrawingAttributes(StrokeVisuals);
         }
 
         #endregion
@@ -83,7 +95,37 @@ namespace App2
 
         private void FinishButton_Click(object sender, RoutedEventArgs e)
         {
+            var strokes = WritingInkCanvas.InkPresenter.StrokeContainer.GetStrokes();
 
+            for (int i = 0; i < strokes.Count; i++)
+            {
+                SketchStroke curSketchStroke = new SketchStroke();
+
+                curSketchStroke.TimeStamp = timeCollection.ElementAt(i);
+
+                var curInkPoints = strokes.ElementAt(i).GetInkPoints();
+
+                for (int j = 0; j < curInkPoints.Count; j++)
+                {
+                    var curInkPoint = curInkPoints.ElementAt(j);
+
+                    var curX = curInkPoint.Position.X;
+                    var curY = curInkPoint.Position.Y;
+
+                    SketchPoint curSketchPoint = new SketchPoint(curX, curY);
+
+                    curSketchStroke.AppendPoint(curSketchPoint);
+                }
+
+                sketchStrokes.Add(curSketchStroke);
+            }
+
+            List<SketchStroke> sketchStrokesResampledForCornerFinding = new List<SketchStroke>();
+
+            foreach(SketchStroke curSketchStroke in sketchStrokes)
+            {
+                SketchStroke curResampledForCornerFinding = SketchStrokeFeatureExtraction.ResampleForCornerFinding(curSketchStroke);
+            }
         }
 
         private void PreviousButton_Click(object sender, RoutedEventArgs e)
@@ -178,6 +220,7 @@ namespace App2
         #region properties
 
         private long DateTimeOffset { get; set; }
+        private InkDrawingAttributes StrokeVisuals { get; set; }
 
         #endregion
 
@@ -186,6 +229,7 @@ namespace App2
         private List<long> times;
         private List<List<long>> timeCollection;
         private Dictionary<string, List<SketchStroke>> strokeTemplates;
+        private List<SketchStroke> sketchStrokes;
 
         #endregion
     }

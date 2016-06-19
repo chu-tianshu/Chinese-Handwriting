@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace App2
 {
-    internal class SketchStroke
+    public class SketchStroke
     {
         #region initializers
 
@@ -50,6 +50,10 @@ namespace App2
             get
             {
                 return timeStamp;
+            }
+            set
+            {
+                timeStamp = value;
             }
         }
 
