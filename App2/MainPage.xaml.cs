@@ -79,6 +79,7 @@ namespace App2
         {
             WritingInkCanvas.InkPresenter.StrokeContainer.Clear();
             timeCollection = new List<List<long>>();
+            sketchStrokes = new List<SketchStroke>();
         }
 
         private void UndoButton_Click(object sender, RoutedEventArgs e)
@@ -96,6 +97,8 @@ namespace App2
         private void FinishButton_Click(object sender, RoutedEventArgs e)
         {
             var strokes = WritingInkCanvas.InkPresenter.StrokeContainer.GetStrokes();
+
+            List<List<SketchPoint>> cornersList = new List<List<SketchPoint>>();
 
             for (int i = 0; i < strokes.Count; i++)
             {
@@ -125,6 +128,9 @@ namespace App2
             foreach(SketchStroke curSketchStroke in sketchStrokes)
             {
                 SketchStroke curResampledForCornerFinding = SketchStrokeFeatureExtraction.ResampleForCornerFinding(curSketchStroke);
+                List<SketchPoint> corners = SketchStrokeFeatureExtraction.FindCorners(curResampledForCornerFinding);
+
+                cornersList.Add(corners);
             }
         }
 

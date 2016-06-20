@@ -163,7 +163,6 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Sketch.cs" />
     <Compile Include="SketchPoint.cs" />
     <Compile Include="SketchStroke.cs" />
     <Compile Include="SketchStrokeFeatureExtraction.cs" />
