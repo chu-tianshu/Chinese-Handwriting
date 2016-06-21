@@ -1,0 +1,13 @@
+C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\obj\x86\Debug\ChineseCharacterWriting.csprojResolveAssemblyReference.cache
+C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\obj\x86\Debug\App.g.i.cs
+C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\obj\x86\Debug\App.g.cs
+C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\obj\x86\Debug\MainPage.g.i.cs
+C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\obj\x86\Debug\MainPage.g.cs
+C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\obj\x86\Debug\XamlTypeInfo.g.cs
+C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\obj\x86\Debug\App.xaml
+C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\obj\x86\Debug\MainPage.xaml
+C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\obj\x86\Debug\App.xbf
+C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\obj\x86\Debug\MainPage.xbf
+C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\obj\x86\Debug\XamlSaveStateFile.xml
+C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\obj\x86\Debug\App2.exe
+C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\obj\x86\Debug\App2.pdb

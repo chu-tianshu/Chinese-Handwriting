@@ -162,11 +162,14 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PDollarClassifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SketchFeatureExtraction.cs" />
     <Compile Include="SketchPoint.cs" />
+    <Compile Include="SketchPreprocessing.cs" />
     <Compile Include="SketchStroke.cs" />
     <Compile Include="SketchStrokeFeatureExtraction.cs" />
-    <Compile Include="SketchStrokePreprocessor.cs" />
+    <Compile Include="SketchStrokePreprocessing.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

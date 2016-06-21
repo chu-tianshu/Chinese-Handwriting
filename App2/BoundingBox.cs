@@ -1,7 +1,31 @@
-﻿namespace App2
+﻿using System.Collections.Generic;
+
+namespace App2
 {
     public class BoundingBox
     {
+        public BoundingBox(List<SketchStroke> strokes)
+        {
+            MinX = double.MaxValue;
+            MinY = double.MaxValue;
+            MaxX = double.MinValue;
+            MaxY = double.MinValue;
+
+            foreach (SketchStroke stroke in strokes)
+            {
+                foreach (SketchPoint point in stroke.Points)
+                {
+                    MinX = MinX < point.X ? MinX : point.X;
+                    MinY = MinY < point.Y ? MinY : point.Y;
+                    MaxX = MaxX > point.X ? MaxX : point.X;
+                    MaxY = MaxY > point.Y ? MaxY : point.Y;
+                }
+            }
+
+            CenterX = (MinX + MaxX) / 2.0;
+            CenterY = (MinY + MaxY) / 2.0;
+        }
+
         public BoundingBox(SketchStroke stroke)
         {
             MinX = double.MaxValue;

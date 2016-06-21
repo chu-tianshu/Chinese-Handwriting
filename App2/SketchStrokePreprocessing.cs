@@ -2,7 +2,7 @@
 
 namespace App2
 {
-    public class SketchStrokePreprocessor
+    public class SketchStrokePreprocessing
     {
         public static SketchStroke ResampleStroke(SketchStroke stroke, int n)
         {
@@ -23,7 +23,6 @@ namespace App2
 
             for (int i = 1; i < points.Count; i++)
             {
-
                 SketchPoint cur = points[i];
                 SketchPoint pre = points[i - 1];
 

@@ -32,7 +32,7 @@
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
-                <Border Name="WritingBorder" BorderBrush="Gray" BorderThickness="3" Height="800" Width="800">
+                <Border Name="WritingBorder" BorderBrush="Gray" BorderThickness="15">
                     <InkCanvas Name="WritingInkCanvas"/>
                 </Border>
             </Grid>
@@ -105,9 +105,9 @@
 
                 <Grid Grid.Column="0">
                     <Button
-                        Name="PreviousButton"
+                        Name="VisualFeedbackButton"
                         Content="Previous"
-                        Click="PreviousButton_Click"
+                        Click="VisualFeedbackButton_Click"
                         BorderBrush="Black"
                         BorderThickness="3"
                         HorizontalAlignment="Stretch"
@@ -118,9 +118,9 @@
 
                 <Grid Grid.Column="1">
                     <Button
-                        Name="NextButton"
+                        Name="TechniqueFeedbackButton"
                         Content="Next"
-                        Click="NextButton_Click"
+                        Click="TechniqueFeedbackButton_Click"
                         BorderBrush="Black"
                         BorderThickness="3"
                         HorizontalAlignment="Stretch"

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -39,6 +40,12 @@ namespace App2
             sketchStrokes = new List<SketchStroke>();
 
             loadTemplates();
+
+            double height = WritingBorder.ActualHeight;
+            double width = WritingBorder.ActualWidth;
+            double length = height < width ? height : width;
+
+            WritingBorder.Height = WritingBorder.Width = length;
         }
 
         private async void loadTemplates()
@@ -123,23 +130,22 @@ namespace App2
                 sketchStrokes.Add(curSketchStroke);
             }
 
-            List<SketchStroke> sketchStrokesResampledForCornerFinding = new List<SketchStroke>();
+            #region recognizes using $P
 
-            foreach(SketchStroke curSketchStroke in sketchStrokes)
-            {
-                SketchStroke curResampledForCornerFinding = SketchStrokeFeatureExtraction.ResampleForCornerFinding(curSketchStroke);
-                List<SketchPoint> corners = SketchStrokeFeatureExtraction.FindCorners(curResampledForCornerFinding);
+            NumResampleForPDollar = 128;
+            SizeScaleForPDollar = 500;
+            PointTranslateForPDollar = new SketchPoint(0, 0);
+            pDollarClassifier = new PDollarClassifier(NumResampleForPDollar, SizeScaleForPDollar, PointTranslateForPDollar, strokeTemplates);
 
-                cornersList.Add(corners);
-            }
+            #endregion
         }
 
-        private void PreviousButton_Click(object sender, RoutedEventArgs e)
+        private void VisualFeedbackButton_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
-        private void NextButton_Click(object sender, RoutedEventArgs e)
+        private void TechniqueFeedbackButton_Click(object sender, RoutedEventArgs e)
         {
 
         }
@@ -227,6 +233,9 @@ namespace App2
 
         private long DateTimeOffset { get; set; }
         private InkDrawingAttributes StrokeVisuals { get; set; }
+        private int NumResampleForPDollar { get; set; }
+        private double SizeScaleForPDollar { get; set; }
+        private SketchPoint PointTranslateForPDollar { get; set; }
 
         #endregion
 
@@ -236,6 +245,7 @@ namespace App2
         private List<List<long>> timeCollection;
         private Dictionary<string, List<SketchStroke>> strokeTemplates;
         private List<SketchStroke> sketchStrokes;
+        private PDollarClassifier pDollarClassifier;
 
         #endregion
     }

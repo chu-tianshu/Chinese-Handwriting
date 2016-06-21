@@ -12,10 +12,12 @@ namespace App2
             double strokeLength = PathLength(stroke);
             int numOfSampledPoints = (int) (strokeLength / resamplingDistance + 1);
 
-            SketchStroke resampledStroke = SketchStrokePreprocessor.ResampleStroke(stroke, numOfSampledPoints);
+            SketchStroke resampledStroke = SketchStrokePreprocessing.ResampleStroke(stroke, numOfSampledPoints);
 
             return resampledStroke;
         }
+
+        #region ShortStraw corner finding algorithm
 
         public static List<SketchPoint> FindCorners(SketchStroke resampledStroke)
         {
@@ -135,6 +137,8 @@ namespace App2
 
             return minValueIndex;
         }
+
+        #endregion
 
         #region static methods
 
