@@ -7,7 +7,7 @@ namespace App2
     {
         #region initializers
 
-        public PDollarClassifier(int n, double size, SketchPoint point, Dictionary<string, SketchStroke> templates)
+        public PDollarClassifier(int n, double size, SketchPoint point, Dictionary<string, List<SketchStroke>> templates)
         {
             N = n;
             Size = size;
@@ -42,7 +42,7 @@ namespace App2
         public int N { get; private set; }
         public double Size { get; private set; }
         public SketchPoint Origin { get; private set; }
-        public Dictionary<string, SketchStroke> Templates { get; private set; }
+        public Dictionary<string, List<SketchStroke>> Templates { get; private set; }
         public List<string> Lables { get { return labels; } }
         public List<double> Scores { get { return scores; } }
 

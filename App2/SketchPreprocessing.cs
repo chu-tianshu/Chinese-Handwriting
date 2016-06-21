@@ -11,7 +11,7 @@ namespace App2
         {
             double totalLength = 0;
 
-            foreach (SketchStroke stroke in strokes) totalLength += SketchStrokeFeatureExtraction.PathLength(strokes);
+            foreach (SketchStroke stroke in strokes) totalLength += SketchStrokeFeatureExtraction.PathLength(stroke);
 
             double I = totalLength / (n - 1);
             double D = 0.0;

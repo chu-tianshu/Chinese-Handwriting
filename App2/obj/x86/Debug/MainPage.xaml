@@ -1,4 +1,4 @@
-﻿<Page 
+﻿<Page x:ConnectionId='1' 
     x:Name="MyPage"
     x:Class="App2.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -6,7 +6,7 @@
     xmlns:local="using:App2"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" Loaded="MyPage_Loaded">
+    mc:Ignorable="d"                       >
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
@@ -16,10 +16,10 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Background="LightGray">
-            <Border Name="InstructionBorder">
+            <Border x:ConnectionId='11' Name="InstructionBorder">
                 <Grid HorizontalAlignment="Left">
                     <Viewbox>
-                        <TextBlock Name="InstructionTextBlock"/>
+                        <TextBlock x:ConnectionId='12' Name="InstructionTextBlock"/>
                     </Viewbox>
                 </Grid>
             </Border>
@@ -32,14 +32,14 @@
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
-                <Border Name="WritingBorder" BorderBrush="Gray" BorderThickness="15">
-                    <InkCanvas Name="WritingInkCanvas"/>
+                <Border x:ConnectionId='9' Name="WritingBorder" BorderBrush="Gray" BorderThickness="15">
+                    <InkCanvas x:ConnectionId='10' Name="WritingInkCanvas"/>
                 </Border>
             </Grid>
 
             <Grid Grid.Column="1">
-                <Border Name="FeedbackBorder" BorderBrush="Gray" BorderThickness="15">
-                    <TextBlock Name="FeedbackTextBlock"/>
+                <Border x:ConnectionId='7' Name="FeedbackBorder" BorderBrush="Gray" BorderThickness="15">
+                    <TextBlock x:ConnectionId='8' Name="FeedbackTextBlock"/>
                 </Border>
             </Grid>
         </Grid>
@@ -58,10 +58,10 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0">
-                    <Button
+                    <Button x:ConnectionId='6'
                         Name="UndoButton"
                         Content="Undo"
-                        Click="UndoButton_Click"
+                                                
                         BorderBrush="Black"
                         BorderThickness="3"
                         HorizontalAlignment="Stretch"
@@ -71,10 +71,10 @@
                 </Grid>
 
                 <Grid Grid.Column="1">
-                    <Button
+                    <Button x:ConnectionId='5'
                         Name="ClearButton"
                         Content="Clear"
-                        Click="ClearButton_Click"
+                                                 
                         BorderBrush="Black"
                         BorderThickness="3"
                         HorizontalAlignment="Stretch"
@@ -84,10 +84,10 @@
                 </Grid>
 
                 <Grid Grid.Column="2">
-                    <Button
+                    <Button x:ConnectionId='4'
                         Name="FinishButton"
                         Content="Finish"
-                        Click="FinishButton_Click"
+                                                  
                         BorderBrush="Black"
                         BorderThickness="3"
                         HorizontalAlignment="Stretch"
@@ -104,10 +104,10 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid Grid.Column="0">
-                    <Button
+                    <Button x:ConnectionId='3'
                         Name="VisualFeedbackButton"
                         Content="Visual"
-                        Click="VisualFeedbackButton_Click"
+                                                          
                         BorderBrush="Black"
                         BorderThickness="3"
                         HorizontalAlignment="Stretch"
@@ -117,10 +117,10 @@
                 </Grid>
 
                 <Grid Grid.Column="1">
-                    <Button
+                    <Button x:ConnectionId='2'
                         Name="TechniqueFeedbackButton"
                         Content="Technique"
-                        Click="TechniqueFeedbackButton_Click"
+                                                             
                         BorderBrush="Black"
                         BorderThickness="3"
                         HorizontalAlignment="Stretch"
@@ -132,3 +132,4 @@
         </Grid>
     </Grid>
 </Page>
+
