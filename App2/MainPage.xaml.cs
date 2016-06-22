@@ -97,6 +97,7 @@ namespace App2
             {
                 strokes[strokes.Count - 1].Selected = true;
                 WritingInkCanvas.InkPresenter.StrokeContainer.DeleteSelected();
+                sketchStrokes.RemoveAt(sketchStrokes.Count - 1);
                 timeCollection.RemoveAt(timeCollection.Count - 1);
             }
         }
@@ -136,6 +137,10 @@ namespace App2
             SizeScaleForPDollar = 500;
             PointTranslateForPDollar = new SketchPoint(0, 0);
             pDollarClassifier = new PDollarClassifier(NumResampleForPDollar, SizeScaleForPDollar, PointTranslateForPDollar, strokeTemplates);
+            pDollarClassifier.run(sketchStrokes);
+            List<string> resultLabels = pDollarClassifier.Labels;
+
+            
 
             #endregion
         }
