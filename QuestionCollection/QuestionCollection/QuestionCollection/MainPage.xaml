@@ -1,0 +1,19 @@
+﻿<Page
+    x:Class="QuestionCollection.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:QuestionCollection"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="LightGray">
+        <TextBox Name="questionText" Margin="315,42,101,616"/>
+        <TextBox Name="answerText" Margin="315,131,101,527"/>
+        <TextBox Name="idText" Margin="315,220,101,438"/>
+        <TextBlock x:Name="questionBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Question:" VerticalAlignment="Top" Height="62" Width="199" Margin="111,42,0,0" FontSize="42"/>
+        <TextBlock x:Name="answerBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Answer:" VerticalAlignment="Top" Height="62" Width="199" Margin="111,131,0,0" FontSize="42"/>
+        <TextBlock x:Name="idBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="ID:" VerticalAlignment="Top" Height="62" Width="199" Margin="111,220,0,0" FontSize="42"/>
+        <Button Name="Create" Margin="370,457,0,59" Width="416" Height="204" Content="Create" FontSize="72" Click="Create_Click"/>
+    </Grid>
+</Page>
