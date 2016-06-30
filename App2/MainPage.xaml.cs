@@ -1,23 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Xml.Linq;
 using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Input.Inking;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 namespace App2
 {
@@ -28,24 +20,48 @@ namespace App2
         public MainPage()
         {
             InitializeComponent();
+            InitializeQuestions();
+            InitializeTemplates();
             InitializeWritingInkCanvas();
 
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
         }
 
+        private void InitializeTemplates()
+        {
+            strokeTemplates = new Dictionary<string, List<SketchStroke>>();
+            loadTemplates();
+        }
+
+        private void InitializeQuestions()
+        {
+            questions = new List<Question>();
+            loadQuestions();
+        }
+
         private void MyPage_Loaded(object sender, RoutedEventArgs e)
         {
             timeCollection = new List<List<long>>();
-            strokeTemplates = new Dictionary<string, List<SketchStroke>>();
             sketchStrokes = new List<SketchStroke>();
 
-            loadTemplates();
+            double writingBorderHeight = WritingBorder.ActualHeight;
+            double writingBorderWidth = WritingBorder.ActualWidth;
+            double writingBorderLength = writingBorderHeight < writingBorderWidth ? writingBorderHeight : writingBorderWidth;
 
-            double height = WritingBorder.ActualHeight;
-            double width = WritingBorder.ActualWidth;
-            double length = height < width ? height : width;
+            WritingBorder.Height = WritingBorder.Width = writingBorderLength;
 
-            WritingBorder.Height = WritingBorder.Width = length;
+            currentQuestionIndex = 0;
+
+            LoadQuestion(currentQuestionIndex);
+        }
+
+        private async void loadQuestions()
+        {
+            StorageFolder localFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
+            StorageFolder questionsFolder = await localFolder.GetFolderAsync("Questions");
+
+            var questionFiles = await questionsFolder.GetFilesAsync();
+            foreach (var questionFile in questionFiles) ReadInQuestionXML(questionFile);
         }
 
         private async void loadTemplates()
@@ -140,9 +156,40 @@ namespace App2
             pDollarClassifier.run(sketchStrokes);
             List<string> resultLabels = pDollarClassifier.Labels;
 
-            
-
             #endregion
+
+            string answer = currentQuestion.Answer;
+
+            if (answer == resultLabels[resultLabels.Count - 1] || 
+                answer == resultLabels[resultLabels.Count - 2] || 
+                answer == resultLabels[resultLabels.Count - 3])
+            {
+                currentTemplate = strokeTemplates[answer];
+            }
+            else
+            {
+                FeedbackTextBlock.Text = "Wrong answer";
+            }
+        }
+
+        private void PreviousButton_Click(object sender, RoutedEventArgs e)
+        {
+            int index = 0;
+
+            if (currentQuestionIndex == 0) index = questions.Count - 1;
+            else index = currentQuestionIndex - 1;
+
+            LoadQuestion(index);
+        }
+
+        private void NextButton_Click(object sender, RoutedEventArgs e)
+        {
+            int index = 0;
+
+            if (currentQuestionIndex == questions.Count - 1) index = 0;
+            else index = currentQuestionIndex + 1;
+
+            LoadQuestion(index);
         }
 
         private void VisualFeedbackButton_Click(object sender, RoutedEventArgs e)
@@ -177,6 +224,24 @@ namespace App2
         #endregion
 
         #region helper methods
+
+        private void LoadQuestion(int questionIndex)
+        {
+            currentQuestion = questions[questionIndex];
+            InstructionTextBlock.Text = currentQuestion.Text;
+        }
+
+        private async void ReadInQuestionXML(StorageFile file)
+        {
+            string fileText = await FileIO.ReadTextAsync(file);
+            XDocument document = XDocument.Parse(fileText);
+
+            string id = document.Root.Attribute("id").Value;
+            string text = document.Root.Attribute("text").Value;
+            string answer = document.Root.Attribute("answer").Value;
+
+            questions.Add(new Question(id, text, answer));
+        }
 
         private async void ReadInTemplateXML(StorageFile file)
         {
@@ -251,6 +316,10 @@ namespace App2
         private Dictionary<string, List<SketchStroke>> strokeTemplates;
         private List<SketchStroke> sketchStrokes;
         private PDollarClassifier pDollarClassifier;
+        private List<Question> questions;
+        private Question currentQuestion;
+        private List<SketchStroke> currentTemplate;
+        private int currentQuestionIndex;
 
         #endregion
     }

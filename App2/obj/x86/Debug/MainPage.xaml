@@ -16,13 +16,47 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0" Background="LightGray">
-            <Border x:ConnectionId='11' Name="InstructionBorder">
-                <Grid HorizontalAlignment="Left">
-                    <Viewbox>
-                        <TextBlock x:ConnectionId='12' Name="InstructionTextBlock"/>
-                    </Viewbox>
-                </Grid>
-            </Border>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="14*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Button x:ConnectionId='14'
+                    Name="PreviousButton"
+                    Content="P"
+                                                
+                    BorderBrush="Black"
+                    BorderThickness="3"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    FontSize="60"
+                    />
+            </Grid>
+
+            <Grid Grid.Column="1">
+                <Border x:ConnectionId='12' Name="InstructionBorder">
+                    <Grid HorizontalAlignment="Left">
+                        <Viewbox>
+                            <TextBlock x:ConnectionId='13' Name="InstructionTextBlock"/>
+                        </Viewbox>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <Grid Grid.Column="2">
+                <Button x:ConnectionId='11'
+                    Name="NextButton"
+                    Content="N"
+                                            
+                    BorderBrush="Black"
+                    BorderThickness="3"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    FontSize="60"
+                    />
+            </Grid>
         </Grid>
 
         <Grid Grid.Row="1">

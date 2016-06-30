@@ -92,6 +92,7 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Questions\001.xml.xml" />
     <Content Include="Templates\Images\._ba.png" />
     <Content Include="Templates\Images\._bu.png" />
     <Content Include="Templates\Images\._er.png" />
@@ -164,6 +165,7 @@
     </Compile>
     <Compile Include="PDollarClassifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Question.cs" />
     <Compile Include="SketchFeatureExtraction.cs" />
     <Compile Include="SketchPoint.cs" />
     <Compile Include="SketchPreprocessing.cs" />
@@ -197,6 +199,7 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

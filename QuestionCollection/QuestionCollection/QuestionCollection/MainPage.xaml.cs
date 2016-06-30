@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -41,9 +42,10 @@ namespace QuestionCollection
         private async void CreateQuestion(string id, string question, string answer)
         {
             StorageFolder localFolder = ApplicationData.Current.LocalFolder;
-            StorageFolder assetsFolder = await localFolder.GetFolderAsync("Assets");
-            StorageFolder questionFolder = await assetsFolder.GetFolderAsync("Questions");
-            StorageFile file = await questionFolder.CreateFileAsync(id, CreationCollisionOption.ReplaceExisting);
+
+            Debug.WriteLine(localFolder.Path);
+
+            StorageFile file = await localFolder.CreateFileAsync(id + ".xml", CreationCollisionOption.ReplaceExisting);
 
             string output = "";
 
