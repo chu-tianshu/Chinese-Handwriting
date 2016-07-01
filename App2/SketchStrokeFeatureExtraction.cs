@@ -5,6 +5,8 @@ namespace App2
 {
     public class SketchStrokeFeatureExtraction
     {
+        #region ShortStraw corner finding algorithm
+
         public static SketchStroke ResampleForCornerFinding(SketchStroke stroke)
         {
             BoundingBox bb = new BoundingBox(stroke);
@@ -16,8 +18,6 @@ namespace App2
 
             return resampledStroke;
         }
-
-        #region ShortStraw corner finding algorithm
 
         public static List<SketchPoint> FindCorners(SketchStroke resampledStroke)
         {
@@ -141,6 +141,22 @@ namespace App2
         #endregion
 
         #region static methods
+
+        public static double StartToEndSlope(SketchStroke stroke)
+        {
+            SketchPoint start = stroke.Points[0];
+            SketchPoint end = stroke.Points[stroke.Points.Count - 1];
+
+            if (start.X == end.X)
+            {
+                if (end.Y >= start.Y) return double.PositiveInfinity;
+                else return double.NegativeInfinity;
+            }
+            else
+            {
+                return (end.Y - start.Y) / (end.X - start.X);
+            }
+        }
 
         public static double PathLength(SketchStroke stroke)
         {

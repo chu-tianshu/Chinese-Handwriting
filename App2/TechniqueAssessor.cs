@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Numerics;
 
 namespace App2
 {
@@ -11,9 +12,15 @@ namespace App2
         {
             IsCorrectStrokeCount = (sample.Count == template.Count);
 
-            if (IsCorrectStrokeCount == false) IsCorrectStrokeOrder = false;
+            if (IsCorrectStrokeCount == false)
+            {
+                IsCorrectStrokeOrder = false;
+                IsCorrectStrokeDirection = false;
+            }
             else
             {
+                #region stroke order correctness check
+
                 IsCorrectStrokeOrder = true;
 
                 List<SketchStroke> sampleNormalized = SketchPreprocessing.Normalize(sample, 128, 500, new SketchPoint(0.0, 0.0));
@@ -21,6 +28,7 @@ namespace App2
 
                 int numStroke = template.Count;
 
+                int[] correspondance = new int[numStroke];
                 bool[] hasCompared = new bool[numStroke];
 
                 for (int i = 0; i < numStroke; i++)
@@ -34,8 +42,6 @@ namespace App2
 
                         double dis = SketchTools.HausdorffDistance(sampleNormalized[i], templateNormalized[j]);
 
-                        Debug.WriteLine("i = " + i + ", j = " + j + ", minDis = " + minDis + ", dis = " + dis);
-
                         if (dis < minDis)
                         {
                             minDis = dis;
@@ -43,17 +49,45 @@ namespace App2
                         }
                     }
 
-                    Debug.WriteLine("i = " + i + ", matched = " + matchedIdx);
+                    if (i != matchedIdx) IsCorrectStrokeOrder = false;
 
-                    if (i != matchedIdx)
-                    {
-                        IsCorrectStrokeOrder = false;
-
-                        break;
-                    }
-
+                    correspondance[i] = matchedIdx;
                     hasCompared[matchedIdx] = true;
                 }
+
+                #endregion
+
+                #region stroke direction correctness check
+
+                IsCorrectStrokeDirection = true;
+                wrongDirectionStrokeIndices = new List<int>();
+
+                for (int i = 0; i < numStroke; i++)
+                {
+                    SketchStroke sampleStroke = sample[i];
+                    SketchStroke templateStroke = template[correspondance[i]];
+
+                    Vector2 sampleStartToEndVector 
+                        = new Vector2((float) (sampleStroke.EndPoint.Y - sampleStroke.StartPoint.Y), 
+                                      (float) (sampleStroke.EndPoint.X - sampleStroke.StartPoint.X));
+                    Vector2 templateStartToEndVector
+                        = new Vector2((float)(templateStroke.EndPoint.Y - templateStroke.StartPoint.Y),
+                                      (float)(templateStroke.EndPoint.X - templateStroke.StartPoint.X));
+
+                    Vector2 sampleStartToEndVectorNormalized = Vector2.Normalize(sampleStartToEndVector);
+                    Vector2 templateStartToEndVectorNormalized = Vector2.Normalize(templateStartToEndVector);
+
+                    double cosBetweenSampleAndTemplateStrokes = Vector2.Dot(sampleStartToEndVectorNormalized, templateStartToEndVectorNormalized);
+
+                    if (cosBetweenSampleAndTemplateStrokes < 0)
+                    {
+                        wrongDirectionStrokeIndices.Add(i);
+
+                        IsCorrectStrokeDirection = false;
+                    }
+                }
+
+                #endregion
             }
         }
 
@@ -63,6 +97,8 @@ namespace App2
 
         public bool IsCorrectStrokeCount { get; private set; }
         public bool IsCorrectStrokeOrder { get; private set; }
+        public bool IsCorrectStrokeDirection { get; private set; }
+        public List<int> wrongDirectionStrokeIndices { get; private set; }
 
         #endregion
     }

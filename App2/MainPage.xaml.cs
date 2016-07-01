@@ -188,6 +188,7 @@ namespace App2
             WritingInkCanvas.InkPresenter.StrokeContainer.Clear();
             timeCollection = new List<List<long>>();
             sketchStrokes = new List<SketchStroke>();
+            FeedbackTextBlock.Text = "";
         }
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
@@ -202,16 +203,17 @@ namespace App2
             WritingInkCanvas.InkPresenter.StrokeContainer.Clear();
             timeCollection = new List<List<long>>();
             sketchStrokes = new List<SketchStroke>();
+            FeedbackTextBlock.Text = "";
         }
 
         private void VisualFeedbackButton_Click(object sender, RoutedEventArgs e)
         {
-            feedbackType = "vision";
+            LoadFeedback("visual");
         }
 
         private void TechniqueFeedbackButton_Click(object sender, RoutedEventArgs e)
         {
-            feedbackType = "technique";
+            LoadFeedback("technique");
         }
 
         #endregion
@@ -249,9 +251,30 @@ namespace App2
 
                 case "technique":
 
+                    FeedbackTextBlock.FontSize = 45;
+
                     FeedbackTextBlock.Text = "";
                     FeedbackTextBlock.Text += ("Stroke count: " + techAssessor.IsCorrectStrokeCount + "\n");
                     FeedbackTextBlock.Text += ("Stroke order: " + techAssessor.IsCorrectStrokeOrder + "\n");
+                    FeedbackTextBlock.Text += ("Stroke directions: " + techAssessor.IsCorrectStrokeDirection + "\n");
+
+                    if (techAssessor.IsCorrectStrokeDirection == false)
+                    {
+                        Debug.Write("Wrong stroke: " + techAssessor.wrongDirectionStrokeIndices[0]);
+
+                        var strokes = WritingInkCanvas.InkPresenter.StrokeContainer.GetStrokes();
+
+                        foreach (int wrongStrokeIndex in techAssessor.wrongDirectionStrokeIndices)
+                        {
+                            strokes[wrongStrokeIndex].DrawingAttributes.Color = Colors.Red;
+                        }
+                    }
+
+                    break;
+
+                case "visual":
+
+                    FeedbackTextBlock.Text = "";
 
                     break;
 

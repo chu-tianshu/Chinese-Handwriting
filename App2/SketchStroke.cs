@@ -37,13 +37,10 @@ namespace App2
 
         #region properties
 
-        public List<SketchPoint> Points
-        {
-            get
-            {
-                return points;
-            }
-        }
+        public int PointsCount { get { return points.Count; } }
+        public List<SketchPoint> Points { get { return points; } }
+        public SketchPoint StartPoint { get { return points[0]; } }
+        public SketchPoint EndPoint { get { return points[Points.Count - 1]; } }
 
         public List<long> TimeStamp
         {
