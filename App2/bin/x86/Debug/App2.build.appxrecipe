@@ -345,6 +345,12 @@
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Questions\001.xml.xml">
       <PackagePath>Questions\001.xml.xml</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Questions\002.xml.xml">
+      <PackagePath>Questions\002.xml.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Questions\003.xml.xml">
+      <PackagePath>Questions\003.xml.xml</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\ba_636011181316677873.xml">
       <PackagePath>Templates\StrokeData\ba_636011181316677873.xml</PackagePath>
     </AppxPackagedFile>

@@ -43,16 +43,16 @@ namespace App2
         {
             timeCollection = new List<List<long>>();
             sketchStrokes = new List<SketchStroke>();
+            feedbackType = "technique";
+            currentQuestionIndex = 0;
+
+            LoadQuestion(currentQuestionIndex);
 
             double writingBorderHeight = WritingBorder.ActualHeight;
             double writingBorderWidth = WritingBorder.ActualWidth;
             double writingBorderLength = writingBorderHeight < writingBorderWidth ? writingBorderHeight : writingBorderWidth;
 
             WritingBorder.Height = WritingBorder.Width = writingBorderLength;
-
-            currentQuestionIndex = 0;
-
-            LoadQuestion(currentQuestionIndex);
         }
 
         private async void loadQuestions()
@@ -165,6 +165,8 @@ namespace App2
                 answer == resultLabels[resultLabels.Count - 3])
             {
                 currentTemplate = strokeTemplates[answer];
+
+                techAssessor = new TechniqueAssessor(sketchStrokes, currentTemplate);
             }
             else
             {
@@ -180,6 +182,10 @@ namespace App2
             else index = currentQuestionIndex - 1;
 
             LoadQuestion(index);
+
+            WritingInkCanvas.InkPresenter.StrokeContainer.Clear();
+            timeCollection = new List<List<long>>();
+            sketchStrokes = new List<SketchStroke>();
         }
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
@@ -190,16 +196,20 @@ namespace App2
             else index = currentQuestionIndex + 1;
 
             LoadQuestion(index);
+
+            WritingInkCanvas.InkPresenter.StrokeContainer.Clear();
+            timeCollection = new List<List<long>>();
+            sketchStrokes = new List<SketchStroke>();
         }
 
         private void VisualFeedbackButton_Click(object sender, RoutedEventArgs e)
         {
-
+            feedbackType = "vision";
         }
 
         private void TechniqueFeedbackButton_Click(object sender, RoutedEventArgs e)
         {
-
+            feedbackType = "technique";
         }
 
         #endregion
@@ -320,6 +330,8 @@ namespace App2
         private Question currentQuestion;
         private List<SketchStroke> currentTemplate;
         private int currentQuestionIndex;
+        private string feedbackType;
+        private TechniqueAssessor techAssessor;
 
         #endregion
     }

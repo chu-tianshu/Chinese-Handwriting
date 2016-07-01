@@ -22,13 +22,13 @@
     <AppXManifest Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\bin\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2016-06-30T13:23:21.010</Modified>
+      <Modified>2016-06-30T23:13:44.117</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\bin\x86\Debug\App2.exe">
       <PackagePath>entrypoint\App2.exe</PackagePath>
-      <Modified>2016-06-30T13:23:20.749</Modified>
+      <Modified>2016-06-30T23:13:43.464</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\.nuget\packages\Microsoft.ApplicationInsights\1.0.0\lib\portable-win81+wpa81\Microsoft.ApplicationInsights.dll">
       <PackagePath>Microsoft.ApplicationInsights.dll</PackagePath>
@@ -462,6 +462,14 @@
       <PackagePath>Questions\001.xml.xml</PackagePath>
       <Modified>2016-06-30T10:40:23.266</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Questions\002.xml.xml">
+      <PackagePath>Questions\002.xml.xml</PackagePath>
+      <Modified>2016-06-30T23:12:18.405</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Questions\003.xml.xml">
+      <PackagePath>Questions\003.xml.xml</PackagePath>
+      <Modified>2016-06-30T23:13:15.470</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\ba_636011181316677873.xml">
       <PackagePath>Templates\StrokeData\ba_636011181316677873.xml</PackagePath>
       <Modified>2016-06-10T08:15:31.761</Modified>
@@ -750,11 +758,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\bin\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2016-06-30T13:13:31.850</Modified>
+      <Modified>2016-06-30T23:13:43.882</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\bin\x86\Debug\Core\App2.exe">
       <PackagePath>App2.exe</PackagePath>
-      <Modified>2016-06-30T13:23:21.007</Modified>
+      <Modified>2016-06-30T23:13:44.114</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>
