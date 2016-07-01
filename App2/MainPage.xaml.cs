@@ -167,10 +167,12 @@ namespace App2
                 currentTemplate = strokeTemplates[answer];
 
                 techAssessor = new TechniqueAssessor(sketchStrokes, currentTemplate);
+
+                LoadFeedback("technique");
             }
             else
             {
-                FeedbackTextBlock.Text = "Wrong answer";
+                LoadFeedback("wrong");
             }
         }
 
@@ -234,6 +236,30 @@ namespace App2
         #endregion
 
         #region helper methods
+
+        private void LoadFeedback(string option)
+        {
+            switch(option)
+            {
+                case "wrong":
+
+                    FeedbackTextBlock.Text = "Wrong answer";
+
+                    break;
+
+                case "technique":
+
+                    FeedbackTextBlock.Text = "";
+                    FeedbackTextBlock.Text += ("Stroke count: " + techAssessor.IsCorrectStrokeCount + "\n");
+                    FeedbackTextBlock.Text += ("Stroke order: " + techAssessor.IsCorrectStrokeOrder + "\n");
+
+                    break;
+
+                default:
+
+                    break;
+            }
+        }
 
         private void LoadQuestion(int questionIndex)
         {

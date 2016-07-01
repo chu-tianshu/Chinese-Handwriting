@@ -21,14 +21,14 @@ namespace App2
         {
             List<Tuple<string, double>> results = new List<Tuple<string, double>>();
 
-            List<SketchStroke> normalizedSample = Normalize(sample);
+            List<SketchStroke> normalizedSample = SketchPreprocessing.Normalize(sample, N, Size, Origin);
 
             foreach(KeyValuePair<string, List<SketchStroke>> entry in Templates)
             {
-                List<SketchStroke> normalizedTemplate = Normalize(entry.Value);
+                List<SketchStroke> normalizedTemplate = SketchPreprocessing.Normalize(entry.Value, N, Size, Origin);
 
-                double d1 = Distance(normalizedSample, normalizedTemplate);
-                double d2 = Distance(normalizedTemplate, normalizedSample);
+                double d1 = SketchTools.Distance(normalizedSample, normalizedTemplate);
+                double d2 = SketchTools.Distance(normalizedTemplate, normalizedSample);
                 double distance = d1 < d2 ? d1 : d2;
 
                 double score = ToScore(distance);
@@ -50,76 +50,6 @@ namespace App2
                 scores.Add(score);
             }
         }
-
-        #region point cloud distance
-
-        public double Distance(List<SketchStroke> alphaStrokeList, List<SketchStroke> betaStrokeList)
-        {
-            List<SketchPoint> alphaPoints = new List<SketchPoint>();
-            List<SketchPoint> betaPoints = new List<SketchPoint>();
-
-            foreach (SketchStroke alphaStroke in alphaStrokeList) alphaPoints.AddRange(alphaStroke.Points);
-            foreach (SketchStroke betaStroke in betaStrokeList) betaPoints.AddRange(betaStroke.Points);
-
-            return Distance(alphaPoints, betaPoints);
-        }
-
-        public double Distance(List<SketchPoint> alphaPoints, List<SketchPoint> betaPoints)
-        {
-            double distances = 0.0;
-
-            var pairs = new List<Tuple<SketchPoint, SketchPoint>>();
-
-            double minDistance, weight, distance;
-            int index;
-
-            SketchPoint minPoint = betaPoints[0];
-
-            foreach (SketchPoint alphaPoint in alphaPoints)
-            {
-                minDistance = Double.MaxValue;
-
-                // iterate through each beta point to find the min beta point to the alpha point
-                index = 1;
-
-                foreach (SketchPoint betaPoint in betaPoints)
-                {
-                    distance = SketchPoint.EuclideanDistance(alphaPoint, betaPoint);
-
-                    // update the min distance and min point
-                    if (minDistance > distance)
-                    {
-                        minDistance = distance;
-                        minPoint = betaPoint;
-                    }
-                }
-
-                // update distance between alpha and beta point lists
-                weight = 1 - ((index - 1) / alphaPoints.Count);
-                distances += minDistance * weight;
-
-                // pair the alpha point to the min beta point and remove min beta point from list of beta points
-                pairs.Add(new Tuple<SketchPoint, SketchPoint>(alphaPoint, minPoint));
-                betaPoints.Remove(minPoint);
-            }
-
-            return distances;
-        }
-
-        #endregion
-
-        #region preprocessing
-
-        List<SketchStroke> Normalize(List<SketchStroke> strokes)
-        {
-            List<SketchStroke> resampled = SketchPreprocessing.Resample(strokes, N);
-            List<SketchStroke> scaled = SketchPreprocessing.ScaleSquare(resampled, Size);
-            List<SketchStroke> translated = SketchPreprocessing.TranslateCentroid(scaled, Origin);
-
-            return translated;
-        }
-
-        #endregion
 
         #region helper methods
 

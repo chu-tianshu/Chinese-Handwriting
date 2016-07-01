@@ -7,6 +7,15 @@ namespace App2
     {
         #region sketch preprocessing methods
 
+        public static List<SketchStroke> Normalize(List<SketchStroke> strokes, int n, double size, SketchPoint origin)
+        {
+            List<SketchStroke> resampled = SketchPreprocessing.Resample(strokes, n);
+            List<SketchStroke> scaled = SketchPreprocessing.ScaleSquare(resampled, size);
+            List<SketchStroke> translated = SketchPreprocessing.TranslateCentroid(scaled, origin);
+
+            return translated;
+        }
+
         public static List<SketchStroke> Resample(List<SketchStroke> strokes, int n)
         {
             double totalLength = 0;
