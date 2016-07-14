@@ -41,18 +41,22 @@ namespace App2
 
         private void MyPage_Loaded(object sender, RoutedEventArgs e)
         {
-            timeCollection = new List<List<long>>();
-            sketchStrokes = new List<SketchStroke>();
-            feedbackType = "technique";
-            currentQuestionIndex = 0;
-
-            LoadQuestion(currentQuestionIndex);
-
             double writingBorderHeight = WritingBorder.ActualHeight;
             double writingBorderWidth = WritingBorder.ActualWidth;
             double writingBorderLength = writingBorderHeight < writingBorderWidth ? writingBorderHeight : writingBorderWidth;
 
             WritingBorder.Height = WritingBorder.Width = writingBorderLength;
+
+            timeCollection = new List<List<long>>();
+            sketchStrokes = new List<SketchStroke>();
+            feedbackType = "technique";
+            currentQuestionIndex = 0;
+            sketchPixels = new bool[(int) writingBorderLength, (int) writingBorderLength];
+            templatePixels = new bool[(int)writingBorderLength, (int) writingBorderLength];
+
+            LoadQuestion(currentQuestionIndex);
+
+
         }
 
         private async void loadQuestions()
@@ -113,13 +117,14 @@ namespace App2
             {
                 strokes[strokes.Count - 1].Selected = true;
                 WritingInkCanvas.InkPresenter.StrokeContainer.DeleteSelected();
-                sketchStrokes.RemoveAt(sketchStrokes.Count - 1);
                 timeCollection.RemoveAt(timeCollection.Count - 1);
             }
         }
 
         private void FinishButton_Click(object sender, RoutedEventArgs e)
         {
+            string answer = currentQuestion.Answer;
+
             var strokes = WritingInkCanvas.InkPresenter.StrokeContainer.GetStrokes();
 
             List<List<SketchPoint>> cornersList = new List<List<SketchPoint>>();
@@ -147,6 +152,9 @@ namespace App2
                 sketchStrokes.Add(curSketchStroke);
             }
 
+            sketchPixels = PixelDataAnalysis.CalculatePixelData(sketchStrokes, (int) WritingBorder.Height, (int) WritingBorder.Width, StrokeVisuals.Size.Height / 2);
+            templatePixels = PixelDataAnalysis.CalculatePixelData(strokeTemplates[answer], (int) WritingBorder.Height, (int)WritingBorder.Width, StrokeVisuals.Size.Height / 2);
+
             #region recognizes using $P
 
             NumResampleForPDollar = 128;
@@ -157,8 +165,6 @@ namespace App2
             List<string> resultLabels = pDollarClassifier.Labels;
 
             #endregion
-
-            string answer = currentQuestion.Answer;
 
             if (answer == resultLabels[resultLabels.Count - 1] || 
                 answer == resultLabels[resultLabels.Count - 2] || 
@@ -251,14 +257,14 @@ namespace App2
 
                 case "technique":
 
-                    FeedbackTextBlock.FontSize = 45;
+                    FeedbackTextBlock.FontSize = 38;
 
                     FeedbackTextBlock.Text = "";
-                    FeedbackTextBlock.Text += ("Stroke count: " + techAssessor.IsCorrectStrokeCount + "\n");
-                    FeedbackTextBlock.Text += ("Stroke order: " + techAssessor.IsCorrectStrokeOrder + "\n");
-                    FeedbackTextBlock.Text += ("Stroke directions: " + techAssessor.IsCorrectStrokeDirection + "\n");
+                    FeedbackTextBlock.Text += ("Stroke count: " + (techAssessor.IsCorrectStrokeCount ? "Correct" : "Incorrect") + "\n");
+                    FeedbackTextBlock.Text += ("Stroke order: " + (techAssessor.IsCorrectStrokeOrder ? "Correct" : "Incorrect") + "\n");
+                    FeedbackTextBlock.Text += ("Stroke directions: " + (techAssessor.IsCorrectStrokeDirection ? "Correct" : "Incorrect") + "\n");
 
-                    if (techAssessor.IsCorrectStrokeDirection == false)
+                    if (techAssessor.IsCorrectStrokeCount == true && techAssessor.IsCorrectStrokeDirection == false)
                     {
                         Debug.Write("Wrong stroke: " + techAssessor.wrongDirectionStrokeIndices[0]);
 
@@ -266,7 +272,12 @@ namespace App2
 
                         foreach (int wrongStrokeIndex in techAssessor.wrongDirectionStrokeIndices)
                         {
-                            strokes[wrongStrokeIndex].DrawingAttributes.Color = Colors.Red;
+                            InkDrawingAttributes drawingAttributes = new InkDrawingAttributes();
+                            drawingAttributes.Color = Colors.Red;
+                            drawingAttributes.PenTip = PenTipShape.Circle;
+                            drawingAttributes.Size = new Size(20, 20);
+
+                            strokes[wrongStrokeIndex].DrawingAttributes = drawingAttributes;
                         }
                     }
 
@@ -274,7 +285,7 @@ namespace App2
 
                 case "visual":
 
-                    FeedbackTextBlock.Text = "";
+                    FeedbackTextBlock.Text = "Coming soon...";
 
                     break;
 
@@ -381,6 +392,8 @@ namespace App2
         private int currentQuestionIndex;
         private string feedbackType;
         private TechniqueAssessor techAssessor;
+        private bool[,] sketchPixels;
+        private bool[,] templatePixels;
 
         #endregion
     }

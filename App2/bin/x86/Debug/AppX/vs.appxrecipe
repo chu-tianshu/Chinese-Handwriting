@@ -22,13 +22,13 @@
     <AppXManifest Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\bin\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2016-07-01T14:11:52.115</Modified>
+      <Modified>2016-07-12T10:50:45.563</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\bin\x86\Debug\App2.exe">
       <PackagePath>entrypoint\App2.exe</PackagePath>
-      <Modified>2016-07-01T14:11:51.842</Modified>
+      <Modified>2016-07-12T10:50:45.000</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\.nuget\packages\Microsoft.ApplicationInsights\1.0.0\lib\portable-win81+wpa81\Microsoft.ApplicationInsights.dll">
       <PackagePath>Microsoft.ApplicationInsights.dll</PackagePath>
@@ -762,7 +762,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\bin\x86\Debug\Core\App2.exe">
       <PackagePath>App2.exe</PackagePath>
-      <Modified>2016-07-01T14:11:52.108</Modified>
+      <Modified>2016-07-12T10:50:45.563</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>
