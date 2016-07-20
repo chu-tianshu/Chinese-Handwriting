@@ -73,7 +73,7 @@
 
             <Grid Grid.Column="1">
                 <Border Name="FeedbackBorder" BorderBrush="Gray" BorderThickness="15">
-                    <TextBlock Name="FeedbackTextBlock"/>
+                    <TextBlock Name="FeedbackTextBlock" TextWrapping="Wrap"/>
                 </Border>
             </Grid>
         </Grid>

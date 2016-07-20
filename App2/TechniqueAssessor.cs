@@ -89,6 +89,8 @@ namespace App2
 
                 #endregion
             }
+
+            IsCorrectOverall = IsCorrectStrokeCount && IsCorrectStrokeDirection && IsCorrectStrokeOrder;
         }
 
         #endregion
@@ -98,6 +100,7 @@ namespace App2
         public bool IsCorrectStrokeCount { get; private set; }
         public bool IsCorrectStrokeOrder { get; private set; }
         public bool IsCorrectStrokeDirection { get; private set; }
+        public bool IsCorrectOverall { get; private set; }
         public List<int> wrongDirectionStrokeIndices { get; private set; }
 
         #endregion

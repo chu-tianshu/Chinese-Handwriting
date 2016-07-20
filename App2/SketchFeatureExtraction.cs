@@ -24,5 +24,24 @@ namespace App2
 
             return new SketchPoint(meanX, meanY);
         }
+
+        public static BoundingBox BoundingRectangle(List<SketchStrokes> strokes)
+        {
+            return new BoundingBox(strokes);
+        }
+
+        public static double Height(List<SketchStroke> strokes)
+        {
+            BoundingBox bb = new BoundingBox(strokes);
+
+            return bb.Height;
+        }
+
+        public static double Width(List<SketchStroke> strokes)
+        {
+            BoundingBox bb = new BoundingBox(strokes);
+
+            return bb.Width;
+        }
     }
 }

@@ -73,7 +73,7 @@
 
             <Grid Grid.Column="1">
                 <Border x:ConnectionId='7' Name="FeedbackBorder" BorderBrush="Gray" BorderThickness="15">
-                    <TextBlock x:ConnectionId='8' Name="FeedbackTextBlock"/>
+                    <TextBlock x:ConnectionId='8' Name="FeedbackTextBlock" TextWrapping="Wrap"/>
                 </Border>
             </Grid>
         </Grid>

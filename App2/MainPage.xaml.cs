@@ -51,12 +51,8 @@ namespace App2
             sketchStrokes = new List<SketchStroke>();
             feedbackType = "technique";
             currentQuestionIndex = 0;
-            sketchPixels = new bool[(int) writingBorderLength, (int) writingBorderLength];
-            templatePixels = new bool[(int)writingBorderLength, (int) writingBorderLength];
 
             LoadQuestion(currentQuestionIndex);
-
-
         }
 
         private async void loadQuestions()
@@ -107,6 +103,7 @@ namespace App2
             WritingInkCanvas.InkPresenter.StrokeContainer.Clear();
             timeCollection = new List<List<long>>();
             sketchStrokes = new List<SketchStroke>();
+            isWrittenCorrectly = false;
         }
 
         private void UndoButton_Click(object sender, RoutedEventArgs e)
@@ -119,6 +116,8 @@ namespace App2
                 WritingInkCanvas.InkPresenter.StrokeContainer.DeleteSelected();
                 timeCollection.RemoveAt(timeCollection.Count - 1);
             }
+
+            isWrittenCorrectly = false;
         }
 
         private void FinishButton_Click(object sender, RoutedEventArgs e)
@@ -152,9 +151,6 @@ namespace App2
                 sketchStrokes.Add(curSketchStroke);
             }
 
-            sketchPixels = PixelDataAnalysis.CalculatePixelData(sketchStrokes, (int) WritingBorder.Height, (int) WritingBorder.Width, StrokeVisuals.Size.Height / 2);
-            templatePixels = PixelDataAnalysis.CalculatePixelData(strokeTemplates[answer], (int) WritingBorder.Height, (int)WritingBorder.Width, StrokeVisuals.Size.Height / 2);
-
             #region recognizes using $P
 
             NumResampleForPDollar = 128;
@@ -174,7 +170,15 @@ namespace App2
 
                 techAssessor = new TechniqueAssessor(sketchStrokes, currentTemplate);
 
+                isWrittenCorrectly = techAssessor.IsCorrectOverall;
+
                 LoadFeedback("technique");
+
+                if (isWrittenCorrectly)
+                {
+                    visAssessor = new VisionAssessor(sketchStrokes, currentTemplate);
+                    WritingInkCanvas.
+                }
             }
             else
             {
@@ -195,6 +199,7 @@ namespace App2
             timeCollection = new List<List<long>>();
             sketchStrokes = new List<SketchStroke>();
             FeedbackTextBlock.Text = "";
+            isWrittenCorrectly = false;
         }
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
@@ -210,6 +215,7 @@ namespace App2
             timeCollection = new List<List<long>>();
             sketchStrokes = new List<SketchStroke>();
             FeedbackTextBlock.Text = "";
+            isWrittenCorrectly = false;
         }
 
         private void VisualFeedbackButton_Click(object sender, RoutedEventArgs e)
@@ -285,7 +291,11 @@ namespace App2
 
                 case "visual":
 
-                    FeedbackTextBlock.Text = "Coming soon...";
+                    if (!isWrittenCorrectly) FeedbackTextBlock.Text = "Please try to write the character correctly first";
+                    else
+                    {
+                        FeedbackTextBlock.Text = "";
+                    }
 
                     break;
 
@@ -389,11 +399,10 @@ namespace App2
         private List<Question> questions;
         private Question currentQuestion;
         private List<SketchStroke> currentTemplate;
+        private bool isWrittenCorrectly;
         private int currentQuestionIndex;
-        private string feedbackType;
         private TechniqueAssessor techAssessor;
-        private bool[,] sketchPixels;
-        private bool[,] templatePixels;
+        private VisionAssessor visAssessor;
 
         #endregion
     }
