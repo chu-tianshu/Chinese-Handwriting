@@ -29,7 +29,7 @@ namespace App2
 
         private void InitializeTemplates()
         {
-            strokeTemplates = new Dictionary<string, List<SketchStroke>>();
+            strokeTemplates = new Dictionary<string, Sketch>();
             loadTemplates();
         }
 
@@ -43,13 +43,12 @@ namespace App2
         {
             double writingBorderHeight = WritingBorder.ActualHeight;
             double writingBorderWidth = WritingBorder.ActualWidth;
-            double writingBorderLength = writingBorderHeight < writingBorderWidth ? writingBorderHeight : writingBorderWidth;
+            writingFrameLength = writingBorderHeight < writingBorderWidth ? writingBorderHeight : writingBorderWidth;
 
-            WritingBorder.Height = WritingBorder.Width = writingBorderLength;
+            WritingBorder.Height = WritingBorder.Width = writingFrameLength;
 
             timeCollection = new List<List<long>>();
             sketchStrokes = new List<SketchStroke>();
-            feedbackType = "technique";
             currentQuestionIndex = 0;
 
             LoadQuestion(currentQuestionIndex);
@@ -168,7 +167,7 @@ namespace App2
             {
                 currentTemplate = strokeTemplates[answer];
 
-                techAssessor = new TechniqueAssessor(sketchStrokes, currentTemplate);
+                techAssessor = new TechniqueAssessor(sketchStrokes, currentTemplate.Strokes);
 
                 isWrittenCorrectly = techAssessor.IsCorrectOverall;
 
@@ -176,8 +175,7 @@ namespace App2
 
                 if (isWrittenCorrectly)
                 {
-                    visAssessor = new VisionAssessor(sketchStrokes, currentTemplate);
-                    WritingInkCanvas.
+                    visAssessor = new VisionAssessor(sketchStrokes, (int) writingFrameLength, currentTemplate.Strokes, currentTemplate.FrameMaxX - currentTemplate.FrameMinX);
                 }
             }
             else
@@ -324,10 +322,7 @@ namespace App2
         }
 
         private async void ReadInTemplateXML(StorageFile file)
-        {
-            string label = "";
-            List<SketchStroke> sketch = new List<SketchStroke>();
-            
+        {   
             /* Creates a new XML document
              * Gets the text from the XML file
              * Loads the file's text into an XML document 
@@ -335,7 +330,12 @@ namespace App2
             string text = await FileIO.ReadTextAsync(file);
             XDocument document = XDocument.Parse(text);
 
-            label = document.Root.Attribute("label").Value;
+            int minX = Int32.Parse(document.Root.Attribute("frameMinX").Value);
+            int maxX = Int32.Parse(document.Root.Attribute("frameMaxX").Value);
+            int minY = Int32.Parse(document.Root.Attribute("frameMinY").Value);
+            int maxY = Int32.Parse(document.Root.Attribute("frameMaxY").Value);
+            string label = document.Root.Attribute("label").Value;
+            List<SketchStroke> strokes = new List<SketchStroke>();
 
             // Itereates through each stroke element
             foreach (XElement element in document.Root.Elements())
@@ -359,8 +359,10 @@ namespace App2
                     stroke.AppendTime(t);
                 }
 
-                sketch.Add(stroke);
+                strokes.Add(stroke);
             }
+
+            Sketch sketch = new Sketch(minX, maxX, minY, maxY, label, strokes);
 
             strokeTemplates.Add(label, sketch);
         }
@@ -393,12 +395,13 @@ namespace App2
 
         private List<long> times;
         private List<List<long>> timeCollection;
-        private Dictionary<string, List<SketchStroke>> strokeTemplates;
+        private double writingFrameLength;
+        private Dictionary<string, Sketch> strokeTemplates;
         private List<SketchStroke> sketchStrokes;
         private PDollarClassifier pDollarClassifier;
         private List<Question> questions;
         private Question currentQuestion;
-        private List<SketchStroke> currentTemplate;
+        private Sketch currentTemplate;
         private bool isWrittenCorrectly;
         private int currentQuestionIndex;
         private TechniqueAssessor techAssessor;

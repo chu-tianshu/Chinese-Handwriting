@@ -7,7 +7,7 @@ namespace App2
     {
         #region initializers
 
-        public PDollarClassifier(int n, double size, SketchPoint point, Dictionary<string, List<SketchStroke>> templates)
+        public PDollarClassifier(int n, double size, SketchPoint point, Dictionary<string, Sketch> templates)
         {
             N = n;
             Size = size;
@@ -23,9 +23,10 @@ namespace App2
 
             List<SketchStroke> normalizedSample = SketchPreprocessing.Normalize(sample, N, Size, Origin);
 
-            foreach(KeyValuePair<string, List<SketchStroke>> entry in Templates)
+            foreach(KeyValuePair<string, Sketch> entry in Templates)
             {
-                List<SketchStroke> normalizedTemplate = SketchPreprocessing.Normalize(entry.Value, N, Size, Origin);
+                List<SketchStroke> templateStrokes = entry.Value.Strokes;
+                List<SketchStroke> normalizedTemplate = SketchPreprocessing.Normalize(templateStrokes, N, Size, Origin);
 
                 double d1 = SketchTools.Distance(normalizedSample, normalizedTemplate);
                 double d2 = SketchTools.Distance(normalizedTemplate, normalizedSample);
@@ -65,7 +66,7 @@ namespace App2
         public int N { get; private set; }
         public double Size { get; private set; }
         public SketchPoint Origin { get; private set; }
-        public Dictionary<string, List<SketchStroke>> Templates { get; private set; }
+        public Dictionary<string, Sketch> Templates { get; private set; }
         public List<string> Labels { get { return labels; } }
         public List<double> Scores { get { return scores; } }
 

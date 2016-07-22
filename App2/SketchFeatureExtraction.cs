@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace App2
 {
@@ -25,7 +26,7 @@ namespace App2
             return new SketchPoint(meanX, meanY);
         }
 
-        public static BoundingBox BoundingRectangle(List<SketchStrokes> strokes)
+        public static BoundingBox BoundingRectangle(List<SketchStroke> strokes)
         {
             return new BoundingBox(strokes);
         }

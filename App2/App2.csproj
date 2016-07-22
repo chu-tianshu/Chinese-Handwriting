@@ -135,26 +135,26 @@
     <Content Include="Templates\Images\wu.png" />
     <Content Include="Templates\Images\Yi.png" />
     <Content Include="Templates\Images\zi.png" />
-    <Content Include="Templates\StrokeData\ba_636011181316677873.xml" />
-    <Content Include="Templates\StrokeData\bu_636011219798660530.xml" />
-    <Content Include="Templates\StrokeData\er_636011219893356233.xml" />
-    <Content Include="Templates\StrokeData\hao_636011275540414782.xml" />
-    <Content Include="Templates\StrokeData\jiu_636011277000300303.xml" />
-    <Content Include="Templates\StrokeData\liu_636011277572693762.xml" />
-    <Content Include="Templates\StrokeData\ma_636011277921768552.xml" />
-    <Content Include="Templates\StrokeData\niu_636011279048894582.xml" />
-    <Content Include="Templates\StrokeData\ni_636011278536614624.xml" />
-    <Content Include="Templates\StrokeData\nv_636011279378774433.xml" />
-    <Content Include="Templates\StrokeData\qi_636011279515500372.xml" />
-    <Content Include="Templates\StrokeData\ren_636011279615978371.xml" />
-    <Content Include="Templates\StrokeData\san_636011280168933741.xml" />
-    <Content Include="Templates\StrokeData\shi_636011280687734296.xml" />
-    <Content Include="Templates\StrokeData\si_636011281629855921.xml" />
-    <Content Include="Templates\StrokeData\ta_636011282170614163.xml" />
-    <Content Include="Templates\StrokeData\wo_636011283961813983.xml" />
-    <Content Include="Templates\StrokeData\wu_636011284181292062.xml" />
-    <Content Include="Templates\StrokeData\Yi_636011284244055132.xml" />
-    <Content Include="Templates\StrokeData\zi_636011284544893955.xml" />
+    <Content Include="Templates\StrokeData\ba_636047663981101947.xml" />
+    <Content Include="Templates\StrokeData\bu_636047656663912347.xml" />
+    <Content Include="Templates\StrokeData\er_636047655634144738.xml" />
+    <Content Include="Templates\StrokeData\hao_636047660555023487.xml" />
+    <Content Include="Templates\StrokeData\jiu_636047659910144596.xml" />
+    <Content Include="Templates\StrokeData\liu_636047664695973041.xml" />
+    <Content Include="Templates\StrokeData\ma_636047659610222071.xml" />
+    <Content Include="Templates\StrokeData\niu_636047663865220395.xml" />
+    <Content Include="Templates\StrokeData\ni_636047665053804198.xml" />
+    <Content Include="Templates\StrokeData\nv_636047654581218941.xml" />
+    <Content Include="Templates\StrokeData\qi_636047662666870920.xml" />
+    <Content Include="Templates\StrokeData\ren_636047663191386175.xml" />
+    <Content Include="Templates\StrokeData\san_636047660144863364.xml" />
+    <Content Include="Templates\StrokeData\shi_636047661443033309.xml" />
+    <Content Include="Templates\StrokeData\si_636047663048998063.xml" />
+    <Content Include="Templates\StrokeData\ta_636047658327346093.xml" />
+    <Content Include="Templates\StrokeData\wo_636047664514050644.xml" />
+    <Content Include="Templates\StrokeData\wu_636047663445530457.xml" />
+    <Content Include="Templates\StrokeData\Yi_636047655336471458.xml" />
+    <Content Include="Templates\StrokeData\zi_636047662297935457.xml" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
@@ -162,12 +162,14 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="BoundingBox.cs" />
+    <Compile Include="Fuzzy.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="PDollarClassifier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Question.cs" />
+    <Compile Include="Sketch.cs" />
     <Compile Include="SketchFeatureExtraction.cs" />
     <Compile Include="SketchPoint.cs" />
     <Compile Include="SketchPreprocessing.cs" />
