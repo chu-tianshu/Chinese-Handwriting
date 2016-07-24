@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Xml.Linq;
 using Windows.Foundation;
 using Windows.Storage;
@@ -103,6 +104,7 @@ namespace App2
             timeCollection = new List<List<long>>();
             sketchStrokes = new List<SketchStroke>();
             isWrittenCorrectly = false;
+            FeedbackTextBlock.Text = "";
         }
 
         private void UndoButton_Click(object sender, RoutedEventArgs e)
@@ -293,6 +295,9 @@ namespace App2
                     else
                     {
                         FeedbackTextBlock.Text = "";
+                        FeedbackTextBlock.Text += "Location: " + visAssessor.LocationScore + "\n";
+                        FeedbackTextBlock.Text += "Shape: " + visAssessor.ShapeScore + "\n";
+                        FeedbackTextBlock.Text += "Projection: " + visAssessor.ProjectionScore + "\n";
                     }
 
                     break;
@@ -305,6 +310,7 @@ namespace App2
 
         private void LoadQuestion(int questionIndex)
         {
+            while (questions.Count == 0) Task.Delay(5000);
             currentQuestion = questions[questionIndex];
             InstructionTextBlock.Text = currentQuestion.Text;
         }

@@ -31,12 +31,12 @@
             double numerator = 0.0;
             double denominator = 0.0;
 
-            for (double x = 0; x < b; x += 0.1)
+            for (double x = 0; x < b; x += 0.01)
             {
                 if (Gamma(x, a, b) < muon) break;
 
                 numerator += x * Gamma(x, a, b);
-                denominator += x;
+                denominator += Gamma(x, a, b);
             }
 
             return numerator / denominator;
@@ -47,12 +47,12 @@
             double numerator = 0.0;
             double denominator = 0.0;
 
-            for (double x = b; x < 1; x += 0.1)
+            for (double x = b; x < 1; x += 0.01)
             {
                 if (Lambda(x, b, c) > muon) break;
 
                 numerator += x * Lambda(x, b, c);
-                denominator += x;
+                denominator += Lambda(x, b, c);
             }
 
             return numerator / denominator;

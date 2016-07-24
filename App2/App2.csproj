@@ -179,6 +179,7 @@
     <Compile Include="SketchTools.cs" />
     <Compile Include="TechniqueAssessor.cs" />
     <Compile Include="VisionAssessor.cs" />
+    <Compile Include="VisionFeatureExtraction.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
