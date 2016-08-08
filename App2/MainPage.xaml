@@ -67,13 +67,16 @@
 
             <Grid Grid.Column="0">
                 <Border Name="WritingBorder" BorderBrush="Gray" BorderThickness="15">
-                    <InkCanvas Name="WritingInkCanvas"/>
+                    <Grid Background="White">
+                        <InkCanvas Name="WritingInkCanvas"/>
+                        <Image Name="TemplateImage"/>
+                    </Grid>
                 </Border>
             </Grid>
 
             <Grid Grid.Column="1">
-                <Border Name="FeedbackBorder" BorderBrush="Gray" BorderThickness="15">
-                    <TextBlock Name="FeedbackTextBlock" TextWrapping="Wrap"/>
+                <Border Name="FeedbackBorder">
+                    <TextBlock Name="FeedbackTextBlock" TextWrapping="Wrap" VerticalAlignment="Center"/>
                 </Border>
             </Grid>
         </Grid>

@@ -182,6 +182,17 @@ namespace App2
             return (SketchPoint.EuclideanDistance(p1, p2) / PathLength(stroke, i1, i2) > LineValidationThreshold);
         }
 
+        public static string IntersectionRelationship(SketchStroke sketchStroke1, SketchStroke sketchStroke2)
+        {
+            List<SketchPoint> points1 = sketchStroke1.Points;
+            List<SketchPoint> points2 = sketchStroke2.Points;
+
+            foreach (SketchPoint point1 in points1)
+            {
+
+            }
+        }
+
         #region helper methods
 
         private static double Median(double[] array)

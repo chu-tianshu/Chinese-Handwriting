@@ -69,26 +69,45 @@ namespace App2
             double s2 = (sa + sr) / 2.0;
             double s3 = (sdx + sdy) / 2.0;
 
-            LocationScore = s1;
-            ShapeScore = s2;
-            ProjectionScore = s3;
+            double muonLocationVeryLow = Fuzzy.Gamma(s1, 0.3, 0.4);
+            double muonLocationLow = Fuzzy.Delta(s1, 0.3, 0.4, 0.5);
+            double muonLocationAverage = Fuzzy.Delta(s1, 0.4, 0.5, 0.6);
+            double muonLocationHigh = Fuzzy.Delta(s1, 0.5, 0.6, 0.7);
+            double muonLocationVeryHigh = Fuzzy.Lambda(s1, 0.6, 0.7);
+            double muonShapeVeryLow = Fuzzy.Gamma(s2, 0.3, 0.4);
+            double muonShapeLow = Fuzzy.Delta(s2, 0.3, 0.4, 0.5);
+            double muonShapeAverage = Fuzzy.Delta(s2, 0.4, 0.5, 0.6);
+            double muonShapeHigh = Fuzzy.Delta(s2, 0.5, 0.6, 0.7);
+            double muonShapeVeryHigh = Fuzzy.Lambda(s2, 0.6, 0.7);
+            double muonProjectionVeryLow = Fuzzy.Gamma(s2, 0.3, 0.4);
+            double muonProjectionLow = Fuzzy.Delta(s2, 0.3, 0.4, 0.5);
+            double muonProjectionAverage = Fuzzy.Delta(s2, 0.4, 0.5, 0.6);
+            double muonProjectionHigh = Fuzzy.Delta(s2, 0.5, 0.6, 0.7);
+            double muonProjectionVeryHigh = Fuzzy.Lambda(s2, 0.6, 0.7);
 
-            Debug.WriteLine("fc = " + fc);
-            Debug.WriteLine("fa = " + fa);
-            Debug.WriteLine("dx = " + dx);
-            Debug.WriteLine("dy = " + dy);
-            Debug.WriteLine("fs = " + fs);
-            Debug.WriteLine("sc = " + sc);
-            Debug.WriteLine("sa = " + sa);
-            Debug.WriteLine("sdx = " + sdx);
-            Debug.WriteLine("sdy = " + sdy);
+            LocationFeedback = getFeedback(muonLocationVeryLow, muonLocationLow, muonLocationAverage, muonLocationHigh, muonLocationVeryHigh);
+            ShapeFeedback = getFeedback(muonShapeVeryLow, muonShapeLow, muonShapeAverage, muonShapeHigh, muonShapeVeryHigh);
+            ProjectionFeedback = getFeedback(muonProjectionVeryLow, muonProjectionLow, muonProjectionAverage, muonProjectionHigh, muonProjectionVeryHigh);
         }
+
+        #region helper methods
+
+        private string getFeedback(double muonVeryLow, double muonLow, double muonAverage, double muonHigh, double muonVeryHigh)
+        {
+            if (muonVeryLow > muonLow && muonVeryLow > muonAverage && muonVeryLow > muonHigh && muonVeryLow > muonVeryHigh) return "very low";
+            if (muonLow > muonAverage && muonLow > muonHigh && muonLow > muonVeryHigh) return "low";
+            if (muonAverage > muonHigh && muonAverage > muonVeryHigh) return "average";
+            if (muonHigh > muonVeryHigh) return "high";
+            return "very high";
+        }
+
+        #endregion
 
         #region properties
 
-        public double LocationScore { get; private set; }
-        public double ShapeScore { get; private set; }
-        public double ProjectionScore { get; private set; }
+        public string LocationFeedback { get; private set; }
+        public string ShapeFeedback { get; private set; }
+        public string ProjectionFeedback { get; private set; }
 
         #endregion
 

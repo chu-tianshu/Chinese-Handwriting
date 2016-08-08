@@ -10,87 +10,110 @@ namespace App2
 
         public TechniqueAssessor(List<SketchStroke> sample, List<SketchStroke> template)
         {
-            IsCorrectStrokeCount = (sample.Count == template.Count);
-
-            if (IsCorrectStrokeCount == false)
-            {
-                IsCorrectStrokeOrder = false;
-                IsCorrectStrokeDirection = false;
-            }
-            else
-            {
-                #region stroke order correctness check
-
-                IsCorrectStrokeOrder = true;
-
-                List<SketchStroke> sampleNormalized = SketchPreprocessing.Normalize(sample, 128, 500, new SketchPoint(0.0, 0.0));
-                List<SketchStroke> templateNormalized = SketchPreprocessing.Normalize(template, 128, 500, new SketchPoint(0.0, 0.0));
-
-                int numStroke = template.Count;
-
-                int[] correspondance = new int[numStroke];
-                bool[] hasCompared = new bool[numStroke];
-
-                for (int i = 0; i < numStroke; i++)
-                {
-                    double minDis = double.MaxValue;
-                    int matchedIdx = -1;
-
-                    for (int j = 0; j < numStroke; j++)
-                    {
-                        if (hasCompared[j]) continue;
-
-                        double dis = SketchTools.HausdorffDistance(sampleNormalized[i], templateNormalized[j]);
-
-                        if (dis < minDis)
-                        {
-                            minDis = dis;
-                            matchedIdx = j;
-                        }
-                    }
-
-                    if (i != matchedIdx) IsCorrectStrokeOrder = false;
-
-                    correspondance[i] = matchedIdx;
-                    hasCompared[matchedIdx] = true;
-                }
-
-                #endregion
-
-                #region stroke direction correctness check
-
-                IsCorrectStrokeDirection = true;
-                wrongDirectionStrokeIndices = new List<int>();
-
-                for (int i = 0; i < numStroke; i++)
-                {
-                    SketchStroke sampleStroke = sample[i];
-                    SketchStroke templateStroke = template[correspondance[i]];
-
-                    Vector2 sampleStartToEndVector 
-                        = new Vector2((float) (sampleStroke.EndPoint.Y - sampleStroke.StartPoint.Y), 
-                                      (float) (sampleStroke.EndPoint.X - sampleStroke.StartPoint.X));
-                    Vector2 templateStartToEndVector
-                        = new Vector2((float)(templateStroke.EndPoint.Y - templateStroke.StartPoint.Y),
-                                      (float)(templateStroke.EndPoint.X - templateStroke.StartPoint.X));
-
-                    Vector2 sampleStartToEndVectorNormalized = Vector2.Normalize(sampleStartToEndVector);
-                    Vector2 templateStartToEndVectorNormalized = Vector2.Normalize(templateStartToEndVector);
-
-                    double cosBetweenSampleAndTemplateStrokes = Vector2.Dot(sampleStartToEndVectorNormalized, templateStartToEndVectorNormalized);
-
-                    if (cosBetweenSampleAndTemplateStrokes < 0)
-                    {
-                        wrongDirectionStrokeIndices.Add(i);
-
-                        IsCorrectStrokeDirection = false;
-                    }
-                }
-
-                #endregion
-            }
-
+            IsCorrectStrokeCount = JudgeStrokeCount(sample, template);
+            IsCorrectStrokeOrder = JudgeStrokeOrder(sample, template);
+            IsCorrectStrokeDirection = JudgeStrokeDirection(sample, template);
+            IsCorrectIntersection = JudgeInterSection(sample, template);
             IsCorrectOverall = IsCorrectStrokeCount && IsCorrectStrokeDirection && IsCorrectStrokeOrder;
+        }
+
+        #endregion
+
+        #region helper methods
+
+        private bool JudgeStrokeCount(List<SketchStroke> sample, List<SketchStroke> template)
+        {
+            return (sample.Count == template.Count);
+        }
+
+        private bool JudgeStrokeOrder(List<SketchStroke> sample, List<SketchStroke> template)
+        {
+            if (!IsCorrectStrokeCount) return false;
+
+            List<SketchStroke> sampleNormalized = SketchPreprocessing.Normalize(sample, 128, 500, new SketchPoint(0.0, 0.0));
+            List<SketchStroke> templateNormalized = SketchPreprocessing.Normalize(template, 128, 500, new SketchPoint(0.0, 0.0));
+
+            int numStroke = template.Count;
+
+            correspondance = new int[numStroke];
+            bool[] hasCompared = new bool[numStroke];
+
+            for (int i = 0; i < numStroke; i++)
+            {
+                double minDis = double.MaxValue;
+                int matchedIdx = -1;
+
+                for (int j = 0; j < numStroke; j++)
+                {
+                    if (hasCompared[j]) continue;
+
+                    double dis = SketchTools.HausdorffDistance(sampleNormalized[i], templateNormalized[j]);
+
+                    if (dis < minDis)
+                    {
+                        minDis = dis;
+                        matchedIdx = j;
+                    }
+                }
+
+                if (i != matchedIdx) return false;
+
+                correspondance[i] = matchedIdx;
+                hasCompared[matchedIdx] = true;
+            }
+
+            return true;
+        }
+
+        private bool JudgeStrokeDirection(List<SketchStroke> sample, List<SketchStroke> template)
+        {
+            if (!IsCorrectStrokeCount) return false;
+
+            int numStroke = template.Count;
+
+            IsCorrectStrokeDirection = true;
+            wrongDirectionStrokeIndices = new List<int>();
+
+            for (int i = 0; i < numStroke; i++)
+            {
+                SketchStroke sampleStroke = sample[i];
+                SketchStroke templateStroke = template[correspondance[i]];
+
+                Vector2 sampleStartToEndVector
+                    = new Vector2((float)(sampleStroke.EndPoint.Y - sampleStroke.StartPoint.Y),
+                                  (float)(sampleStroke.EndPoint.X - sampleStroke.StartPoint.X));
+                Vector2 templateStartToEndVector
+                    = new Vector2((float)(templateStroke.EndPoint.Y - templateStroke.StartPoint.Y),
+                                  (float)(templateStroke.EndPoint.X - templateStroke.StartPoint.X));
+
+                Vector2 sampleStartToEndVectorNormalized = Vector2.Normalize(sampleStartToEndVector);
+                Vector2 templateStartToEndVectorNormalized = Vector2.Normalize(templateStartToEndVector);
+
+                double cosBetweenSampleAndTemplateStrokes = Vector2.Dot(sampleStartToEndVectorNormalized, templateStartToEndVectorNormalized);
+
+                if (cosBetweenSampleAndTemplateStrokes < 0)
+                {
+                    wrongDirectionStrokeIndices.Add(i);
+
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        private bool JudgeIntersection(List<SketchStroke> sample, List<SketchStroke> template)
+        {
+            if (!IsCorrectStrokeCount) return false;
+
+            string[,] sampleIntersectionMatrix = SketchFeatureExtraction.IntersectionMatrix(sample, correspondance);
+            string[,] templateIntersectionMatrix = SketchFeatureExtraction.IntersectionMatrix(template);
+
+            for (int i = 0; i < sample.Count; i++)
+                for (int j = 0; j < sample.Count; j++)
+                    if (sampleIntersectionMatrix[i, j] != templateIntersectionMatrix[i, j]) return false;
+
+            return true;
         }
 
         #endregion
@@ -100,8 +123,15 @@ namespace App2
         public bool IsCorrectStrokeCount { get; private set; }
         public bool IsCorrectStrokeOrder { get; private set; }
         public bool IsCorrectStrokeDirection { get; private set; }
+        public bool IsCorrectIntersection { get; private set; }
         public bool IsCorrectOverall { get; private set; }
         public List<int> wrongDirectionStrokeIndices { get; private set; }
+
+        #endregion
+
+        #region fields
+
+        private int[] correspondance;
 
         #endregion
     }

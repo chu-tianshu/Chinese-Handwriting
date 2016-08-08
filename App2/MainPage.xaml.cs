@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Windows.Foundation;
 using Windows.Storage;
+using Windows.Storage.Streams;
 using Windows.UI;
 using Windows.UI.Input.Inking;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace App2
 {
@@ -31,6 +33,8 @@ namespace App2
         private void InitializeTemplates()
         {
             strokeTemplates = new Dictionary<string, Sketch>();
+            templateImageFiles = new Dictionary<string, StorageFile>();
+
             loadTemplates();
         }
 
@@ -71,8 +75,11 @@ namespace App2
             StorageFolder strokeTemplateFolder = await templatesFolder.GetFolderAsync("StrokeData");
             StorageFolder imageTemplateFolder = await templatesFolder.GetFolderAsync("Images");
 
-            var strokeTemplateFiles = await strokeTemplateFolder.GetFilesAsync();
-            foreach (var strokeTemplateFile in strokeTemplateFiles) ReadInTemplateXML(strokeTemplateFile);
+            var strokeTemplateFileList = await strokeTemplateFolder.GetFilesAsync();
+            foreach (var strokeTemplateFile in strokeTemplateFileList) ReadInTemplateXML(strokeTemplateFile);
+
+            var templateImageFileList = await imageTemplateFolder.GetFilesAsync();
+            foreach (var templateImageFile in templateImageFileList) templateImageFiles.Add(RemoveExtension(templateImageFile.Name), templateImageFile);
         }
 
         private void InitializeWritingInkCanvas()
@@ -167,9 +174,9 @@ namespace App2
                 answer == resultLabels[resultLabels.Count - 2] || 
                 answer == resultLabels[resultLabels.Count - 3])
             {
-                currentTemplate = strokeTemplates[answer];
+                currentTemplateSketch = strokeTemplates[answer];
 
-                techAssessor = new TechniqueAssessor(sketchStrokes, currentTemplate.Strokes);
+                techAssessor = new TechniqueAssessor(sketchStrokes, currentTemplateSketch.Strokes);
 
                 isWrittenCorrectly = techAssessor.IsCorrectOverall;
 
@@ -177,7 +184,9 @@ namespace App2
 
                 if (isWrittenCorrectly)
                 {
-                    visAssessor = new VisionAssessor(sketchStrokes, (int) writingFrameLength, currentTemplate.Strokes, currentTemplate.FrameMaxX - currentTemplate.FrameMinX);
+                    LoadTemplateImage(answer);
+
+                    visAssessor = new VisionAssessor(sketchStrokes, (int) writingFrameLength, currentTemplateSketch.Strokes, currentTemplateSketch.FrameMaxX - currentTemplateSketch.FrameMinX);
                 }
             }
             else
@@ -256,13 +265,11 @@ namespace App2
             switch(option)
             {
                 case "wrong":
-
                     FeedbackTextBlock.Text = "Wrong answer";
 
                     break;
 
                 case "technique":
-
                     FeedbackTextBlock.FontSize = 38;
 
                     FeedbackTextBlock.Text = "";
@@ -290,20 +297,18 @@ namespace App2
                     break;
 
                 case "visual":
-
                     if (!isWrittenCorrectly) FeedbackTextBlock.Text = "Please try to write the character correctly first";
                     else
                     {
                         FeedbackTextBlock.Text = "";
-                        FeedbackTextBlock.Text += "Location: " + visAssessor.LocationScore + "\n";
-                        FeedbackTextBlock.Text += "Shape: " + visAssessor.ShapeScore + "\n";
-                        FeedbackTextBlock.Text += "Projection: " + visAssessor.ProjectionScore + "\n";
+                        FeedbackTextBlock.Text += "Location: " + visAssessor.LocationFeedback + "\n";
+                        FeedbackTextBlock.Text += "Shape: " + visAssessor.ShapeFeedback + "\n";
+                        FeedbackTextBlock.Text += "Distribution: " + visAssessor.ProjectionFeedback + "\n";
                     }
 
                     break;
 
                 default:
-
                     break;
             }
         }
@@ -328,7 +333,7 @@ namespace App2
         }
 
         private async void ReadInTemplateXML(StorageFile file)
-        {   
+        {
             /* Creates a new XML document
              * Gets the text from the XML file
              * Loads the file's text into an XML document 
@@ -385,6 +390,26 @@ namespace App2
             if (hasEnded) { timeCollection.Add(times); }
         }
 
+        private string RemoveExtension(string fileName)
+        {
+            int dotLocation = 0;
+
+            for (int i = fileName.Length - 1; i >= 0; i--) if (fileName[i] == '.') dotLocation = i;
+
+            return fileName.Substring(0, dotLocation);
+        }
+
+        private async void LoadTemplateImage(string answer)
+        {
+            currentImageTemplate = new BitmapImage();
+
+            StorageFile currentImageTemplateFile = templateImageFiles[answer];
+
+            FileRandomAccessStream stream = (FileRandomAccessStream)await currentImageTemplateFile.OpenAsync(FileAccessMode.Read);
+
+            currentImageTemplate.SetSource(stream);
+        }
+
         #endregion
 
         #region properties
@@ -403,11 +428,13 @@ namespace App2
         private List<List<long>> timeCollection;
         private double writingFrameLength;
         private Dictionary<string, Sketch> strokeTemplates;
+        private Dictionary<string, StorageFile> templateImageFiles;
         private List<SketchStroke> sketchStrokes;
         private PDollarClassifier pDollarClassifier;
         private List<Question> questions;
         private Question currentQuestion;
-        private Sketch currentTemplate;
+        private Sketch currentTemplateSketch;
+        private BitmapImage currentImageTemplate;
         private bool isWrittenCorrectly;
         private int currentQuestionIndex;
         private TechniqueAssessor techAssessor;

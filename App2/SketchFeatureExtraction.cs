@@ -44,5 +44,18 @@ namespace App2
 
             return bb.Width;
         }
+
+        public static string[,] IntersectionMatrix(List<SketchStroke> strokes)
+        {
+            string[,] intersectionMatrix = new string[strokes.Count, strokes.Count];
+
+            for (int i = 0; i < strokes.Count; i++)
+            {
+                for (int j = 0; j < strokes.Count; j++)
+                {
+                    string relationship = SketchStrokeFeatureExtraction.IntersectionRelationship(strokes[i], strokes[j]);
+                }
+            }
+        }
     }
 }

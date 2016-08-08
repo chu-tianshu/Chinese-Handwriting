@@ -23,7 +23,7 @@
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
-                <Button x:ConnectionId='14'
+                <Button x:ConnectionId='15'
                     Name="PreviousButton"
                     Content="P"
                                                 
@@ -36,17 +36,17 @@
             </Grid>
 
             <Grid Grid.Column="1">
-                <Border x:ConnectionId='12' Name="InstructionBorder">
+                <Border x:ConnectionId='13' Name="InstructionBorder">
                     <Grid HorizontalAlignment="Left">
                         <Viewbox>
-                            <TextBlock x:ConnectionId='13' Name="InstructionTextBlock"/>
+                            <TextBlock x:ConnectionId='14' Name="InstructionTextBlock"/>
                         </Viewbox>
                     </Grid>
                 </Border>
             </Grid>
 
             <Grid Grid.Column="2">
-                <Button x:ConnectionId='11'
+                <Button x:ConnectionId='12'
                     Name="NextButton"
                     Content="N"
                                             
@@ -67,13 +67,16 @@
 
             <Grid Grid.Column="0">
                 <Border x:ConnectionId='9' Name="WritingBorder" BorderBrush="Gray" BorderThickness="15">
-                    <InkCanvas x:ConnectionId='10' Name="WritingInkCanvas"/>
+                    <Grid Background="White">
+                        <InkCanvas x:ConnectionId='10' Name="WritingInkCanvas"/>
+                        <Image x:ConnectionId='11' Name="TemplateImage"/>
+                    </Grid>
                 </Border>
             </Grid>
 
             <Grid Grid.Column="1">
-                <Border x:ConnectionId='7' Name="FeedbackBorder" BorderBrush="Gray" BorderThickness="15">
-                    <TextBlock x:ConnectionId='8' Name="FeedbackTextBlock" TextWrapping="Wrap"/>
+                <Border x:ConnectionId='7' Name="FeedbackBorder">
+                    <TextBlock x:ConnectionId='8' Name="FeedbackTextBlock" TextWrapping="Wrap" VerticalAlignment="Center"/>
                 </Border>
             </Grid>
         </Grid>
