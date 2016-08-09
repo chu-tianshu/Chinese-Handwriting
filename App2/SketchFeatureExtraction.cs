@@ -50,12 +50,24 @@ namespace App2
             string[,] intersectionMatrix = new string[strokes.Count, strokes.Count];
 
             for (int i = 0; i < strokes.Count; i++)
-            {
                 for (int j = 0; j < strokes.Count; j++)
-                {
-                    string relationship = SketchStrokeFeatureExtraction.IntersectionRelationship(strokes[i], strokes[j]);
-                }
+                    intersectionMatrix[i, j] = SketchStrokeFeatureExtraction.IntersectionRelationship(strokes[i], strokes[j]);
+
+            return intersectionMatrix;
+        }
+
+        public static string[,] IntersectionMatrix(List<SketchStroke> strokes, int[] correspondance)
+        {
+            List<SketchStroke> reordered = new List<SketchStroke>();
+
+            for (int i = 0; i < correspondance.Length; i++)
+            {
+                int strokeIndex = Array.IndexOf(correspondance, i);
+
+                reordered.Add(strokes[strokeIndex]);
             }
+
+            return IntersectionMatrix(reordered);
         }
     }
 }

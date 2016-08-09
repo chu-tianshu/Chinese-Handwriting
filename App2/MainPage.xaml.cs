@@ -276,6 +276,7 @@ namespace App2
                     FeedbackTextBlock.Text += ("Stroke count: " + (techAssessor.IsCorrectStrokeCount ? "Correct" : "Incorrect") + "\n");
                     FeedbackTextBlock.Text += ("Stroke order: " + (techAssessor.IsCorrectStrokeOrder ? "Correct" : "Incorrect") + "\n");
                     FeedbackTextBlock.Text += ("Stroke directions: " + (techAssessor.IsCorrectStrokeDirection ? "Correct" : "Incorrect") + "\n");
+                    FeedbackTextBlock.Text += ("Stroke intersections: " + (techAssessor.IsCorrectIntersection ? "Correct" : "Incorrect") + "\n");
 
                     if (techAssessor.IsCorrectStrokeCount == true && techAssessor.IsCorrectStrokeDirection == false)
                     {

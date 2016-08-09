@@ -13,7 +13,7 @@ namespace App2
             IsCorrectStrokeCount = JudgeStrokeCount(sample, template);
             IsCorrectStrokeOrder = JudgeStrokeOrder(sample, template);
             IsCorrectStrokeDirection = JudgeStrokeDirection(sample, template);
-            IsCorrectIntersection = JudgeInterSection(sample, template);
+            IsCorrectIntersection = JudgeIntersection(sample, template);
             IsCorrectOverall = IsCorrectStrokeCount && IsCorrectStrokeDirection && IsCorrectStrokeOrder;
         }
 
@@ -29,6 +29,8 @@ namespace App2
         private bool JudgeStrokeOrder(List<SketchStroke> sample, List<SketchStroke> template)
         {
             if (!IsCorrectStrokeCount) return false;
+
+            bool result = true;
 
             List<SketchStroke> sampleNormalized = SketchPreprocessing.Normalize(sample, 128, 500, new SketchPoint(0.0, 0.0));
             List<SketchStroke> templateNormalized = SketchPreprocessing.Normalize(template, 128, 500, new SketchPoint(0.0, 0.0));
@@ -56,13 +58,13 @@ namespace App2
                     }
                 }
 
-                if (i != matchedIdx) return false;
+                if (i != matchedIdx) result = false;
 
                 correspondance[i] = matchedIdx;
                 hasCompared[matchedIdx] = true;
             }
 
-            return true;
+            return result;
         }
 
         private bool JudgeStrokeDirection(List<SketchStroke> sample, List<SketchStroke> template)

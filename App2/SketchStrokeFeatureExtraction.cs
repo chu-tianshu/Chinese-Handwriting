@@ -187,10 +187,24 @@ namespace App2
             List<SketchPoint> points1 = sketchStroke1.Points;
             List<SketchPoint> points2 = sketchStroke2.Points;
 
-            foreach (SketchPoint point1 in points1)
+            for (int i = 0; i < points1.Count; i++)
             {
+                SketchPoint point1 = points1[i];
 
+                for (int j = 0; j < points2.Count; j++)
+                {
+                    SketchPoint point2 = points2[j];
+
+                    if (Math.Abs(point2.X - point1.X) < 4 && Math.Abs(point2.Y - point1.Y) < 4)
+                    {
+                        if (SketchStrokeFeatureExtraction.PathLength(sketchStroke1, 0, i) < SketchStrokeFeatureExtraction.PathLength(sketchStroke1) * 0.1) return "touch head";
+                        if (SketchStrokeFeatureExtraction.PathLength(sketchStroke1, 0, i) > SketchStrokeFeatureExtraction.PathLength(sketchStroke1) * 0.9) return "touch tail";
+                        return "cross"; 
+                    }
+                }
             }
+
+            return "none";
         }
 
         #region helper methods
