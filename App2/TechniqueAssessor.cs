@@ -111,6 +111,30 @@ namespace App2
             string[,] sampleIntersectionMatrix = SketchFeatureExtraction.IntersectionMatrix(sample, correspondance);
             string[,] templateIntersectionMatrix = SketchFeatureExtraction.IntersectionMatrix(template);
 
+            Debug.WriteLine("Sample matrix: ");
+
+            for (int i = 0; i < sample.Count; i++)
+            {
+                Debug.WriteLine("");
+
+                for (int j = 0; j < sample.Count; j++)
+                {
+                    Debug.Write(sampleIntersectionMatrix[i, j] + "         ");
+                }
+            }
+
+            Debug.WriteLine("Template matrix: ");
+
+            for (int i = 0; i < template.Count; i++)
+            {
+                Debug.WriteLine("");
+
+                for (int j = 0; j < template.Count; j++)
+                {
+                    Debug.Write(templateIntersectionMatrix[i, j] + "         ");
+                }
+            }
+
             for (int i = 0; i < sample.Count; i++)
                 for (int j = 0; j < sample.Count; j++)
                     if (sampleIntersectionMatrix[i, j] != templateIntersectionMatrix[i, j]) return false;

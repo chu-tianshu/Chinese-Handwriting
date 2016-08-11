@@ -144,8 +144,8 @@ namespace App2
 
         public static double StartToEndSlope(SketchStroke stroke)
         {
-            SketchPoint start = stroke.Points[0];
-            SketchPoint end = stroke.Points[stroke.Points.Count - 1];
+            SketchPoint start = stroke.StartPoint;
+            SketchPoint end = stroke.EndPoint;
 
             if (start.X == end.X)
             {
@@ -195,11 +195,15 @@ namespace App2
                 {
                     SketchPoint point2 = points2[j];
 
-                    if (Math.Abs(point2.X - point1.X) < 4 && Math.Abs(point2.Y - point1.Y) < 4)
+                    if (Math.Abs(point2.X - point1.X) < 10 && Math.Abs(point2.Y - point1.Y) < 10)
                     {
-                        if (SketchStrokeFeatureExtraction.PathLength(sketchStroke1, 0, i) < SketchStrokeFeatureExtraction.PathLength(sketchStroke1) * 0.1) return "touch head";
-                        if (SketchStrokeFeatureExtraction.PathLength(sketchStroke1, 0, i) > SketchStrokeFeatureExtraction.PathLength(sketchStroke1) * 0.9) return "touch tail";
-                        return "cross"; 
+                        if (i == j) return "none";
+
+                        if (SketchStrokeFeatureExtraction.PathLength(sketchStroke1, 0, i) < SketchStrokeFeatureExtraction.PathLength(sketchStroke1) * 0.1)
+                            return "touch head";
+                        if (SketchStrokeFeatureExtraction.PathLength(sketchStroke1, 0, i) > SketchStrokeFeatureExtraction.PathLength(sketchStroke1) * 0.9)
+                            return "touch tail";
+                        return "cross";
                     }
                 }
             }
@@ -223,10 +227,10 @@ namespace App2
 
         #region fields
 
-        private static double DiagonalDividedFactor = 40;
-        private static int WindowRadius = 3;
-        private static double MedianStrawLengthMultipliedFactor = 0.95;
-        private static double LineValidationThreshold = 0.95;
+        private static readonly double DiagonalDividedFactor = 40;
+        private static readonly int WindowRadius = 3;
+        private static readonly double MedianStrawLengthMultipliedFactor = 0.95;
+        private static readonly double LineValidationThreshold = 0.95;
 
         #endregion
     }
