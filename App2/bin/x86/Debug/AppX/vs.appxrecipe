@@ -22,13 +22,13 @@
     <AppXManifest Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\bin\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2016-08-11T02:52:09.507</Modified>
+      <Modified>2016-08-16T23:13:58.659</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\bin\x86\Debug\App2.exe">
       <PackagePath>entrypoint\App2.exe</PackagePath>
-      <Modified>2016-08-11T02:52:08.601</Modified>
+      <Modified>2016-08-16T23:13:58.374</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\.nuget\packages\Microsoft.ApplicationInsights\1.0.0\lib\portable-win81+wpa81\Microsoft.ApplicationInsights.dll">
       <PackagePath>Microsoft.ApplicationInsights.dll</PackagePath>
@@ -470,6 +470,14 @@
       <PackagePath>Questions\003.xml.xml</PackagePath>
       <Modified>2016-06-30T23:13:15.470</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Questions\004.xml.xml">
+      <PackagePath>Questions\004.xml.xml</PackagePath>
+      <Modified>2016-08-16T18:55:29.726</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Questions\005.xml.xml">
+      <PackagePath>Questions\005.xml.xml</PackagePath>
+      <Modified>2016-08-16T18:56:36.047</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\Templates\StrokeData\ba_636047663981101947.xml">
       <PackagePath>Templates\StrokeData\ba_636047663981101947.xml</PackagePath>
       <Modified>2016-07-22T13:39:58.141</Modified>
@@ -750,7 +758,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\bin\x86\Debug\App2.xr.xml">
       <PackagePath>App2.xr.xml</PackagePath>
-      <Modified>2016-08-09T02:52:30.132</Modified>
+      <Modified>2016-08-16T18:45:05.125</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\UnionMetadata\Windows.winmd">
       <PackagePath>WinMetadata\Windows.winmd</PackagePath>
@@ -758,11 +766,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\bin\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2016-08-11T02:52:09.210</Modified>
+      <Modified>2016-08-16T22:48:49.664</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\Visual Studio 2015\Projects\App2\App2\bin\x86\Debug\Core\App2.exe">
       <PackagePath>App2.exe</PackagePath>
-      <Modified>2016-08-11T02:52:09.491</Modified>
+      <Modified>2016-08-16T23:13:58.656</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

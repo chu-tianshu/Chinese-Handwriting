@@ -25,7 +25,7 @@
             <Grid Grid.Column="0">
                 <Button
                     Name="PreviousButton"
-                    Content="P"
+                    Content="←"
                     Click="PreviousButton_Click"
                     BorderBrush="Black"
                     BorderThickness="3"
@@ -48,7 +48,7 @@
             <Grid Grid.Column="2">
                 <Button
                     Name="NextButton"
-                    Content="N"
+                    Content="→"
                     Click="NextButton_Click"
                     BorderBrush="Black"
                     BorderThickness="3"
@@ -69,15 +69,67 @@
                 <Border Name="WritingBorder" BorderBrush="Gray" BorderThickness="15">
                     <Grid Background="White">
                         <InkCanvas Name="WritingInkCanvas"/>
+                        <Canvas Name="AnimationCanvas"/>
                         <Image Name="TemplateImage"/>
                     </Grid>
                 </Border>
             </Grid>
 
             <Grid Grid.Column="1">
-                <Border Name="FeedbackBorder">
-                    <TextBlock Name="FeedbackTextBlock" TextWrapping="Wrap" VerticalAlignment="Center"/>
-                </Border>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="6*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="2*"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid Grid.Column="0">
+                        <Border Name="FeedbackBorder0">
+                            <TextBlock Name="FeedbackTextBlock0" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                        </Border>
+                    </Grid>
+                    <Grid Grid.Column="1">
+                        <Border Name="PlayButtonBorder0">
+                            <Button                         
+                                Name="PlayButton0"
+                                Content="Play"
+                                Click="FinishButton_Click"
+                                BorderBrush="Black"
+                                BorderThickness="3"
+                                HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                FontSize="50"/>
+                        </Border>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <Grid Grid.Column="0">
+                        <Border Name="FeedbackBorder1">
+                            <TextBlock Name="FeedbackTextBlock1" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                        </Border>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="2">
+                    <Grid Grid.Column="0">
+                        <Border Name="FeedbackBorder2">
+                            <TextBlock Name="FeedbackTextBlock2" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                        </Border>
+                    </Grid>
+                </Grid>
+                <Grid Grid.Row="3">
+                    <Grid Grid.Column="0">
+                        <Border Name="FeedbackBorder3">
+                            <TextBlock Name="FeedbackTextBlock3" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                        </Border>
+                    </Grid>
+                </Grid>
             </Grid>
         </Grid>
 

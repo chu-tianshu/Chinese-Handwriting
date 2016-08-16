@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Windows.ApplicationModel;
 using Windows.Foundation;
 using Windows.Storage;
 using Windows.Storage.Streams;
@@ -23,8 +24,6 @@ namespace App2
         public MainPage()
         {
             InitializeComponent();
-            InitializeQuestions();
-            InitializeTemplates();
             InitializeWritingInkCanvas();
 
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
@@ -35,14 +34,9 @@ namespace App2
             strokeTemplates = new Dictionary<string, Sketch>();
             templateImageFiles = new Dictionary<string, StorageFile>();
 
-            loadTemplates();
+            LoadTemplates();
         }
 
-        private void InitializeQuestions()
-        {
-            questions = new List<Question>();
-            loadQuestions();
-        }
 
         private void MyPage_Loaded(object sender, RoutedEventArgs e)
         {
@@ -52,25 +46,46 @@ namespace App2
 
             WritingBorder.Height = WritingBorder.Width = writingFrameLength;
 
+            LoadQuestions(out questionFiles);
+            questions = new List<Question>();
+            foreach (StorageFile questionFile in questionFiles)
+            {
+                Question question = null;
+                Task task = Task.Run(async () => question = await ReadInQuestionXML(questionFile));
+                task.Wait();
+
+                questions.Add(question);
+            }
+
+            InitializeTemplates();
+
             timeCollection = new List<List<long>>();
             sketchStrokes = new List<SketchStroke>();
+
             currentQuestionIndex = 0;
 
-            LoadQuestion(currentQuestionIndex);
+            LoadQuestion(0);
         }
 
-        private async void loadQuestions()
+        private void LoadQuestions(out List<StorageFile> targetFiles)
         {
-            StorageFolder localFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
-            StorageFolder questionsFolder = await localFolder.GetFolderAsync("Questions");
+            Task task;
 
-            var questionFiles = await questionsFolder.GetFilesAsync();
-            foreach (var questionFile in questionFiles) ReadInQuestionXML(questionFile);
+            StorageFolder folder = null;
+            task = Task.Run(async () => folder = await Package.Current.InstalledLocation.GetFolderAsync("Questions"));
+            task.Wait();
+
+            IReadOnlyList<StorageFile> files = null;
+            task = Task.Run(async () => files = await folder.GetFilesAsync());
+            task.Wait();
+
+            targetFiles = new List<StorageFile>();
+            foreach (StorageFile file in files) targetFiles.Add(file);
         }
 
-        private async void loadTemplates()
+        private async void LoadTemplates()
         {
-            StorageFolder localFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
+            StorageFolder localFolder = Package.Current.InstalledLocation;
             StorageFolder templatesFolder = await localFolder.GetFolderAsync("Templates");
             StorageFolder strokeTemplateFolder = await templatesFolder.GetFolderAsync("StrokeData");
             StorageFolder imageTemplateFolder = await templatesFolder.GetFolderAsync("Images");
@@ -95,7 +110,7 @@ namespace App2
             StrokeVisuals = new InkDrawingAttributes();
             StrokeVisuals.Color = Colors.Black;
             StrokeVisuals.IgnorePressure = true;
-            StrokeVisuals.PenTip = PenTipShape.Circle;
+            StrokeVisuals.PenTip = PenTipShape.Rectangle;
             StrokeVisuals.Size = new Size(20, 20);
 
             WritingInkCanvas.InkPresenter.UpdateDefaultDrawingAttributes(StrokeVisuals);
@@ -197,12 +212,8 @@ namespace App2
 
         private void PreviousButton_Click(object sender, RoutedEventArgs e)
         {
-            int index = 0;
-
-            if (currentQuestionIndex == 0) index = questions.Count - 1;
-            else index = currentQuestionIndex - 1;
-
-            LoadQuestion(index);
+            currentQuestionIndex = currentQuestionIndex == 0 ? questions.Count - 1 : currentQuestionIndex - 1;
+            LoadQuestion(currentQuestionIndex);
 
             WritingInkCanvas.InkPresenter.StrokeContainer.Clear();
             timeCollection = new List<List<long>>();
@@ -213,12 +224,8 @@ namespace App2
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
-            int index = 0;
-
-            if (currentQuestionIndex == questions.Count - 1) index = 0;
-            else index = currentQuestionIndex + 1;
-
-            LoadQuestion(index);
+            currentQuestionIndex = currentQuestionIndex == questions.Count - 1 ? 0 : currentQuestionIndex + 1;
+            LoadQuestion(currentQuestionIndex);
 
             WritingInkCanvas.InkPresenter.StrokeContainer.Clear();
             timeCollection = new List<List<long>>();
@@ -316,12 +323,11 @@ namespace App2
 
         private void LoadQuestion(int questionIndex)
         {
-            while (questions.Count == 0) Task.Delay(5000);
             currentQuestion = questions[questionIndex];
             InstructionTextBlock.Text = currentQuestion.Text;
         }
 
-        private async void ReadInQuestionXML(StorageFile file)
+        private async Task<Question> ReadInQuestionXML(StorageFile file)
         {
             string fileText = await FileIO.ReadTextAsync(file);
             XDocument document = XDocument.Parse(fileText);
@@ -330,12 +336,13 @@ namespace App2
             string text = document.Root.Attribute("text").Value;
             string answer = document.Root.Attribute("answer").Value;
 
-            questions.Add(new Question(id, text, answer));
+            return new Question(id, text, answer);
         }
 
         private async void ReadInTemplateXML(StorageFile file)
         {
-            /* Creates a new XML document
+            /**
+             * Creates a new XML document
              * Gets the text from the XML file
              * Loads the file's text into an XML document 
              */
@@ -432,6 +439,7 @@ namespace App2
         private Dictionary<string, StorageFile> templateImageFiles;
         private List<SketchStroke> sketchStrokes;
         private PDollarClassifier pDollarClassifier;
+        private List<StorageFile> questionFiles;
         private List<Question> questions;
         private Question currentQuestion;
         private Sketch currentTemplateSketch;

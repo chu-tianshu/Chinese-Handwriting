@@ -95,6 +95,8 @@
     <Content Include="Questions\001.xml.xml" />
     <Content Include="Questions\002.xml.xml" />
     <Content Include="Questions\003.xml.xml" />
+    <Content Include="Questions\004.xml.xml" />
+    <Content Include="Questions\005.xml.xml" />
     <Content Include="Templates\Images\._ba.png" />
     <Content Include="Templates\Images\._bu.png" />
     <Content Include="Templates\Images\._er.png" />

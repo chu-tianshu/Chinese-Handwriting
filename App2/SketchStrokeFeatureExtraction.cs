@@ -173,9 +173,13 @@ namespace App2
             return length;
         }
 
+        public static bool IsLine(SketchStroke stroke)
+        {
+            return IsLine(stroke, 0, stroke.Points.Count - 1);
+        }
+
         public static bool IsLine(SketchStroke stroke, int i1, int i2)
         {
-
             SketchPoint p1 = stroke.Points[i1];
             SketchPoint p2 = stroke.Points[i2];
 
