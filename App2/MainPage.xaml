@@ -76,11 +76,6 @@
             </Grid>
 
             <Grid Grid.Column="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="6*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
@@ -93,19 +88,6 @@
                     <Grid Grid.Column="0">
                         <Border Name="FeedbackBorder0">
                             <TextBlock Name="FeedbackTextBlock0" TextWrapping="Wrap" VerticalAlignment="Center"/>
-                        </Border>
-                    </Grid>
-                    <Grid Grid.Column="1">
-                        <Border Name="PlayButtonBorder0">
-                            <Button                         
-                                Name="PlayButton0"
-                                Content="Play"
-                                Click="FinishButton_Click"
-                                BorderBrush="Black"
-                                BorderThickness="3"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch"
-                                FontSize="50"/>
                         </Border>
                     </Grid>
                 </Grid>
