@@ -36,16 +36,17 @@
       <RootProperty Name="FontSize" />
       <RootEvent Name="Click" />
     </RootType>
-    <RootType FullName="Windows.UI.Xaml.Controls.Border">
-      <RootProperty Name="Name" />
-      <RootProperty Name="Child" />
-      <RootProperty Name="BorderBrush" />
-      <RootProperty Name="BorderThickness" />
-    </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.TextBlock">
       <RootProperty Name="Name" />
-      <RootProperty Name="TextWrapping" />
+      <RootProperty Name="HorizontalAlignment" />
       <RootProperty Name="VerticalAlignment" />
+      <RootProperty Name="FontSize" />
+    </RootType>
+    <RootType FullName="Windows.UI.Xaml.Controls.Border">
+      <RootProperty Name="Name" />
+      <RootProperty Name="BorderBrush" />
+      <RootProperty Name="BorderThickness" />
+      <RootProperty Name="Child" />
     </RootType>
     <RootType FullName="Windows.UI.Xaml.Controls.InkCanvas">
       <RootProperty Name="Name" />

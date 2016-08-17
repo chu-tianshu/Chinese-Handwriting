@@ -65,6 +65,8 @@ namespace App2
             currentQuestionIndex = 0;
 
             LoadQuestion(0);
+
+            HidePlayButtons();
         }
 
         private void LoadQuestions(out List<StorageFile> targetFiles)
@@ -122,11 +124,7 @@ namespace App2
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
-            WritingInkCanvas.InkPresenter.StrokeContainer.Clear();
-            timeCollection = new List<List<long>>();
-            sketchStrokes = new List<SketchStroke>();
-            isWrittenCorrectly = false;
-            FeedbackTextBlock.Text = "";
+            Clear();
         }
 
         private void UndoButton_Click(object sender, RoutedEventArgs e)
@@ -215,11 +213,7 @@ namespace App2
             currentQuestionIndex = currentQuestionIndex == 0 ? questions.Count - 1 : currentQuestionIndex - 1;
             LoadQuestion(currentQuestionIndex);
 
-            WritingInkCanvas.InkPresenter.StrokeContainer.Clear();
-            timeCollection = new List<List<long>>();
-            sketchStrokes = new List<SketchStroke>();
-            FeedbackTextBlock.Text = "";
-            isWrittenCorrectly = false;
+            Clear();
         }
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
@@ -227,11 +221,7 @@ namespace App2
             currentQuestionIndex = currentQuestionIndex == questions.Count - 1 ? 0 : currentQuestionIndex + 1;
             LoadQuestion(currentQuestionIndex);
 
-            WritingInkCanvas.InkPresenter.StrokeContainer.Clear();
-            timeCollection = new List<List<long>>();
-            sketchStrokes = new List<SketchStroke>();
-            FeedbackTextBlock.Text = "";
-            isWrittenCorrectly = false;
+            Clear();
         }
 
         private void VisualFeedbackButton_Click(object sender, RoutedEventArgs e)
@@ -272,18 +262,17 @@ namespace App2
             switch(option)
             {
                 case "wrong":
-                    FeedbackTextBlock.Text = "Wrong answer";
+                    FeedbackTextBlock1.Text = "Wrong answer";
 
                     break;
 
                 case "technique":
-                    FeedbackTextBlock.FontSize = 38;
+                    ShowPlayButtons();
 
-                    FeedbackTextBlock.Text = "";
-                    FeedbackTextBlock.Text += ("Stroke count: " + (techAssessor.IsCorrectStrokeCount ? "Correct" : "Incorrect") + "\n");
-                    FeedbackTextBlock.Text += ("Stroke order: " + (techAssessor.IsCorrectStrokeOrder ? "Correct" : "Incorrect") + "\n");
-                    FeedbackTextBlock.Text += ("Stroke directions: " + (techAssessor.IsCorrectStrokeDirection ? "Correct" : "Incorrect") + "\n");
-                    FeedbackTextBlock.Text += ("Stroke intersections: " + (techAssessor.IsCorrectIntersection ? "Correct" : "Incorrect") + "\n");
+                    FeedbackTextBlock1.Text = ("Stroke count: " + "\n" + (techAssessor.IsCorrectStrokeCount ? "Correct" : "Incorrect") + "\n");
+                    FeedbackTextBlock2.Text = ("Stroke order: " + "\n" + (techAssessor.IsCorrectStrokeOrder ? "Correct" : "Incorrect") + "\n");
+                    FeedbackTextBlock3.Text = ("Stroke directions: " + "\n" + (techAssessor.IsCorrectStrokeDirection ? "Correct" : "Incorrect") + "\n");
+                    FeedbackTextBlock4.Text = ("Stroke intersections: " + "\n" + (techAssessor.IsCorrectIntersection ? "Correct" : "Incorrect") + "\n");
 
                     if (techAssessor.IsCorrectStrokeCount == true && techAssessor.IsCorrectStrokeDirection == false)
                     {
@@ -295,7 +284,7 @@ namespace App2
                         {
                             InkDrawingAttributes drawingAttributes = new InkDrawingAttributes();
                             drawingAttributes.Color = Colors.Red;
-                            drawingAttributes.PenTip = PenTipShape.Circle;
+                            drawingAttributes.PenTip = PenTipShape.Rectangle;
                             drawingAttributes.Size = new Size(20, 20);
 
                             strokes[wrongStrokeIndex].DrawingAttributes = drawingAttributes;
@@ -305,13 +294,21 @@ namespace App2
                     break;
 
                 case "visual":
-                    if (!isWrittenCorrectly) FeedbackTextBlock.Text = "Please try to write the character correctly first";
+                    HidePlayButtons();
+
+                    if (!isWrittenCorrectly)
+                    {
+                        FeedbackTextBlock1.Text = "Please try to write the character correct";
+                        FeedbackTextBlock2.Text = "";
+                        FeedbackTextBlock3.Text = "";
+                        FeedbackTextBlock4.Text = "";
+                    }
                     else
                     {
-                        FeedbackTextBlock.Text = "";
-                        FeedbackTextBlock.Text += "Location: " + visAssessor.LocationFeedback + "\n";
-                        FeedbackTextBlock.Text += "Shape: " + visAssessor.ShapeFeedback + "\n";
-                        FeedbackTextBlock.Text += "Distribution: " + visAssessor.ProjectionFeedback + "\n";
+                        FeedbackTextBlock1.Text = "Location: " + visAssessor.LocationFeedback + "\n";
+                        FeedbackTextBlock2.Text = "Shape: " + visAssessor.ShapeFeedback + "\n";
+                        FeedbackTextBlock3.Text = "Distribution: " + visAssessor.ProjectionFeedback + "\n";
+                        FeedbackTextBlock4.Text = "";
                     }
 
                     break;
@@ -325,6 +322,17 @@ namespace App2
         {
             currentQuestion = questions[questionIndex];
             InstructionTextBlock.Text = currentQuestion.Text;
+        }
+
+        private async void LoadTemplateImage(string answer)
+        {
+            currentImageTemplate = new BitmapImage();
+
+            StorageFile currentImageTemplateFile = templateImageFiles[answer];
+
+            FileRandomAccessStream stream = (FileRandomAccessStream)await currentImageTemplateFile.OpenAsync(FileAccessMode.Read);
+
+            currentImageTemplate.SetSource(stream);
         }
 
         private async Task<Question> ReadInQuestionXML(StorageFile file)
@@ -407,15 +415,33 @@ namespace App2
             return fileName.Substring(0, dotLocation);
         }
 
-        private async void LoadTemplateImage(string answer)
+        private void ShowPlayButtons()
         {
-            currentImageTemplate = new BitmapImage();
+            FeedbackPlayButton1.Visibility = Visibility.Visible;
+            FeedbackPlayButton2.Visibility = Visibility.Visible;
+            FeedbackPlayButton3.Visibility = Visibility.Visible;
+            FeedbackPlayButton4.Visibility = Visibility.Visible;
+        }
 
-            StorageFile currentImageTemplateFile = templateImageFiles[answer];
+        private void HidePlayButtons()
+        {
+            FeedbackPlayButton1.Visibility = Visibility.Collapsed;
+            FeedbackPlayButton2.Visibility = Visibility.Collapsed;
+            FeedbackPlayButton3.Visibility = Visibility.Collapsed;
+            FeedbackPlayButton4.Visibility = Visibility.Collapsed;
+        }
 
-            FileRandomAccessStream stream = (FileRandomAccessStream)await currentImageTemplateFile.OpenAsync(FileAccessMode.Read);
-
-            currentImageTemplate.SetSource(stream);
+        private void Clear()
+        {
+            WritingInkCanvas.InkPresenter.StrokeContainer.Clear();
+            timeCollection = new List<List<long>>();
+            sketchStrokes = new List<SketchStroke>();
+            isWrittenCorrectly = false;
+            FeedbackTextBlock1.Text = "";
+            FeedbackTextBlock2.Text = "";
+            FeedbackTextBlock3.Text = "";
+            FeedbackTextBlock4.Text = "";
+            HidePlayButtons();
         }
 
         #endregion
