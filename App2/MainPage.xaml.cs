@@ -260,9 +260,15 @@ namespace App2
                 {
                     if (sampleIntersections[i, j] != templateIntersections[i, j])
                     {
-                        if (sampleIntersections[i, j] == "cross")
+                        SketchPoint intersection = SketchStrokeFeatureExtraction.Intersection(sketchStrokes[i], sketchStrokes[j]);
+
+                        if (intersection != null)
                         {
-                            SketchPoint intersection = SketchStrokeFeatureExtraction.Intersection(sketchStrokes[i], sketchStrokes[j]);
+                            // Highlight the wrong intersection
+                        }
+                        else
+                        {
+                            // Highlight the location where the intersection should be
                         }
                     }
                 }

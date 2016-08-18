@@ -201,7 +201,7 @@ namespace App2
 
                 for (int j = 0; j < points2.Count; j++)
                 {
-                    SketchPoint point2 = points1[2];
+                    SketchPoint point2 = points2[j];
 
                     double distance = SketchPoint.EuclideanDistance(point1, point2);
 
@@ -214,7 +214,7 @@ namespace App2
                 }
             }
 
-            if (minDistance > 10) return null;
+            if (minDistance > 40) return null;
 
             SketchPoint Intersection1 = points1[minDisIndex1];
             SketchPoint Intersection2 = points2[minDisIndex2];
@@ -227,8 +227,8 @@ namespace App2
             SketchPoint closestPoint = SketchStrokeFeatureExtraction.Intersection(sketchStroke1, sketchStroke2);
 
             if (closestPoint == null) return "none";
-            if (SketchPoint.EuclideanDistance(closestPoint, sketchStroke1.Points[0]) < 10) return "touch head";
-            if (SketchPoint.EuclideanDistance(closestPoint, sketchStroke1.Points[sketchStroke1.Points.Count - 1]) < 10) return "touch tail";
+            if (SketchPoint.EuclideanDistance(closestPoint, sketchStroke1.Points[0]) < 40) return "touch head";
+            if (SketchPoint.EuclideanDistance(closestPoint, sketchStroke1.Points[sketchStroke1.Points.Count - 1]) < 40) return "touch tail";
             return "cross";
         }
 
