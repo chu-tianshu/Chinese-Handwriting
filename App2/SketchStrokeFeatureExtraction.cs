@@ -186,8 +186,12 @@ namespace App2
             return (SketchPoint.EuclideanDistance(p1, p2) / PathLength(stroke, i1, i2) > LineValidationThreshold);
         }
 
-        public static string IntersectionRelationship(SketchStroke sketchStroke1, SketchStroke sketchStroke2)
+        public static SketchPoint Intersection(SketchStroke sketchStroke1, SketchStroke sketchStroke2)
         {
+            double minDistance = double.MaxValue;
+            int minDisIndex1 = 0;
+            int minDisIndex2 = 0;
+
             List<SketchPoint> points1 = sketchStroke1.Points;
             List<SketchPoint> points2 = sketchStroke2.Points;
 
@@ -197,22 +201,35 @@ namespace App2
 
                 for (int j = 0; j < points2.Count; j++)
                 {
-                    SketchPoint point2 = points2[j];
+                    SketchPoint point2 = points1[2];
 
-                    if (Math.Abs(point2.X - point1.X) < 10 && Math.Abs(point2.Y - point1.Y) < 10)
+                    double distance = SketchPoint.EuclideanDistance(point1, point2);
+
+                    if (distance < minDistance)
                     {
-                        if (i == j) return "none";
-
-                        if (SketchStrokeFeatureExtraction.PathLength(sketchStroke1, 0, i) < SketchStrokeFeatureExtraction.PathLength(sketchStroke1) * 0.1)
-                            return "touch head";
-                        if (SketchStrokeFeatureExtraction.PathLength(sketchStroke1, 0, i) > SketchStrokeFeatureExtraction.PathLength(sketchStroke1) * 0.9)
-                            return "touch tail";
-                        return "cross";
+                        minDistance = distance;
+                        minDisIndex1 = i;
+                        minDisIndex2 = j;
                     }
                 }
             }
 
-            return "none";
+            if (minDistance > 10) return null;
+
+            SketchPoint Intersection1 = points1[minDisIndex1];
+            SketchPoint Intersection2 = points2[minDisIndex2];
+
+            return new SketchPoint((Intersection1.X + Intersection2.X) / 2.0, (Intersection1.Y + Intersection2.Y) / 2.0);
+        }
+
+        public static string IntersectionRelationship(SketchStroke sketchStroke1, SketchStroke sketchStroke2)
+        {
+            SketchPoint closestPoint = SketchStrokeFeatureExtraction.Intersection(sketchStroke1, sketchStroke2);
+
+            if (closestPoint == null) return "none";
+            if (SketchPoint.EuclideanDistance(closestPoint, sketchStroke1.Points[0]) < 10) return "touch head";
+            if (SketchPoint.EuclideanDistance(closestPoint, sketchStroke1.Points[sketchStroke1.Points.Count - 1]) < 10) return "touch tail";
+            return "cross";
         }
 
         #region helper methods

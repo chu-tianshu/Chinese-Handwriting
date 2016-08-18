@@ -234,6 +234,41 @@ namespace App2
             LoadFeedback("technique");
         }
 
+        private void FeedbackPlayButton1_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void FeedbackPlayButton2_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void FeedbackPlayButton3_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void FeedbackPlayButton4_Click(object sender, RoutedEventArgs e)
+        {
+            string[,] sampleIntersections = techAssessor.SampleIntersectionMatrix;
+            string[,] templateIntersections = techAssessor.TemplateIntersectionMatrix;
+
+            for (int i = 0; i < sampleIntersections.Length - 1; i++)
+            {
+                for (int j = 1 + 1; j < sampleIntersections.Length; j++)
+                {
+                    if (sampleIntersections[i, j] != templateIntersections[i, j])
+                    {
+                        if (sampleIntersections[i, j] == "cross")
+                        {
+                            SketchPoint intersection = SketchStrokeFeatureExtraction.Intersection(sketchStrokes[i], sketchStrokes[j]);
+                        }
+                    }
+                }
+            }
+        }
+
         #endregion
 
         #region stroke interaction methods
@@ -273,23 +308,6 @@ namespace App2
                     FeedbackTextBlock2.Text = ("Stroke order: " + "\n" + (techAssessor.IsCorrectStrokeOrder ? "Correct" : "Incorrect") + "\n");
                     FeedbackTextBlock3.Text = ("Stroke directions: " + "\n" + (techAssessor.IsCorrectStrokeDirection ? "Correct" : "Incorrect") + "\n");
                     FeedbackTextBlock4.Text = ("Stroke intersections: " + "\n" + (techAssessor.IsCorrectIntersection ? "Correct" : "Incorrect") + "\n");
-
-                    if (techAssessor.IsCorrectStrokeCount == true && techAssessor.IsCorrectStrokeDirection == false)
-                    {
-                        Debug.Write("Wrong stroke: " + techAssessor.wrongDirectionStrokeIndices[0]);
-
-                        var strokes = WritingInkCanvas.InkPresenter.StrokeContainer.GetStrokes();
-
-                        foreach (int wrongStrokeIndex in techAssessor.wrongDirectionStrokeIndices)
-                        {
-                            InkDrawingAttributes drawingAttributes = new InkDrawingAttributes();
-                            drawingAttributes.Color = Colors.Red;
-                            drawingAttributes.PenTip = PenTipShape.Rectangle;
-                            drawingAttributes.Size = new Size(20, 20);
-
-                            strokes[wrongStrokeIndex].DrawingAttributes = drawingAttributes;
-                        }
-                    }
 
                     break;
 

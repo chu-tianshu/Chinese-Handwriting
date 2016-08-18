@@ -86,7 +86,7 @@
                     <RowDefinition Height="2*"/>
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
-                
+
                 <Grid Grid.Row="1">
                     <TextBlock Name="FeedbackTextBlock1" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="25"/>
                 </Grid>
@@ -150,8 +150,8 @@
                         Name="FeedbackPlayButton4"
                         Content="►"
                         HorizontalAlignment="Stretch"
-                        VerticalAlignment="Stretch"
-                        FontSize="70"
+                        VerticalAlignment="Top"
+                        FontSize="70" Height="160" Click="FeedbackPlayButton4_Click"
                         />
                 </Grid>
             </Grid>

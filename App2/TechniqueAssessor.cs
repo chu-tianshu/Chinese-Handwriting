@@ -37,7 +37,7 @@ namespace App2
 
             int numStroke = template.Count;
 
-            correspondance = new int[numStroke];
+            Correspondance = new int[numStroke];
             bool[] hasCompared = new bool[numStroke];
 
             for (int i = 0; i < numStroke; i++)
@@ -60,7 +60,7 @@ namespace App2
 
                 if (i != matchedIdx) result = false;
 
-                correspondance[i] = matchedIdx;
+                Correspondance[i] = matchedIdx;
                 hasCompared[matchedIdx] = true;
             }
 
@@ -79,7 +79,7 @@ namespace App2
             for (int i = 0; i < numStroke; i++)
             {
                 SketchStroke sampleStroke = sample[i];
-                SketchStroke templateStroke = template[correspondance[i]];
+                SketchStroke templateStroke = template[Correspondance[i]];
 
                 Vector2 sampleStartToEndVector
                     = new Vector2((float)(sampleStroke.EndPoint.Y - sampleStroke.StartPoint.Y),
@@ -108,36 +108,12 @@ namespace App2
         {
             if (!IsCorrectStrokeCount) return false;
 
-            string[,] sampleIntersectionMatrix = SketchFeatureExtraction.IntersectionMatrix(sample, correspondance);
-            string[,] templateIntersectionMatrix = SketchFeatureExtraction.IntersectionMatrix(template);
-
-            Debug.WriteLine("Sample matrix: ");
-
-            for (int i = 0; i < sample.Count; i++)
-            {
-                Debug.WriteLine("");
-
-                for (int j = 0; j < sample.Count; j++)
-                {
-                    Debug.Write(sampleIntersectionMatrix[i, j] + "         ");
-                }
-            }
-
-            Debug.WriteLine("Template matrix: ");
-
-            for (int i = 0; i < template.Count; i++)
-            {
-                Debug.WriteLine("");
-
-                for (int j = 0; j < template.Count; j++)
-                {
-                    Debug.Write(templateIntersectionMatrix[i, j] + "         ");
-                }
-            }
+            SampleIntersectionMatrix = SketchFeatureExtraction.IntersectionMatrix(sample, Correspondance);
+            TemplateIntersectionMatrix = SketchFeatureExtraction.IntersectionMatrix(template);
 
             for (int i = 0; i < sample.Count; i++)
                 for (int j = 0; j < sample.Count; j++)
-                    if (sampleIntersectionMatrix[i, j] != templateIntersectionMatrix[i, j]) return false;
+                    if (SampleIntersectionMatrix[i, j] != TemplateIntersectionMatrix[i, j]) return false;
 
             return true;
         }
@@ -151,13 +127,10 @@ namespace App2
         public bool IsCorrectStrokeDirection { get; private set; }
         public bool IsCorrectIntersection { get; private set; }
         public bool IsCorrectOverall { get; private set; }
+        public int[] Correspondance { get; private set; }
         public List<int> wrongDirectionStrokeIndices { get; private set; }
-
-        #endregion
-
-        #region fields
-
-        private int[] correspondance;
+        public string[,] SampleIntersectionMatrix { get; private set; }
+        public string[,] TemplateIntersectionMatrix { get; private set; }
 
         #endregion
     }
