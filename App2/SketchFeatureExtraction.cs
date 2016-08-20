@@ -51,7 +51,8 @@ namespace App2
 
             for (int i = 0; i < strokes.Count; i++)
                 for (int j = 0; j < strokes.Count; j++)
-                    intersectionMatrix[i, j] = SketchStrokeFeatureExtraction.IntersectionRelationship(strokes[i], strokes[j]);
+                    if (i == j) intersectionMatrix[i, j] = "none";
+                    else intersectionMatrix[i, j] = SketchStrokeFeatureExtraction.IntersectionRelationship(strokes[i], strokes[j]);
 
             return intersectionMatrix;
         }

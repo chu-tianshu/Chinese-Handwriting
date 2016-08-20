@@ -70,7 +70,7 @@
                 <Border Name="WritingBorder" BorderBrush="Gray" BorderThickness="15">
                     <Grid Background="White">
                         <InkCanvas Name="WritingInkCanvas"/>
-                        <Canvas Name="AnimationCanvas"/>
+                        <Canvas Name="AnimationCanvas" />
                         <Image Name="TemplateImage"/>
                     </Grid>
                 </Border>

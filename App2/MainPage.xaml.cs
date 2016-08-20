@@ -13,7 +13,9 @@ using Windows.UI.Input.Inking;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
+using Windows.UI.Xaml.Shapes;
 
 namespace App2
 {
@@ -254,9 +256,9 @@ namespace App2
             string[,] sampleIntersections = techAssessor.SampleIntersectionMatrix;
             string[,] templateIntersections = techAssessor.TemplateIntersectionMatrix;
 
-            for (int i = 0; i < sampleIntersections.Length - 1; i++)
+            for (int i = 0; i < sampleIntersections.GetLength(0) - 1; i++)
             {
-                for (int j = 1 + 1; j < sampleIntersections.Length; j++)
+                for (int j = 0; j < sampleIntersections.GetLength(0); j++)
                 {
                     if (sampleIntersections[i, j] != templateIntersections[i, j])
                     {
@@ -264,11 +266,24 @@ namespace App2
 
                         if (intersection != null)
                         {
-                            // Highlight the wrong intersection
+                            // Highlights the wrong intersection
+                            
+                            Ellipse circle = new Ellipse()
+                            {
+                                Height = 50,
+                                Width = 50,
+                                Stroke = new SolidColorBrush(Colors.Red),
+                                StrokeThickness = 10,
+                            };
+
+                            Canvas.SetLeft(circle, intersection.X - circle.Width / 2);
+                            Canvas.SetTop(circle, intersection.Y - circle.Height / 2);
+
+                            AnimationCanvas.Children.Add(circle);
                         }
                         else
                         {
-                            // Highlight the location where the intersection should be
+                            // Highlights the location where the intersection should be
                         }
                     }
                 }
@@ -466,6 +481,7 @@ namespace App2
             FeedbackTextBlock3.Text = "";
             FeedbackTextBlock4.Text = "";
             HidePlayButtons();
+            AnimationCanvas.Children.Clear();
         }
 
         #endregion
