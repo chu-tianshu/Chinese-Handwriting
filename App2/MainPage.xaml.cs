@@ -253,16 +253,29 @@ namespace App2
 
         private void FeedbackPlayButton4_Click(object sender, RoutedEventArgs e)
         {
+            int[] correspondance = techAssessor.Correspondance;
+
             string[,] sampleIntersections = techAssessor.SampleIntersectionMatrix;
             string[,] templateIntersections = techAssessor.TemplateIntersectionMatrix;
 
-            for (int i = 0; i < sampleIntersections.GetLength(0) - 1; i++)
+            for (int i = 0; i < sampleIntersections.GetLength(0); i++)
             {
                 for (int j = 0; j < sampleIntersections.GetLength(0); j++)
                 {
+                    if (i == j) continue;
+
                     if (sampleIntersections[i, j] != templateIntersections[i, j])
                     {
-                        SketchPoint intersection = SketchStrokeFeatureExtraction.Intersection(sketchStrokes[i], sketchStrokes[j]);
+                        int realI = 0;
+                        int realJ = 0;
+
+                        for (int index = 0; index < correspondance.GetLength(0); index++)
+                        {
+                            if (correspondance[index] == i) realI = index;
+                            if (correspondance[index] == j) realJ = index;
+                        }
+
+                        SketchPoint intersection = SketchStrokeFeatureExtraction.Intersection(sketchStrokes[realI], sketchStrokes[realJ]);
 
                         if (intersection != null)
                         {
@@ -284,6 +297,8 @@ namespace App2
                         else
                         {
                             // Highlights the location where the intersection should be
+
+                            
                         }
                     }
                 }

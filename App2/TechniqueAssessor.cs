@@ -37,6 +37,10 @@ namespace App2
 
             int numStroke = template.Count;
 
+            /**
+             * Correspondance[i] denotes the mapped template stroke number of the ith stroke in the sample
+             */
+
             Correspondance = new int[numStroke];
             bool[] hasCompared = new bool[numStroke];
 
@@ -74,7 +78,7 @@ namespace App2
             int numStroke = template.Count;
 
             IsCorrectStrokeDirection = true;
-            wrongDirectionStrokeIndices = new List<int>();
+            WrongDirectionStrokeIndices = new List<int>();
 
             for (int i = 0; i < numStroke; i++)
             {
@@ -95,7 +99,7 @@ namespace App2
 
                 if (cosBetweenSampleAndTemplateStrokes < 0)
                 {
-                    wrongDirectionStrokeIndices.Add(i);
+                    WrongDirectionStrokeIndices.Add(i);
 
                     return false;
                 }
@@ -155,7 +159,7 @@ namespace App2
         public bool IsCorrectIntersection { get; private set; }
         public bool IsCorrectOverall { get; private set; }
         public int[] Correspondance { get; private set; }
-        public List<int> wrongDirectionStrokeIndices { get; private set; }
+        public List<int> WrongDirectionStrokeIndices { get; private set; }
         public string[,] SampleIntersectionMatrix { get; private set; }
         public string[,] TemplateIntersectionMatrix { get; private set; }
 

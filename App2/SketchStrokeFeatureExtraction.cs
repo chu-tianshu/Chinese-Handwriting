@@ -214,7 +214,7 @@ namespace App2
                 }
             }
 
-            if (minDistance > 40) return null;
+            if (minDistance > 30) return null;
 
             SketchPoint Intersection1 = points1[minDisIndex1];
             SketchPoint Intersection2 = points2[minDisIndex2];
