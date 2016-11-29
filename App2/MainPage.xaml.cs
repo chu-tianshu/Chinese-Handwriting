@@ -236,21 +236,25 @@ namespace App2
             LoadFeedback("technique");
         }
 
+        // Stroke count button
         private void FeedbackPlayButton1_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
+        // Stroke order button
         private void FeedbackPlayButton2_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
+        // Stroke direction button
         private void FeedbackPlayButton3_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
+        // Stroke intersection button
         private void FeedbackPlayButton4_Click(object sender, RoutedEventArgs e)
         {
             int[] correspondance = techAssessor.Correspondance;
