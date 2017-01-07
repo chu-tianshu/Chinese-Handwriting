@@ -251,6 +251,17 @@ namespace App2
         // Stroke direction button
         private void FeedbackPlayButton3_Click(object sender, RoutedEventArgs e)
         {
+            List<int> wrongStrokeIndices = techAssessor.WrongDirectionStrokeIndices;
+            List<List<SketchPoint>> solutionStrokeTraces = new List<List<SketchPoint>>();
+            
+            foreach (int index in wrongStrokeIndices)
+            {
+                List<SketchPoint> origPoints = sketchStrokes[index].Points;
+                List<SketchPoint> reversed = new List<SketchPoint>();
+                for (int i = origPoints.Count - 1; i >= 0; i--) reversed.Add(origPoints[i]);
+                solutionStrokeTraces.Add(reversed);
+            }
+
 
         }
 
