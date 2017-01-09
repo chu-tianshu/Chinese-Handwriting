@@ -14,6 +14,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Shapes;
 
@@ -176,8 +177,6 @@ namespace App2
 
             #region recognizes using $P
 
-            NumResampleForPDollar = 128;
-            SizeScaleForPDollar = 500;
             PointTranslateForPDollar = new SketchPoint(0, 0);
             pDollarClassifier = new PDollarClassifier(NumResampleForPDollar, SizeScaleForPDollar, PointTranslateForPDollar, strokeTemplates);
             pDollarClassifier.run(sketchStrokes);
@@ -262,7 +261,9 @@ namespace App2
                 solutionStrokeTraces.Add(reversed);
             }
 
+            List<Storyboard> storyboards = InteractionTools.Animate(AnimationCanvas, solutionStrokeTraces, AnimationPointSize);
 
+            foreach (var sb in storyboards) sb.Begin();
         }
 
         // Stroke intersection button
@@ -520,8 +521,6 @@ namespace App2
 
         private long DateTimeOffset { get; set; }
         private InkDrawingAttributes StrokeVisuals { get; set; }
-        private int NumResampleForPDollar { get; set; }
-        private double SizeScaleForPDollar { get; set; }
         private SketchPoint PointTranslateForPDollar { get; set; }
 
         #endregion
@@ -544,6 +543,14 @@ namespace App2
         private int currentQuestionIndex;
         private TechniqueAssessor techAssessor;
         private VisionAssessor visAssessor;
+
+        #endregion
+
+        #region
+
+        private readonly int NumResampleForPDollar = 128;
+        private readonly double SizeScaleForPDollar = 500;
+        private readonly double AnimationPointSize = 30;
 
         #endregion
     }
