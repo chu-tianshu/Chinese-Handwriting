@@ -251,17 +251,22 @@ namespace App2
         private void FeedbackPlayButton3_Click(object sender, RoutedEventArgs e)
         {
             List<int> wrongStrokeIndices = techAssessor.WrongDirectionStrokeIndices;
+
+            Debug.WriteLine("Number of wrong direction strokes: " + wrongStrokeIndices.Count);
+
             List<List<SketchPoint>> solutionStrokeTraces = new List<List<SketchPoint>>();
             
             foreach (int index in wrongStrokeIndices)
             {
+                Debug.WriteLine(index);
+
                 List<SketchPoint> origPoints = sketchStrokes[index].Points;
                 List<SketchPoint> reversed = new List<SketchPoint>();
                 for (int i = origPoints.Count - 1; i >= 0; i--) reversed.Add(origPoints[i]);
                 solutionStrokeTraces.Add(reversed);
             }
 
-            List<Storyboard> storyboards = InteractionTools.Animate(AnimationCanvas, solutionStrokeTraces, AnimationPointSize);
+            List<Storyboard> storyboards = InteractionTools.Animate(AnimationCanvas, solutionStrokeTraces, AnimationPointSize, DirectionAnimationDuration);
 
             foreach (var sb in storyboards) sb.Begin();
         }
@@ -546,11 +551,12 @@ namespace App2
 
         #endregion
 
-        #region
+        #region read only fields
 
         private readonly int NumResampleForPDollar = 128;
         private readonly double SizeScaleForPDollar = 500;
         private readonly double AnimationPointSize = 30;
+        private readonly int DirectionAnimationDuration = 5;
 
         #endregion
     }
