@@ -97,15 +97,10 @@ namespace App2
 
                 double cosBetweenSampleAndTemplateStrokes = Vector2.Dot(sampleStartToEndVectorNormalized, templateStartToEndVectorNormalized);
 
-                if (cosBetweenSampleAndTemplateStrokes < 0)
-                {
-                    WrongDirectionStrokeIndices.Add(i);
-
-                    return false;
-                }
+                if (cosBetweenSampleAndTemplateStrokes < 0) WrongDirectionStrokeIndices.Add(i);
             }
 
-            return true;
+            return WrongDirectionStrokeIndices.Count == 0;
         }
 
         private bool JudgeIntersection(List<SketchStroke> sample, List<SketchStroke> template)
@@ -115,8 +110,9 @@ namespace App2
             SampleIntersectionMatrix = SketchFeatureExtraction.IntersectionMatrix(sample, Correspondance);
             TemplateIntersectionMatrix = SketchFeatureExtraction.IntersectionMatrix(template);
 
-            Debug.WriteLine("Sample intersections: ");
+            // Debug.WriteLine("Sample intersections: ");
 
+            /*
             for (int i = 0; i < sample.Count; i++)
             {
                 Debug.WriteLine("");
@@ -126,12 +122,14 @@ namespace App2
                     Debug.Write(SampleIntersectionMatrix[i, j] + "   ");
                 }
             }
+            */
 
-            Debug.WriteLine("");
-            Debug.WriteLine("");
+            // Debug.WriteLine("");
+            // Debug.WriteLine("");
 
-            Debug.WriteLine("Template intersections: ");
+            // Debug.WriteLine("Template intersections: ");
 
+            /*
             for (int i = 0; i < sample.Count; i++)
             {
                 Debug.WriteLine("");
@@ -141,6 +139,7 @@ namespace App2
                     Debug.Write(TemplateIntersectionMatrix[i, j] + "   ");
                 }
             }
+            */
 
             for (int i = 0; i < sample.Count; i++)
                 for (int j = 0; j < sample.Count; j++)

@@ -122,6 +122,7 @@
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         FontSize="70"
+                        Click="FeedbackPlayButton1_Click"
                         />
                 </Grid>
 
@@ -132,6 +133,7 @@
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         FontSize="70"
+                        Click="FeedbackPlayButton2_Click"
                         />
                 </Grid>
 
@@ -142,6 +144,7 @@
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         FontSize="70"
+                        Click="FeedbackPlayButton3_Click"
                         />
                 </Grid>
 
@@ -151,7 +154,8 @@
                         Content="►"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Top"
-                        FontSize="70" Height="160" Click="FeedbackPlayButton4_Click"
+                        FontSize="70"
+                        Click="FeedbackPlayButton4_Click"
                         />
                 </Grid>
             </Grid>

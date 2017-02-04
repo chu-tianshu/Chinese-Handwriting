@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -10,11 +11,11 @@ namespace App2
 {
     public class InteractionTools
     {
-        public static List<Storyboard> Animate(Canvas canvas, List<List<SketchPoint>> strokes, double pointSize, int duration)
+        public static List<Storyboard> Animate(Canvas canvas, List<List<SketchPoint>> strokes, double pointSize, long duration)
         {
             List<Storyboard> storyboards = new List<Storyboard>();
 
-            int currentTime = 0;
+            long currentTime = 0;
 
             foreach (List<SketchPoint> points in strokes)
             {

@@ -238,13 +238,13 @@ namespace App2
         // Stroke count button
         private void FeedbackPlayButton1_Click(object sender, RoutedEventArgs e)
         {
-
+            Debug.WriteLine("Button 1 pressed");
         }
 
         // Stroke order button
         private void FeedbackPlayButton2_Click(object sender, RoutedEventArgs e)
         {
-
+            Debug.WriteLine("Button 2 pressed");
         }
 
         // Stroke direction button
@@ -255,7 +255,7 @@ namespace App2
             Debug.WriteLine("Number of wrong direction strokes: " + wrongStrokeIndices.Count);
 
             List<List<SketchPoint>> solutionStrokeTraces = new List<List<SketchPoint>>();
-            
+
             foreach (int index in wrongStrokeIndices)
             {
                 Debug.WriteLine(index);
@@ -274,6 +274,8 @@ namespace App2
         // Stroke intersection button
         private void FeedbackPlayButton4_Click(object sender, RoutedEventArgs e)
         {
+            Debug.WriteLine("Button 4 pressed");
+
             int[] correspondance = techAssessor.Correspondance;
 
             string[,] sampleIntersections = techAssessor.SampleIntersectionMatrix;
@@ -556,7 +558,7 @@ namespace App2
         private readonly int NumResampleForPDollar = 128;
         private readonly double SizeScaleForPDollar = 500;
         private readonly double AnimationPointSize = 30;
-        private readonly int DirectionAnimationDuration = 5;
+        private readonly long DirectionAnimationDuration = 200000;
 
         #endregion
     }
