@@ -10,6 +10,7 @@ using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI;
 using Windows.UI.Input.Inking;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -46,7 +47,6 @@ namespace App2
             double writingBorderHeight = WritingBorder.ActualHeight;
             double writingBorderWidth = WritingBorder.ActualWidth;
             writingFrameLength = writingBorderHeight < writingBorderWidth ? writingBorderHeight : writingBorderWidth;
-
             WritingBorder.Height = WritingBorder.Width = writingFrameLength;
 
             LoadQuestions(out questionFiles);
@@ -113,9 +113,9 @@ namespace App2
             WritingInkCanvas.InkPresenter.StrokeInput.StrokeEnded += StrokeInput_StrokeEnded;
 
             StrokeVisuals = new InkDrawingAttributes();
-            StrokeVisuals.Color = Colors.Black;
+            StrokeVisuals.Color = Colors.Purple;
             StrokeVisuals.IgnorePressure = true;
-            StrokeVisuals.PenTip = PenTipShape.Rectangle;
+            StrokeVisuals.PenTip = PenTipShape.Circle;
             StrokeVisuals.Size = new Size(20, 20);
 
             WritingInkCanvas.InkPresenter.UpdateDefaultDrawingAttributes(StrokeVisuals);
@@ -148,6 +148,8 @@ namespace App2
         {
             string answer = currentQuestion.Answer;
 
+            LoadTemplateImage(answer);
+
             var strokes = WritingInkCanvas.InkPresenter.StrokeContainer.GetStrokes();
 
             List<List<SketchPoint>> cornersList = new List<List<SketchPoint>>();
@@ -163,12 +165,9 @@ namespace App2
                 for (int j = 0; j < curInkPoints.Count; j++)
                 {
                     var curInkPoint = curInkPoints.ElementAt(j);
-
                     var curX = curInkPoint.Position.X;
                     var curY = curInkPoint.Position.Y;
-
                     SketchPoint curSketchPoint = new SketchPoint(curX, curY);
-
                     curSketchStroke.AppendPoint(curSketchPoint);
                 }
 
@@ -189,19 +188,12 @@ namespace App2
                 answer == resultLabels[resultLabels.Count - 3])
             {
                 currentTemplateSketch = strokeTemplates[answer];
-
                 techAssessor = new TechniqueAssessor(sketchStrokes, currentTemplateSketch.Strokes);
-
                 isWrittenCorrectly = techAssessor.IsCorrectOverall;
 
                 LoadFeedback("technique");
 
-                if (isWrittenCorrectly)
-                {
-                    LoadTemplateImage(answer);
-
-                    visAssessor = new VisionAssessor(sketchStrokes, (int) writingFrameLength, currentTemplateSketch.Strokes, currentTemplateSketch.FrameMaxX - currentTemplateSketch.FrameMinX);
-                }
+                if (isWrittenCorrectly) visAssessor = new VisionAssessor(sketchStrokes, (int) writingFrameLength, currentTemplateSketch.Strokes, currentTemplateSketch.FrameMaxX - currentTemplateSketch.FrameMinX);
             }
             else
             {
@@ -213,7 +205,6 @@ namespace App2
         {
             currentQuestionIndex = currentQuestionIndex == 0 ? questions.Count - 1 : currentQuestionIndex - 1;
             LoadQuestion(currentQuestionIndex);
-
             Clear();
         }
 
@@ -221,7 +212,6 @@ namespace App2
         {
             currentQuestionIndex = currentQuestionIndex == questions.Count - 1 ? 0 : currentQuestionIndex + 1;
             LoadQuestion(currentQuestionIndex);
-
             Clear();
         }
 
@@ -236,18 +226,16 @@ namespace App2
         }
 
         // Stroke count button
-        private void FeedbackPlayButton1_Click(object sender, RoutedEventArgs e)
+        private void StrokeCountPlayButton_Click(object sender, RoutedEventArgs e)
         {
         }
 
-        // Stroke order button
-        private void FeedbackPlayButton2_Click(object sender, RoutedEventArgs e)
+        private void StrokeOrderPlayButton_Click(object sender, RoutedEventArgs e)
         {
             if (!techAssessor.IsCorrectStrokeCount) return;
         }
 
-        // Stroke direction button
-        private void FeedbackPlayButton3_Click(object sender, RoutedEventArgs e)
+        private void StrokeDirectionPlayButton_Click(object sender, RoutedEventArgs e)
         {
             if (!techAssessor.IsCorrectStrokeCount) return;
 
@@ -257,21 +245,18 @@ namespace App2
 
             foreach (int index in wrongStrokeIndices)
             {
-                Debug.WriteLine(index);
-
                 List<SketchPoint> origPoints = sketchStrokes[index].Points;
                 List<SketchPoint> reversed = new List<SketchPoint>();
                 for (int i = origPoints.Count - 1; i >= 0; i--) reversed.Add(origPoints[i]);
                 solutionStrokeTraces.Add(reversed);
             }
 
-            List<Storyboard> storyboards = InteractionTools.Animate(AnimationCanvas, solutionStrokeTraces, AnimationPointSize, DirectionAnimationDuration);
+            List<Storyboard> storyboards = InteractionTools.Animate(AnimationCanvas, solutionStrokeTraces, AnimationPointSize, DirectionAnimationPointDuration);
 
             foreach (var sb in storyboards) sb.Begin();
         }
 
-        // Stroke intersection button
-        private void FeedbackPlayButton4_Click(object sender, RoutedEventArgs e)
+        private void StrokeIntersectionPlayButton_Click(object sender, RoutedEventArgs e)
         {
             if (!techAssessor.IsCorrectStrokeCount) return;
 
@@ -350,45 +335,55 @@ namespace App2
 
         #region helper methods
 
-        private void LoadFeedback(string option)
+        private async void LoadFeedback(string option)
         {
-            switch(option)
+            switch (option)
             {
                 case "wrong":
-                    FeedbackTextBlock1.Text = "Wrong answer";
+                    var wrongAnswerWarning = new MessageDialog("Your answer is wrong");
+
+                    var retryCommand = new UICommand("Retry") { Id = 0 };
+                    var showAnswerCommand = new UICommand("Show answer") { Id = 1 };
+
+                    wrongAnswerWarning.Commands.Add(retryCommand);
+                    wrongAnswerWarning.Commands.Add(showAnswerCommand);
+
+                    var result = await wrongAnswerWarning.ShowAsync();
+
+                    if (result == retryCommand) Clear();
+                    if (result == showAnswerCommand) InteractionTools.ShowTemplateImage(TemplateImage, currentImageTemplate);
 
                     break;
-
                 case "technique":
                     ShowPlayButtons();
 
-                    FeedbackTextBlock1.Text = ("Stroke count: " + "\n" + (techAssessor.IsCorrectStrokeCount ? "Correct" : "Incorrect") + "\n");
-                    FeedbackTextBlock2.Text = ("Stroke order: " + "\n" + (techAssessor.IsCorrectStrokeOrder ? "Correct" : "Incorrect") + "\n");
-                    FeedbackTextBlock3.Text = ("Stroke directions: " + "\n" + (techAssessor.IsCorrectStrokeDirection ? "Correct" : "Incorrect") + "\n");
-                    FeedbackTextBlock4.Text = ("Stroke intersections: " + "\n" + (techAssessor.IsCorrectIntersection ? "Correct" : "Incorrect") + "\n");
+                    StrokeCountFeedbackTextBlock.Text = ("Stroke count: " + "\n" + (techAssessor.IsCorrectStrokeCount ? "Correct" : "Incorrect") + "\n");
+                    StrokeOrderFeedbackTextBlock.Text = ("Stroke order: " + "\n" + (techAssessor.IsCorrectStrokeOrder ? "Correct" : "Incorrect") + "\n");
+                    StrokeDirectionFeedbackTextBlock.Text = ("Stroke directions: " + "\n" + (techAssessor.IsCorrectStrokeDirection ? "Correct" : "Incorrect") + "\n");
+                    StrokeIntersectionFeedbackTextBlock.Text = ("Stroke intersections: " + "\n" + (techAssessor.IsCorrectIntersection ? "Correct" : "Incorrect") + "\n");
 
                     break;
-
                 case "visual":
                     HidePlayButtons();
 
                     if (!isWrittenCorrectly)
                     {
-                        FeedbackTextBlock1.Text = "Please try to write the character correct";
-                        FeedbackTextBlock2.Text = "";
-                        FeedbackTextBlock3.Text = "";
-                        FeedbackTextBlock4.Text = "";
+                        var incorrectWritingWarning = new Windows.UI.Popups.MessageDialog("Please first try to write the character correctly.");
+                        incorrectWritingWarning.Commands.Add(new Windows.UI.Popups.UICommand("Ok") { Id = 0 });
+                        incorrectWritingWarning.DefaultCommandIndex = 0;
+                        incorrectWritingWarning.ShowAsync();
                     }
                     else
                     {
-                        FeedbackTextBlock1.Text = "Location: " + visAssessor.LocationFeedback + "\n";
-                        FeedbackTextBlock2.Text = "Shape: " + visAssessor.ShapeFeedback + "\n";
-                        FeedbackTextBlock3.Text = "Distribution: " + visAssessor.ProjectionFeedback + "\n";
-                        FeedbackTextBlock4.Text = "";
+                        InteractionTools.ShowTemplateImage(TemplateImage, currentImageTemplate);
+
+                        StrokeCountFeedbackTextBlock.Text = "Location: " + visAssessor.LocationFeedback + "\n";
+                        StrokeOrderFeedbackTextBlock.Text = "Shape: " + visAssessor.ShapeFeedback + "\n";
+                        StrokeDirectionFeedbackTextBlock.Text = "Distribution: " + visAssessor.ProjectionFeedback + "\n";
+                        StrokeIntersectionFeedbackTextBlock.Text = "";
                     }
 
                     break;
-
                 default:
                     break;
             }
@@ -403,11 +398,8 @@ namespace App2
         private async void LoadTemplateImage(string answer)
         {
             currentImageTemplate = new BitmapImage();
-
             StorageFile currentImageTemplateFile = templateImageFiles[answer];
-
-            FileRandomAccessStream stream = (FileRandomAccessStream)await currentImageTemplateFile.OpenAsync(FileAccessMode.Read);
-
+            FileRandomAccessStream stream = (FileRandomAccessStream) await currentImageTemplateFile.OpenAsync(FileAccessMode.Read);
             currentImageTemplate.SetSource(stream);
         }
 
@@ -428,7 +420,7 @@ namespace App2
             /**
              * Creates a new XML document
              * Gets the text from the XML file
-             * Loads the file's text into an XML document 
+             * Loads the file's text into an XML document
              */
             string text = await FileIO.ReadTextAsync(file);
             XDocument document = XDocument.Parse(text);
@@ -493,32 +485,38 @@ namespace App2
 
         private void ShowPlayButtons()
         {
-            FeedbackPlayButton1.Visibility = Visibility.Visible;
-            FeedbackPlayButton2.Visibility = Visibility.Visible;
-            FeedbackPlayButton3.Visibility = Visibility.Visible;
-            FeedbackPlayButton4.Visibility = Visibility.Visible;
+            StrokeCountPlayButton.Visibility = Visibility.Visible;
+            StrokeOrderPlayButton.Visibility = Visibility.Visible;
+            StrokeDirectionPlayButton.Visibility = Visibility.Visible;
+            StrokeIntersectionPlayButton.Visibility = Visibility.Visible;
         }
 
         private void HidePlayButtons()
         {
-            FeedbackPlayButton1.Visibility = Visibility.Collapsed;
-            FeedbackPlayButton2.Visibility = Visibility.Collapsed;
-            FeedbackPlayButton3.Visibility = Visibility.Collapsed;
-            FeedbackPlayButton4.Visibility = Visibility.Collapsed;
+            StrokeCountPlayButton.Visibility = Visibility.Collapsed;
+            StrokeOrderPlayButton.Visibility = Visibility.Collapsed;
+            StrokeDirectionPlayButton.Visibility = Visibility.Collapsed;
+            StrokeIntersectionPlayButton.Visibility = Visibility.Collapsed;
+        }
+
+        private void ClearFeedbackTextBlocks()
+        {
+            StrokeCountFeedbackTextBlock.Text = "";
+            StrokeOrderFeedbackTextBlock.Text = "";
+            StrokeDirectionFeedbackTextBlock.Text = "";
+            StrokeIntersectionFeedbackTextBlock.Text = "";
         }
 
         private void Clear()
         {
-            WritingInkCanvas.InkPresenter.StrokeContainer.Clear();
             timeCollection = new List<List<long>>();
             sketchStrokes = new List<SketchStroke>();
             isWrittenCorrectly = false;
-            FeedbackTextBlock1.Text = "";
-            FeedbackTextBlock2.Text = "";
-            FeedbackTextBlock3.Text = "";
-            FeedbackTextBlock4.Text = "";
+            ClearFeedbackTextBlocks();
             HidePlayButtons();
+            WritingInkCanvas.InkPresenter.StrokeContainer.Clear();
             AnimationCanvas.Children.Clear();
+            TemplateImage.Source = null;
         }
 
         #endregion
@@ -557,7 +555,7 @@ namespace App2
         private readonly int NumResampleForPDollar = 128;
         private readonly double SizeScaleForPDollar = 500;
         private readonly double AnimationPointSize = 30;
-        private readonly long DirectionAnimationDuration = 200000;
+        private readonly long DirectionAnimationPointDuration = 200000;
 
         #endregion
     }

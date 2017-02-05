@@ -69,9 +69,9 @@
             <Grid Grid.Column="0">
                 <Border Name="WritingBorder" BorderBrush="Gray" BorderThickness="15">
                     <Grid Background="White">
-                        <InkCanvas Name="WritingInkCanvas"/>
-                        <Canvas Name="AnimationCanvas" />
                         <Image Name="TemplateImage"/>
+                        <InkCanvas Name="WritingInkCanvas"/>
+                        <Canvas Name="AnimationCanvas"/>
                     </Grid>
                 </Border>
             </Grid>
@@ -88,19 +88,39 @@
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="1">
-                    <TextBlock Name="FeedbackTextBlock1" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="25"/>
+                    <TextBlock 
+                        Name="StrokeCountFeedbackTextBlock"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        FontSize="25"
+                        />
                 </Grid>
 
                 <Grid Grid.Row="2">
-                    <TextBlock Name="FeedbackTextBlock2" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="25"/>
+                    <TextBlock
+                        Name="StrokeOrderFeedbackTextBlock"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        FontSize="25"
+                        />
                 </Grid>
 
                 <Grid Grid.Row="3">
-                    <TextBlock Name="FeedbackTextBlock3" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="25"/>
+                    <TextBlock
+                        Name="StrokeDirectionFeedbackTextBlock"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        FontSize="25"
+                        />
                 </Grid>
 
                 <Grid Grid.Row="4">
-                    <TextBlock Name="FeedbackTextBlock4" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="25"/>
+                    <TextBlock
+                        Name="StrokeIntersectionFeedbackTextBlock"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        FontSize="25"
+                        />
                 </Grid>
             </Grid>
 
@@ -117,45 +137,45 @@
 
                 <Grid Grid.Row="1">
                     <Button
-                        Name="FeedbackPlayButton1"
+                        Name="StrokeCountPlayButton"
                         Content="►"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         FontSize="70"
-                        Click="FeedbackPlayButton1_Click"
+                        Click="StrokeCountPlayButton_Click"
                         />
                 </Grid>
 
                 <Grid Grid.Row="2">
                     <Button
-                        Name="FeedbackPlayButton2"
+                        Name="StrokeOrderPlayButton"
                         Content="►"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         FontSize="70"
-                        Click="FeedbackPlayButton2_Click"
+                        Click="StrokeOrderPlayButton_Click"
                         />
                 </Grid>
 
                 <Grid Grid.Row="3">
                     <Button
-                        Name="FeedbackPlayButton3"
+                        Name="StrokeDirectionPlayButton"
                         Content="►"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Stretch"
                         FontSize="70"
-                        Click="FeedbackPlayButton3_Click"
+                        Click="StrokeDirectionPlayButton_Click"
                         />
                 </Grid>
 
                 <Grid Grid.Row="4">
                     <Button
-                        Name="FeedbackPlayButton4"
+                        Name="StrokeIntersectionPlayButton"
                         Content="►"
                         HorizontalAlignment="Stretch"
-                        VerticalAlignment="Top"
+                        VerticalAlignment="Stretch"
                         FontSize="70"
-                        Click="FeedbackPlayButton4_Click"
+                        Click="StrokeIntersectionPlayButton_Click"
                         />
                 </Grid>
             </Grid>

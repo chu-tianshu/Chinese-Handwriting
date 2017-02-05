@@ -5,6 +5,7 @@ using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Shapes;
 
 namespace App2
@@ -80,6 +81,11 @@ namespace App2
             }
 
             return storyboards;
+        }
+
+        public static void ShowTemplateImage(Image templateImage, BitmapImage currentImageTemplate)
+        {
+            templateImage.Source = currentImageTemplate;
         }
     }
 }
