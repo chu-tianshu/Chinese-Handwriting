@@ -9,9 +9,17 @@ namespace App2
         {
             bool[,] array = new bool[length, length];
 
-            foreach (SketchStroke stroke in strokes) foreach (SketchPoint point in stroke.Points) array[(int)point.X, (int)point.Y] = true;
+            foreach (SketchStroke stroke in strokes)
+                foreach (SketchPoint point in stroke.Points)
+                    if (IsInsideBoard(point, length))
+                        array[(int)point.X, (int)point.Y] = true;
 
             return array;
+        }
+
+        private static bool IsInsideBoard(SketchPoint point, int length)
+        {
+            return (point.X >= 0 && point.X <= length - 1 && point.Y >= 0 && point.Y <= length - 1);
         }
 
         public static bool[,] Scale(bool[,] array, int scaledLength)

@@ -238,21 +238,20 @@ namespace App2
         // Stroke count button
         private void FeedbackPlayButton1_Click(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("Button 1 pressed");
         }
 
         // Stroke order button
         private void FeedbackPlayButton2_Click(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("Button 2 pressed");
+            if (!techAssessor.IsCorrectStrokeCount) return;
         }
 
         // Stroke direction button
         private void FeedbackPlayButton3_Click(object sender, RoutedEventArgs e)
         {
-            List<int> wrongStrokeIndices = techAssessor.WrongDirectionStrokeIndices;
+            if (!techAssessor.IsCorrectStrokeCount) return;
 
-            Debug.WriteLine("Number of wrong direction strokes: " + wrongStrokeIndices.Count);
+            HashSet<int> wrongStrokeIndices = techAssessor.WrongDirectionStrokeIndices;
 
             List<List<SketchPoint>> solutionStrokeTraces = new List<List<SketchPoint>>();
 
@@ -274,7 +273,7 @@ namespace App2
         // Stroke intersection button
         private void FeedbackPlayButton4_Click(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("Button 4 pressed");
+            if (!techAssessor.IsCorrectStrokeCount) return;
 
             int[] correspondance = techAssessor.Correspondance;
 

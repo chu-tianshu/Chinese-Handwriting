@@ -78,7 +78,7 @@ namespace App2
             int numStroke = template.Count;
 
             IsCorrectStrokeDirection = true;
-            WrongDirectionStrokeIndices = new List<int>();
+            WrongDirectionStrokeIndices = new HashSet<int>();
 
             for (int i = 0; i < numStroke; i++)
             {
@@ -107,39 +107,8 @@ namespace App2
         {
             if (!IsCorrectStrokeCount) return false;
 
-            SampleIntersectionMatrix = SketchFeatureExtraction.IntersectionMatrix(sample, Correspondance);
+            SampleIntersectionMatrix = SketchFeatureExtraction.IntersectionMatrix(sample, Correspondance, WrongDirectionStrokeIndices);
             TemplateIntersectionMatrix = SketchFeatureExtraction.IntersectionMatrix(template);
-
-            // Debug.WriteLine("Sample intersections: ");
-
-            /*
-            for (int i = 0; i < sample.Count; i++)
-            {
-                Debug.WriteLine("");
-
-                for (int j = 0; j < sample.Count; j++)
-                {
-                    Debug.Write(SampleIntersectionMatrix[i, j] + "   ");
-                }
-            }
-            */
-
-            // Debug.WriteLine("");
-            // Debug.WriteLine("");
-
-            // Debug.WriteLine("Template intersections: ");
-
-            /*
-            for (int i = 0; i < sample.Count; i++)
-            {
-                Debug.WriteLine("");
-
-                for (int j = 0; j < sample.Count; j++)
-                {
-                    Debug.Write(TemplateIntersectionMatrix[i, j] + "   ");
-                }
-            }
-            */
 
             for (int i = 0; i < sample.Count; i++)
                 for (int j = 0; j < sample.Count; j++)
@@ -158,7 +127,7 @@ namespace App2
         public bool IsCorrectIntersection { get; private set; }
         public bool IsCorrectOverall { get; private set; }
         public int[] Correspondance { get; private set; }
-        public List<int> WrongDirectionStrokeIndices { get; private set; }
+        public HashSet<int> WrongDirectionStrokeIndices { get; private set; }
         public string[,] SampleIntersectionMatrix { get; private set; }
         public string[,] TemplateIntersectionMatrix { get; private set; }
 

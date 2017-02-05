@@ -35,6 +35,17 @@ namespace App2
 
         #endregion
 
+        #region static methods
+
+        public static SketchStroke Reverse(SketchStroke sketchStroke)
+        {
+            List<SketchPoint> reversedPoints = new List<SketchPoint>();
+            for (int i = sketchStroke.Points.Count - 1; i >= 0; i--) reversedPoints.Add(sketchStroke.Points[i]);
+            return new App2.SketchStroke(reversedPoints, sketchStroke.TimeStamp);
+        }
+
+        #endregion
+
         #region properties
 
         public int PointsCount { get { return points.Count; } }

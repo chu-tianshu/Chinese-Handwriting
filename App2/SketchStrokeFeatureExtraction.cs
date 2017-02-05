@@ -227,8 +227,8 @@ namespace App2
             SketchPoint closestPoint = SketchStrokeFeatureExtraction.Intersection(sketchStroke1, sketchStroke2);
 
             if (closestPoint == null) return "none";
-            if (SketchPoint.EuclideanDistance(closestPoint, sketchStroke1.Points[0]) < 40) return "touch head";
-            if (SketchPoint.EuclideanDistance(closestPoint, sketchStroke1.Points[sketchStroke1.Points.Count - 1]) < 40) return "touch tail";
+            if (SketchPoint.EuclideanDistance(closestPoint, sketchStroke1.StartPoint) < 40) return "touch head";
+            if (SketchPoint.EuclideanDistance(closestPoint, sketchStroke1.EndPoint) < 40) return "touch tail";
             return "cross";
         }
 

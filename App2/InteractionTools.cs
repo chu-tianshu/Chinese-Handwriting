@@ -21,6 +21,10 @@ namespace App2
             {
                 Storyboard sb = new Storyboard();
 
+                long currStrokeStartTime, currStrokeEndTime;
+
+                currStrokeStartTime = currentTime;
+
                 Ellipse animator = new Ellipse()
                 {
                     Width = pointSize,
@@ -36,6 +40,7 @@ namespace App2
 
                 DoubleAnimationUsingKeyFrames translateXAnimation = new DoubleAnimationUsingKeyFrames();
                 DoubleAnimationUsingKeyFrames translateYAnimation = new DoubleAnimationUsingKeyFrames();
+                DoubleAnimationUsingKeyFrames fadeAnimation = new DoubleAnimationUsingKeyFrames();
 
                 for (int i = 0; i < points.Count; i++)
                 {
@@ -49,13 +54,27 @@ namespace App2
                     currentTime += duration;
                 }
 
+                currStrokeEndTime = currentTime;
+
+                // fade animations
+                fadeAnimation.KeyFrames.Add(new EasingDoubleKeyFrame() { KeyTime = new TimeSpan(0), Value = 1 });
+                fadeAnimation.KeyFrames.Add(new EasingDoubleKeyFrame() { KeyTime = new TimeSpan(0), Value = 0 });
+                fadeAnimation.KeyFrames.Add(new EasingDoubleKeyFrame() { KeyTime = new TimeSpan(currStrokeStartTime), Value = 0 });
+                fadeAnimation.KeyFrames.Add(new EasingDoubleKeyFrame() { KeyTime = new TimeSpan(currStrokeStartTime), Value = 1 });
+                fadeAnimation.KeyFrames.Add(new EasingDoubleKeyFrame() { KeyTime = new TimeSpan(currStrokeEndTime), Value = 1 });
+                fadeAnimation.KeyFrames.Add(new EasingDoubleKeyFrame() { KeyTime = new TimeSpan(currStrokeEndTime), Value = 0 });
+
                 Storyboard.SetTarget(translateXAnimation, animator);
                 Storyboard.SetTarget(translateYAnimation, animator);
+                Storyboard.SetTarget(fadeAnimation, animator);
+
                 Storyboard.SetTargetProperty(translateXAnimation, "(UIElement.RenderTransform).(CompositeTransform.TranslateX)");
                 Storyboard.SetTargetProperty(translateYAnimation, "(UIElement.RenderTransform).(CompositeTransform.TranslateY)");
+                Storyboard.SetTargetProperty(fadeAnimation, "(UIElement.Opacity)");
 
                 sb.Children.Add(translateXAnimation);
                 sb.Children.Add(translateYAnimation);
+                sb.Children.Add(fadeAnimation);
 
                 storyboards.Add(sb);
             }

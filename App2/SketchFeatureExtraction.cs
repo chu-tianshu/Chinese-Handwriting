@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace App2
 {
@@ -57,18 +58,19 @@ namespace App2
             return intersectionMatrix;
         }
 
-        public static string[,] IntersectionMatrix(List<SketchStroke> strokes, int[] correspondance)
+        public static string[,] IntersectionMatrix(List<SketchStroke> strokes, int[] correspondance, HashSet<int> wrongDirectionStrokeIndices)
         {
-            List<SketchStroke> reordered = new List<SketchStroke>();
+            List<SketchStroke> restored = new List<SketchStroke>();
 
             for (int i = 0; i < correspondance.Length; i++)
             {
                 int strokeIndex = Array.IndexOf(correspondance, i);
 
-                reordered.Add(strokes[strokeIndex]);
+                if (wrongDirectionStrokeIndices.Contains(strokeIndex)) restored.Add(SketchStroke.Reverse(strokes[strokeIndex]));
+                else restored.Add(strokes[strokeIndex]);
             }
 
-            return IntersectionMatrix(reordered);
+            return IntersectionMatrix(restored);
         }
     }
 }
