@@ -9,7 +9,6 @@ namespace App2
         public static SketchPoint Centroid(List<SketchStroke> strokes)
         {
             List<SketchPoint> points = new List<SketchPoint>();
-
             foreach (SketchStroke stroke in strokes) points.AddRange(stroke.Points);
 
             double meanX = 0.0;
@@ -34,16 +33,12 @@ namespace App2
 
         public static double Height(List<SketchStroke> strokes)
         {
-            BoundingBox bb = new BoundingBox(strokes);
-
-            return bb.Height;
+            return new BoundingBox(strokes).Height;
         }
 
         public static double Width(List<SketchStroke> strokes)
         {
-            BoundingBox bb = new BoundingBox(strokes);
-
-            return bb.Width;
+            return new BoundingBox(strokes).Width;
         }
 
         public static string[,] IntersectionMatrix(List<SketchStroke> strokes)

@@ -49,7 +49,7 @@ namespace App2
 
                 foreach (SketchPoint betaPoint in betaPoints)
                 {
-                    distance = SketchPoint.EuclideanDistance(alphaPoint, betaPoint);
+                    distance = MathHelpers.EuclideanDistance(alphaPoint, betaPoint);
 
                     // update the min distance and min point
                     if (minDistance > distance)
@@ -94,7 +94,7 @@ namespace App2
 
                 foreach(SketchPoint pb in pointSetB)
                 {
-                    double currentDistance = SketchPoint.EuclideanDistance(pa, pb);
+                    double currentDistance = MathHelpers.EuclideanDistance(pa, pb);
 
                     if (currentDistance < minDis) minDis = currentDistance;
                 }

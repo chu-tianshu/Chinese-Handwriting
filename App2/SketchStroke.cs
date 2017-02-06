@@ -1,5 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Windows.UI.Input.Inking;
+using System.Linq;
 
 namespace App2
 {
@@ -19,19 +20,20 @@ namespace App2
             timeStamp = ts;
         }
 
+        public SketchStroke(InkStroke inkStroke, List<long> list)
+        {
+            points = new List<SketchPoint>();
+            var inkPoints = inkStroke.GetInkPoints();
+            for (int j = 0; j < inkPoints.Count; j++) AppendPoint(new SketchPoint(inkPoints.ElementAt(j)));
+            timeStamp = list;
+        }
+
         #endregion
 
         #region modifiers
 
-        public void AppendPoint(SketchPoint p)
-        {
-            points.Add(p);
-        }
-
-        public void AppendTime(long t)
-        {
-            timeStamp.Add(t);
-        }
+        public void AppendPoint(SketchPoint p) { points.Add(p); }
+        public void AppendTime(long t) { timeStamp.Add(t); }
 
         #endregion
 
@@ -41,7 +43,7 @@ namespace App2
         {
             List<SketchPoint> reversedPoints = new List<SketchPoint>();
             for (int i = sketchStroke.Points.Count - 1; i >= 0; i--) reversedPoints.Add(sketchStroke.Points[i]);
-            return new App2.SketchStroke(reversedPoints, sketchStroke.TimeStamp);
+            return new SketchStroke(reversedPoints, sketchStroke.TimeStamp);
         }
 
         #endregion

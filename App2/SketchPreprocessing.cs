@@ -45,7 +45,7 @@ namespace App2
 
                 for (int i = 1; i < points.Count; ++i)
                 {
-                    double d = SketchPoint.EuclideanDistance(points[i - 1], points[i]);
+                    double d = MathHelpers.EuclideanDistance(points[i - 1], points[i]);
 
                     if (D + d >= I)
                     {
@@ -70,10 +70,7 @@ namespace App2
                         D += d;
                     }
 
-                    if (isDone)
-                    {
-                        break;
-                    }
+                    if (isDone) break;
                 }
 
                 D = 0.0;
@@ -103,24 +100,16 @@ namespace App2
 
         public static List<SketchStroke> ScaleSquare(List<SketchStroke> strokes, double size)
         {
-            BoundingBox bb = new BoundingBox(strokes);
+            double width = SketchFeatureExtraction.Width(strokes);
+            double height = SketchFeatureExtraction.Height(strokes);
 
             List<SketchStroke> newStrokes = new List<SketchStroke>();
 
             foreach (SketchStroke stroke in strokes)
             {
                 List<SketchPoint> newPoints = new List<SketchPoint>();
-
-                foreach (SketchPoint point in stroke.Points)
-                {
-                    double qx = point.X * size / bb.Width;
-                    double qy = point.Y * size / bb.Height;
-
-                    newPoints.Add(new SketchPoint(qx, qy));
-                }
-
+                foreach (SketchPoint point in stroke.Points) newPoints.Add(new SketchPoint(point.X * size / width, point.Y * size / height));
                 SketchStroke newStroke = new SketchStroke(newPoints, stroke.TimeStamp);
-
                 newStrokes.Add(newStroke);
             }
 
@@ -129,9 +118,7 @@ namespace App2
 
         public static List<SketchStroke> TranslateCentroid(List<SketchStroke> strokes, SketchPoint origin)
         {
-            SketchPoint centroid = SketchFeatureExtraction.Centroid(strokes);
-
-            return Translate(strokes, origin, centroid);
+            return Translate(strokes, origin, SketchFeatureExtraction.Centroid(strokes));
         }
 
         public static List<SketchStroke> Translate(List<SketchStroke> strokes, SketchPoint origin, SketchPoint centroid)
@@ -141,17 +128,8 @@ namespace App2
             foreach (SketchStroke stroke in strokes)
             {
                 List<SketchPoint> newPoints = new List<SketchPoint>();
-
-                foreach (SketchPoint point in stroke.Points)
-                {
-                    double qx = point.X + origin.X - centroid.X;
-                    double qy = point.Y + origin.Y - centroid.Y;
-
-                    newPoints.Add(new SketchPoint(qx, qy));
-                }
-
+                foreach (SketchPoint point in stroke.Points) newPoints.Add(new SketchPoint(point.X + origin.X - centroid.X, point.Y + origin.Y - centroid.Y));
                 SketchStroke newStroke = new SketchStroke(newPoints, stroke.TimeStamp);
-
                 newStrokes.Add(newStroke);
             }
 

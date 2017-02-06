@@ -31,7 +31,6 @@ namespace App2
                 double d1 = SketchTools.Distance(normalizedSample, normalizedTemplate);
                 double d2 = SketchTools.Distance(normalizedTemplate, normalizedSample);
                 double distance = d1 < d2 ? d1 : d2;
-
                 double score = ToScore(distance);
 
                 results.Add(new Tuple<string, double>(entry.Key, distance));
@@ -54,10 +53,7 @@ namespace App2
 
         #region helper methods
 
-        private double ToScore(double distance)
-        {
-            return (100.0 - (distance / (0.5 * (Math.Sqrt(Size * Size + Size * Size)))));
-        }
+        private double ToScore(double distance) { return (100.0 - (distance / (0.5 * (Math.Sqrt(Size * Size + Size * Size))))); }
 
         #endregion
 

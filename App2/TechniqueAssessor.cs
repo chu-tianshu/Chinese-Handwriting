@@ -85,12 +85,8 @@ namespace App2
                 SketchStroke sampleStroke = sample[i];
                 SketchStroke templateStroke = template[Correspondance[i]];
 
-                Vector2 sampleStartToEndVector
-                    = new Vector2((float)(sampleStroke.EndPoint.Y - sampleStroke.StartPoint.Y),
-                                  (float)(sampleStroke.EndPoint.X - sampleStroke.StartPoint.X));
-                Vector2 templateStartToEndVector
-                    = new Vector2((float)(templateStroke.EndPoint.Y - templateStroke.StartPoint.Y),
-                                  (float)(templateStroke.EndPoint.X - templateStroke.StartPoint.X));
+                Vector2 sampleStartToEndVector = new Vector2((float)(sampleStroke.EndPoint.Y - sampleStroke.StartPoint.Y), (float)(sampleStroke.EndPoint.X - sampleStroke.StartPoint.X));
+                Vector2 templateStartToEndVector = new Vector2((float)(templateStroke.EndPoint.Y - templateStroke.StartPoint.Y), (float)(templateStroke.EndPoint.X - templateStroke.StartPoint.X));
 
                 Vector2 sampleStartToEndVectorNormalized = Vector2.Normalize(sampleStartToEndVector);
                 Vector2 templateStartToEndVectorNormalized = Vector2.Normalize(templateStartToEndVector);

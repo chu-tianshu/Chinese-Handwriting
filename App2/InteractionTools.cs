@@ -83,6 +83,22 @@ namespace App2
             return storyboards;
         }
 
+        public static void HighlightWrongIntersection(Canvas animationCanvas, SketchPoint intersection)
+        {
+            Ellipse circle = new Ellipse()
+            {
+                Height = 50,
+                Width = 50,
+                Stroke = new SolidColorBrush(Colors.Red),
+                StrokeThickness = 10,
+            };
+
+            Canvas.SetLeft(circle, intersection.X - circle.Width / 2);
+            Canvas.SetTop(circle, intersection.Y - circle.Height / 2);
+
+            animationCanvas.Children.Add(circle);
+        }
+
         public static void ShowTemplateImage(Image templateImage, BitmapImage currentImageTemplate)
         {
             templateImage.Source = currentImageTemplate;

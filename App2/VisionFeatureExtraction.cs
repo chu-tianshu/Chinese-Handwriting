@@ -11,8 +11,7 @@ namespace App2
 
             foreach (SketchStroke stroke in strokes)
                 foreach (SketchPoint point in stroke.Points)
-                    if (IsInsideBoard(point, length))
-                        array[(int)point.X, (int)point.Y] = true;
+                    if (IsInsideBoard(point, length)) array[(int)point.X, (int)point.Y] = true;
 
             return array;
         }
@@ -31,15 +30,8 @@ namespace App2
             double ratio = scaledLength * 1.0 / origLength;
 
             for (int i = 0; i < origLength; i++)
-            {
                 for (int j = 0; j < origLength; j++)
-                {
-                    int newI = (int)(i * ratio);
-                    int newJ = (int)(j * ratio);
-
-                    if (array[i, j]) scaled[newI, newJ] = true;
-                }
-            }
+                    if (array[i, j]) scaled[(int)(i * ratio), (int)(j * ratio)] = true;
 
             return scaled;
         }
@@ -92,26 +84,18 @@ namespace App2
         public static int[] HorizontalProjection(bool[,] array)
         {
             int h = array.GetLength(0);
-
             int[] projection = new int[h];
-
             for (int i = 0; i < h; i++) projection[i] = 0;
-
             for (int i = 0; i < array.GetLength(0); i++) for (int j = 0; j < array.GetLength(1); j++) if (array[i, j]) projection[i]++;
-
             return projection;
         }
 
         public static int[] VerticalProjection(bool[,] array)
         {
             int w = array.GetLength(1);
-
             int[] projection = new int[w];
-
             for (int i = 0; i < w; i++) projection[i] = 0;
-
             for (int i = 0; i < array.GetLength(0); i++) for (int j = 0; j < array.GetLength(1); j++) if (array[i, j]) projection[j]++;
-
             return projection;
         }
 

@@ -30,9 +30,7 @@ namespace App2
             int[] templateProjectionX = VisionFeatureExtraction.VerticalProjection(templateArrayScaled);
             int[] templateProjectionY = VisionFeatureExtraction.HorizontalProjection(templateArrayScaled);
 
-            double fc = Math.Sqrt(Math.Pow(sampleCentroid.X - templateCentroid.X, 2) 
-                      + Math.Pow(sampleCentroid.Y - templateCentroid.Y, 2)) 
-                      / (0.5 * sampleArrayScaled.GetLength(1));
+            double fc = Math.Sqrt(Math.Pow(sampleCentroid.X - templateCentroid.X, 2) + Math.Pow(sampleCentroid.Y - templateCentroid.Y, 2)) / (0.5 * sampleArrayScaled.GetLength(1));
             double fa = (sampleWidth * sampleHeight - templateWidth * templateHeight) / (templateWidth * templateHeight);
             double fr = (sampleWidth / sampleHeight - templateWidth / templateHeight);
             double dx = VisionFeatureExtraction.ProjectionDifference(sampleProjectionX, templateProjectionX);
@@ -56,14 +54,11 @@ namespace App2
             double muonRight = Fuzzy.Lambda(fs, 0, 1);
 
             double sc = muonNear > muonFar ? Fuzzy.CenterOfAreaHigh(0.1, 0.9, muonNear) : Fuzzy.CenterOfAreaLow(0.1, 0.9, muonFar);
-            double sa = muonProperSize > Math.Max(muonSmall, muonLarge) ? 
-                Fuzzy.CenterOfAreaHigh(0.6, 0.9, muonProperSize) : Fuzzy.CenterOfAreaLow(0.1, 0.9, Math.Max(muonSmall, muonLarge));
-            double sr = muonProperRatio > Math.Max(muonTall, muonShort) ? 
-                Fuzzy.CenterOfAreaHigh(0.8, 0.9, muonProperRatio) : Fuzzy.CenterOfAreaLow(0.5, 0.9, Math.Max(muonTall, muonShort));
+            double sa = muonProperSize > Math.Max(muonSmall, muonLarge) ? Fuzzy.CenterOfAreaHigh(0.6, 0.9, muonProperSize) : Fuzzy.CenterOfAreaLow(0.1, 0.9, Math.Max(muonSmall, muonLarge));
+            double sr = muonProperRatio > Math.Max(muonTall, muonShort) ? Fuzzy.CenterOfAreaHigh(0.8, 0.9, muonProperRatio) : Fuzzy.CenterOfAreaLow(0.5, 0.9, Math.Max(muonTall, muonShort));
             double sdx = muonLessX > muonMuchX ? Fuzzy.CenterOfAreaHigh(0.1, 0.9, muonLessX) : Fuzzy.CenterOfAreaLow(0.1, 0.9, muonMuchX);
             double sdy = muonLessY > muonMuchY ? Fuzzy.CenterOfAreaHigh(0.1, 0.9, muonMuchY) : Fuzzy.CenterOfAreaLow(0.1, 0.9, muonMuchY);
-            double ss = muonProperSymmetry > Math.Max(muonLeft, muonRight) ? 
-                Fuzzy.CenterOfAreaHigh(0.6, 0.9, muonProperSymmetry) : Fuzzy.CenterOfAreaLow(0.1, 0.9, Math.Max(muonLeft, muonRight));
+            double ss = muonProperSymmetry > Math.Max(muonLeft, muonRight) ? Fuzzy.CenterOfAreaHigh(0.6, 0.9, muonProperSymmetry) : Fuzzy.CenterOfAreaLow(0.1, 0.9, Math.Max(muonLeft, muonRight));
 
             double s1 = sc;
             double s2 = (sa + sr) / 2.0;

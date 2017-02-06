@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.UI.Input.Inking;
 
 namespace App2
 {
@@ -20,18 +21,10 @@ namespace App2
             Y = y;
         }
 
-        #endregion
-
-        #region static methods
-
-        public static double EuclideanDistance(SketchPoint p1, SketchPoint p2)
+        public SketchPoint(InkPoint inkPoint)
         {
-            return (Math.Sqrt(Math.Pow(p1.X - p2.X, 2) + Math.Pow(p1.Y - p2.Y, 2)));
-        }
-
-        public static double EuclideanDistance(double x1, double y1, double x2, double y2)
-        {
-            return (Math.Sqrt(Math.Pow(x1 - x2, 2) + Math.Pow(y1 - y2, 2)));
+            X = inkPoint.Position.X;
+            Y = inkPoint.Position.Y;
         }
 
         #endregion

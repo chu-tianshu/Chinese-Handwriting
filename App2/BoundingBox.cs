@@ -59,7 +59,6 @@ namespace App2
 
         public bool Contains(SketchPoint point)
         {
-
             double x = point.X;
             double y = point.Y;
 
@@ -81,7 +80,7 @@ namespace App2
         public SketchPoint BottomRight { get { return new SketchPoint(MaxX, MaxY); } }
         public double Width { get { return (MaxX - MinX); } }
         public double Height { get { return (MaxY - MinY); } }
-        public double Diagonal { get { return (SketchPoint.EuclideanDistance(TopLeft, BottomRight)); } }
+        public double Diagonal { get { return (MathHelpers.EuclideanDistance(TopLeft, BottomRight)); } }
 
         #endregion
     }

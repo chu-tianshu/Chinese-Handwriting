@@ -26,7 +26,7 @@ namespace App2
                 SketchPoint cur = points[i];
                 SketchPoint pre = points[i - 1];
 
-                double d = SketchPoint.EuclideanDistance(cur, pre);
+                double d = MathHelpers.EuclideanDistance(cur, pre);
 
                 if (dist + d >= increment)
                 {
