@@ -12,7 +12,7 @@ namespace App2
 {
     public class InteractionTools
     {
-        public static List<Storyboard> Animate(Canvas canvas, List<List<SketchPoint>> strokes, double pointSize, long duration)
+        public static List<Storyboard> Animate(Canvas canvas, List<List<SketchPoint>> strokes, double pointSize, long pointDuration)
         {
             List<Storyboard> storyboards = new List<Storyboard>();
 
@@ -52,7 +52,7 @@ namespace App2
                     translateXAnimation.KeyFrames.Add(xFrame);
                     translateYAnimation.KeyFrames.Add(yFrame);
 
-                    currentTime += duration;
+                    currentTime += pointDuration;
                 }
 
                 currStrokeEndTime = currentTime;

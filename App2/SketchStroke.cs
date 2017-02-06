@@ -52,18 +52,7 @@ namespace App2
         public List<SketchPoint> Points { get { return points; } }
         public SketchPoint StartPoint { get { return points[0]; } }
         public SketchPoint EndPoint { get { return points[Points.Count - 1]; } }
-
-        public List<long> TimeStamp
-        {
-            get
-            {
-                return timeStamp;
-            }
-            set
-            {
-                timeStamp = value;
-            }
-        }
+        public List<long> TimeStamp { get { return timeStamp; } set { timeStamp = value; } }
 
         #endregion
 

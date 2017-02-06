@@ -368,10 +368,10 @@ namespace App2
 
                     if (!isWrittenCorrectly)
                     {
-                        var incorrectWritingWarning = new Windows.UI.Popups.MessageDialog("Please first try to write the character correctly.");
-                        incorrectWritingWarning.Commands.Add(new Windows.UI.Popups.UICommand("Ok") { Id = 0 });
+                        var incorrectWritingWarning = new MessageDialog("Please first try to write the character correctly.");
+                        incorrectWritingWarning.Commands.Add(new UICommand("Ok") { Id = 0 });
                         incorrectWritingWarning.DefaultCommandIndex = 0;
-                        incorrectWritingWarning.ShowAsync();
+                        await incorrectWritingWarning.ShowAsync();
                     }
                     else
                     {
