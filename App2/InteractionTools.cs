@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using Windows.UI;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -12,7 +11,40 @@ namespace App2
 {
     public class InteractionTools
     {
-        public static List<Storyboard> Animate(Canvas canvas, List<List<SketchPoint>> strokes, double pointSize, long pointDuration)
+        public static void DemoCorrectStrokeDirections(Canvas canvas, List<SketchStroke> strokes, HashSet<int> wrongDirectionStrokeIndices)
+        {
+            List<List<SketchPoint>> solutionStrokeTraces = new List<List<SketchPoint>>();
+
+            foreach (int index in wrongDirectionStrokeIndices)
+            {
+                List<SketchPoint> origPoints = strokes[index].Points;
+                List<SketchPoint> reversed = new List<SketchPoint>();
+                for (int i = origPoints.Count - 1; i >= 0; i--) reversed.Add(origPoints[i]);
+                solutionStrokeTraces.Add(reversed);
+            }
+
+            List<Storyboard> storyboards = GenerateStoryBoards(canvas, solutionStrokeTraces, AnimationPointSize, DirectionAnimationPointDuration);
+
+            foreach (var sb in storyboards) sb.Begin();
+        }
+
+        public static void HighlightWrongIntersection(Canvas animationCanvas, SketchPoint intersection)
+        {
+            Ellipse circle = new Ellipse()
+            {
+                Height = 50,
+                Width = 50,
+                Stroke = new SolidColorBrush(Colors.Red),
+                StrokeThickness = 10,
+            };
+
+            Canvas.SetLeft(circle, intersection.X - circle.Width / 2);
+            Canvas.SetTop(circle, intersection.Y - circle.Height / 2);
+
+            animationCanvas.Children.Add(circle);
+        }
+
+        public static List<Storyboard> GenerateStoryBoards(Canvas canvas, List<List<SketchPoint>> strokes, double pointSize, long pointDuration)
         {
             List<Storyboard> storyboards = new List<Storyboard>();
 
@@ -83,25 +115,16 @@ namespace App2
             return storyboards;
         }
 
-        public static void HighlightWrongIntersection(Canvas animationCanvas, SketchPoint intersection)
-        {
-            Ellipse circle = new Ellipse()
-            {
-                Height = 50,
-                Width = 50,
-                Stroke = new SolidColorBrush(Colors.Red),
-                StrokeThickness = 10,
-            };
-
-            Canvas.SetLeft(circle, intersection.X - circle.Width / 2);
-            Canvas.SetTop(circle, intersection.Y - circle.Height / 2);
-
-            animationCanvas.Children.Add(circle);
-        }
-
         public static void ShowTemplateImage(Image templateImage, BitmapImage currentImageTemplate)
         {
             templateImage.Source = currentImageTemplate;
         }
+
+        #region readonly fields
+
+        private static readonly double AnimationPointSize = 30;
+        private static readonly long DirectionAnimationPointDuration = 200000;
+
+        #endregion
     }
 }

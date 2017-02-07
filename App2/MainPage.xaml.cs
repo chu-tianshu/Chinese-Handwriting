@@ -217,22 +217,9 @@ namespace App2
             if (!techAssessor.IsCorrectStrokeCount) return;
 
             AnimationCanvas.Children.Clear();
-
-            HashSet<int> wrongStrokeIndices = techAssessor.WrongDirectionStrokeIndices;
-
-            List<List<SketchPoint>> solutionStrokeTraces = new List<List<SketchPoint>>();
-
-            foreach (int index in wrongStrokeIndices)
-            {
-                List<SketchPoint> origPoints = sketchStrokes[index].Points;
-                List<SketchPoint> reversed = new List<SketchPoint>();
-                for (int i = origPoints.Count - 1; i >= 0; i--) reversed.Add(origPoints[i]);
-                solutionStrokeTraces.Add(reversed);
-            }
-
-            List<Storyboard> storyboards = InteractionTools.Animate(AnimationCanvas, solutionStrokeTraces, AnimationPointSize, DirectionAnimationPointDuration);
-
-            foreach (var sb in storyboards) sb.Begin();
+            DisablePlayButtons();
+            InteractionTools.DemoCorrectStrokeDirections(AnimationCanvas, sketchStrokes, techAssessor.WrongDirectionStrokeIndices);
+            EnablePlayButtons();
         }
 
         private void StrokeIntersectionPlayButton_Click(object sender, RoutedEventArgs e)
@@ -279,20 +266,9 @@ namespace App2
 
         #region stroke interaction methods
 
-        private void StrokeInput_StrokeStarted(Windows.UI.Input.Inking.InkStrokeInput sender, Windows.UI.Core.PointerEventArgs args)
-        {
-            UpdateTime(true, false);
-        }
-
-        private void StrokeInput_StrokeContinued(Windows.UI.Input.Inking.InkStrokeInput sender, Windows.UI.Core.PointerEventArgs args)
-        {
-            UpdateTime(false, false);
-        }
-
-        private void StrokeInput_StrokeEnded(Windows.UI.Input.Inking.InkStrokeInput sender, Windows.UI.Core.PointerEventArgs args)
-        {
-            UpdateTime(false, true);
-        }
+        private void StrokeInput_StrokeStarted(InkStrokeInput sender, Windows.UI.Core.PointerEventArgs args) { UpdateTime(true, false); }
+        private void StrokeInput_StrokeContinued(InkStrokeInput sender, Windows.UI.Core.PointerEventArgs args) { UpdateTime(false, false); }
+        private void StrokeInput_StrokeEnded(InkStrokeInput sender, Windows.UI.Core.PointerEventArgs args) { UpdateTime(false, true); }
 
         #endregion
 
@@ -315,34 +291,15 @@ namespace App2
             {
                 case "wrong":
                     ShowWrongAnswerWarning();
-
                     break;
                 case "technique":
                     ShowPlayButtons();
-
-                    StrokeCountFeedbackTextBlock.Text = ("Stroke count: " + "\n" + (techAssessor.IsCorrectStrokeCount ? "Correct" : "Incorrect") + "\n");
-                    StrokeOrderFeedbackTextBlock.Text = ("Stroke order: " + "\n" + (techAssessor.IsCorrectStrokeOrder ? "Correct" : "Incorrect") + "\n");
-                    StrokeDirectionFeedbackTextBlock.Text = ("Stroke directions: " + "\n" + (techAssessor.IsCorrectStrokeDirection ? "Correct" : "Incorrect") + "\n");
-                    StrokeIntersectionFeedbackTextBlock.Text = ("Stroke intersections: " + "\n" + (techAssessor.IsCorrectIntersection ? "Correct" : "Incorrect") + "\n");
-
+                    ShowTechniqueFeedback();
                     break;
                 case "visual":
                     HidePlayButtons();
-
-                    if (!isWrittenCorrectly)
-                    {
-                        ShowIncorrectWritingWarning();
-                    }
-                    else
-                    {
-                        InteractionTools.ShowTemplateImage(TemplateImage, currentImageTemplate);
-
-                        StrokeCountFeedbackTextBlock.Text = "Location: " + visAssessor.LocationFeedback + "\n";
-                        StrokeOrderFeedbackTextBlock.Text = "Shape: " + visAssessor.ShapeFeedback + "\n";
-                        StrokeDirectionFeedbackTextBlock.Text = "Distribution: " + visAssessor.ProjectionFeedback + "\n";
-                        StrokeIntersectionFeedbackTextBlock.Text = "";
-                    }
-
+                    if (!isWrittenCorrectly) ShowIncorrectWritingWarning();
+                    else ShowVisualFeedback();
                     break;
                 default:
                     break;
@@ -371,14 +328,32 @@ namespace App2
 
         private void UpdateTime(bool hasStarted, bool hasEnded)
         {
-            if (hasStarted && hasEnded) { throw new Exception("Cannot start and end stroke at the same time."); }
+            if (hasStarted && hasEnded) throw new Exception("Cannot start and end stroke at the same time.");
 
-            if (hasStarted) { times = new List<long>(); }
+            if (hasStarted) times = new List<long>();
 
             long time = DateTime.Now.Ticks - DateTimeOffset;
             times.Add(time);
 
-            if (hasEnded) { timeCollection.Add(times); }
+            if (hasEnded) timeCollection.Add(times);
+        }
+
+        private void ShowTechniqueFeedback()
+        {
+            StrokeCountFeedbackTextBlock.Text = ("Stroke count: " + "\n" + (techAssessor.IsCorrectStrokeCount ? "Correct" : "Incorrect") + "\n");
+            StrokeOrderFeedbackTextBlock.Text = ("Stroke order: " + "\n" + (techAssessor.IsCorrectStrokeOrder ? "Correct" : "Incorrect") + "\n");
+            StrokeDirectionFeedbackTextBlock.Text = ("Stroke directions: " + "\n" + (techAssessor.IsCorrectStrokeDirection ? "Correct" : "Incorrect") + "\n");
+            StrokeIntersectionFeedbackTextBlock.Text = ("Stroke intersections: " + "\n" + (techAssessor.IsCorrectIntersection ? "Correct" : "Incorrect") + "\n");
+        }
+
+        private void ShowVisualFeedback()
+        {
+            InteractionTools.ShowTemplateImage(TemplateImage, currentImageTemplate);
+
+            StrokeCountFeedbackTextBlock.Text = "Location: " + visAssessor.LocationFeedback + "\n";
+            StrokeOrderFeedbackTextBlock.Text = "Shape: " + visAssessor.ShapeFeedback + "\n";
+            StrokeDirectionFeedbackTextBlock.Text = "Distribution: " + visAssessor.ProjectionFeedback + "\n";
+            StrokeIntersectionFeedbackTextBlock.Text = "";
         }
 
         private void ShowPlayButtons()
@@ -397,12 +372,40 @@ namespace App2
             StrokeIntersectionPlayButton.Visibility = Visibility.Collapsed;
         }
 
+        private void EnablePlayButtons()
+        {
+            StrokeCountPlayButton.IsEnabled = true;
+            StrokeOrderPlayButton.IsEnabled = true;
+            StrokeDirectionPlayButton.IsEnabled = true;
+            StrokeIntersectionPlayButton.IsEnabled = true;
+        }
+
+        private void DisablePlayButtons()
+        {
+            StrokeCountPlayButton.IsEnabled = false;
+            StrokeOrderPlayButton.IsEnabled = false;
+            StrokeDirectionPlayButton.IsEnabled = false;
+            StrokeIntersectionPlayButton.IsEnabled = false;
+        }
+
         private void ClearFeedbackTextBlocks()
         {
             StrokeCountFeedbackTextBlock.Text = "";
             StrokeOrderFeedbackTextBlock.Text = "";
             StrokeDirectionFeedbackTextBlock.Text = "";
             StrokeIntersectionFeedbackTextBlock.Text = "";
+        }
+
+        private void Clear()
+        {
+            timeCollection = new List<List<long>>();
+            sketchStrokes = new List<SketchStroke>();
+            isWrittenCorrectly = false;
+            ClearFeedbackTextBlocks();
+            HidePlayButtons();
+            WritingInkCanvas.InkPresenter.StrokeContainer.Clear();
+            AnimationCanvas.Children.Clear();
+            TemplateImage.Source = null;
         }
 
         private async void ShowWrongAnswerWarning()
@@ -427,18 +430,6 @@ namespace App2
             incorrectWritingWarning.Commands.Add(new UICommand("Ok") { Id = 0 });
             incorrectWritingWarning.DefaultCommandIndex = 0;
             await incorrectWritingWarning.ShowAsync();
-        }
-
-        private void Clear()
-        {
-            timeCollection = new List<List<long>>();
-            sketchStrokes = new List<SketchStroke>();
-            isWrittenCorrectly = false;
-            ClearFeedbackTextBlocks();
-            HidePlayButtons();
-            WritingInkCanvas.InkPresenter.StrokeContainer.Clear();
-            AnimationCanvas.Children.Clear();
-            TemplateImage.Source = null;
         }
 
         #endregion
@@ -475,8 +466,6 @@ namespace App2
 
         private readonly int NumResampleForPDollar = 128;
         private readonly double SizeScaleForPDollar = 500;
-        private readonly double AnimationPointSize = 30;
-        private readonly long DirectionAnimationPointDuration = 200000;
 
         #endregion
     }
