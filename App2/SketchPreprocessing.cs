@@ -136,6 +136,33 @@ namespace App2
             return newStrokes;
         }
 
+        public static List<SketchStroke> MergeConsecutiveBrokenStrokes(List<SketchStroke> input)
+        {
+            List<SketchStroke> result = new List<SketchStroke>();
+
+            if (input.Count == 0) return result;
+
+            result.Add(input[0]);
+
+            int rIndex = 0;
+            int iIndex = 1;
+            while (iIndex < input.Count)
+            {
+                SketchPoint rEnd = result[result.Count - 1].EndPoint;
+                SketchPoint iStart = input[iIndex].StartPoint;
+
+                if ()
+            }
+
+            return result;
+        }
+
+        #endregion
+
+        #region read only fields
+
+        private readonly int MergeDistanceThreshold = 10;
+
         #endregion
     }
 }

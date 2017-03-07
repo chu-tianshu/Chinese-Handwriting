@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Windows.ApplicationModel;
 using Windows.Foundation;
 using Windows.Storage;
@@ -13,10 +12,7 @@ using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
-using Windows.UI.Xaml.Shapes;
 
 namespace App2
 {
@@ -144,6 +140,8 @@ namespace App2
 
         private void UndoButton_Click(object sender, RoutedEventArgs e)
         {
+            AnimationCanvas.Children.Clear();
+
             var strokes = WritingInkCanvas.InkPresenter.StrokeContainer.GetStrokes();
 
             if (strokes.Count != 0)
@@ -252,7 +250,10 @@ namespace App2
 
                         SketchPoint intersection = SketchStrokeFeatureExtraction.Intersection(sketchStrokes[realI], sketchStrokes[realJ]);
 
-                        if (intersection != null) InteractionTools.HighlightWrongIntersection(AnimationCanvas, intersection);
+                        if (intersection != null)
+                        {
+                            InteractionTools.HighlightWrongIntersection(AnimationCanvas, intersection);
+                        }
                         else
                         {
                             // Highlights the location where the intersection should be
