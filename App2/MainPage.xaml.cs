@@ -174,7 +174,9 @@ namespace App2
                 answer == resultLabels[resultLabels.Count - 3])
             {
                 currentTemplateSketch = strokeTemplates[answer];
-                techAssessor = new TechniqueAssessor(sketchStrokes, currentTemplateSketch.Strokes);
+                currentTemplateSketchStrokes = SketchPreprocessing.ScaleToFrame(currentTemplateSketch, writingFrameLength);
+
+                techAssessor = new TechniqueAssessor(sketchStrokes, currentTemplateSketchStrokes);
                 isWrittenCorrectly = techAssessor.IsCorrectOverall;
 
                 LoadFeedback("technique");
@@ -201,6 +203,9 @@ namespace App2
         private void StrokeCountPlayButton_Click(object sender, RoutedEventArgs e)
         {
             AnimationCanvas.Children.Clear();
+
+            InteractionTools.ShowTemplateImage(TemplateImage, currentImageTemplate);
+            InteractionTools.DemoTemplate(AnimationCanvas, currentTemplateSketchStrokes);
         }
 
         private void StrokeOrderPlayButton_Click(object sender, RoutedEventArgs e)
@@ -216,7 +221,7 @@ namespace App2
 
             AnimationCanvas.Children.Clear();
             DisablePlayButtons();
-            InteractionTools.DemoCorrectStrokeDirections(AnimationCanvas, sketchStrokes, techAssessor.WrongDirectionStrokeIndices);
+            InteractionTools.DemoCorrectStrokes(AnimationCanvas, sketchStrokes, techAssessor.WrongDirectionStrokeIndices);
             EnablePlayButtons();
         }
 
@@ -455,6 +460,7 @@ namespace App2
         private List<Question> questions;
         private Question currentQuestion;
         private Sketch currentTemplateSketch;
+        private List<SketchStroke> currentTemplateSketchStrokes;
         private BitmapImage currentImageTemplate;
         private bool isWrittenCorrectly;
         private int currentQuestionIndex;

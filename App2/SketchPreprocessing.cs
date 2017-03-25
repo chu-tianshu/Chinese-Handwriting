@@ -7,11 +7,38 @@ namespace App2
     {
         #region sketch preprocessing methods
 
+        public static List<SketchStroke> ScaleToFrame(Sketch sketch, double frameLength)
+        {
+            List<SketchStroke> result = new List<SketchStroke>();
+
+            double templateFrameWidth = sketch.FrameMaxX - sketch.FrameMinX;
+            double templateFrameHeight = sketch.FrameMaxY - sketch.FrameMinY;
+
+            foreach (SketchStroke origStroke in sketch.Strokes)
+            {
+                List<SketchPoint> origPoints = origStroke.Points;
+                List<SketchPoint> scaledPoints = new List<SketchPoint>();
+
+                foreach (SketchPoint origPoint in origPoints)
+                {
+                    double scaledX = origPoint.X / templateFrameWidth * frameLength;
+                    double scaledY = origPoint.Y / templateFrameHeight * frameLength;
+                    SketchPoint scaledPoint = new SketchPoint(scaledX, scaledY);
+                    scaledPoints.Add(scaledPoint);
+                }
+
+                SketchStroke scaledStroke = new SketchStroke(scaledPoints, origStroke.TimeStamp);
+                result.Add(scaledStroke);
+            }
+
+            return result;
+        }
+
         public static List<SketchStroke> Normalize(List<SketchStroke> strokes, int n, double size, SketchPoint origin)
         {
-            List<SketchStroke> resampled = SketchPreprocessing.Resample(strokes, n);
-            List<SketchStroke> scaled = SketchPreprocessing.ScaleSquare(resampled, size);
-            List<SketchStroke> translated = SketchPreprocessing.TranslateCentroid(scaled, origin);
+            List<SketchStroke> resampled = Resample(strokes, n);
+            List<SketchStroke> scaled = ScaleSquare(resampled, size);
+            List<SketchStroke> translated = TranslateCentroid(scaled, origin);
 
             return translated;
         }
@@ -134,27 +161,6 @@ namespace App2
             }
 
             return newStrokes;
-        }
-
-        public static List<SketchStroke> MergeConsecutiveBrokenStrokes(List<SketchStroke> input)
-        {
-            List<SketchStroke> result = new List<SketchStroke>();
-
-            if (input.Count == 0) return result;
-
-            result.Add(input[0]);
-
-            int rIndex = 0;
-            int iIndex = 1;
-            while (iIndex < input.Count)
-            {
-                SketchPoint rEnd = result[result.Count - 1].EndPoint;
-                SketchPoint iStart = input[iIndex].StartPoint;
-
-                if ()
-            }
-
-            return result;
         }
 
         #endregion

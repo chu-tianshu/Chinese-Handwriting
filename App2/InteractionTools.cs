@@ -11,7 +11,20 @@ namespace App2
 {
     public class InteractionTools
     {
-        public static void DemoCorrectStrokeDirections(Canvas canvas, List<SketchStroke> strokes, HashSet<int> wrongDirectionStrokeIndices)
+        public static void DemoTemplate(Canvas canvas, List<SketchStroke> template)
+        {
+            DemoCorrectStrokes(canvas, template);
+        }
+
+        public static void DemoCorrectStrokes(Canvas canvas, List<SketchStroke> correctStrokes)
+        {
+            List<List<SketchPoint>> solutionStrokeTraces = new List<List<SketchPoint>>();
+            foreach (SketchStroke stroke in correctStrokes) solutionStrokeTraces.Add(stroke.Points);
+            List<Storyboard> storyboards = GenerateStoryBoards(canvas, solutionStrokeTraces, AnimationPointSize, AnimationPointDuration);
+            foreach (var sb in storyboards) sb.Begin();
+        }
+
+        public static void DemoCorrectStrokes(Canvas canvas, List<SketchStroke> strokes, HashSet<int> wrongDirectionStrokeIndices)
         {
             List<List<SketchPoint>> solutionStrokeTraces = new List<List<SketchPoint>>();
 
@@ -23,7 +36,7 @@ namespace App2
                 solutionStrokeTraces.Add(reversed);
             }
 
-            List<Storyboard> storyboards = GenerateStoryBoards(canvas, solutionStrokeTraces, AnimationPointSize, DirectionAnimationPointDuration);
+            List<Storyboard> storyboards = GenerateStoryBoards(canvas, solutionStrokeTraces, AnimationPointSize, AnimationPointDuration);
 
             foreach (var sb in storyboards) sb.Begin();
         }
@@ -123,7 +136,7 @@ namespace App2
         #region readonly fields
 
         private static readonly double AnimationPointSize = 30;
-        private static readonly long DirectionAnimationPointDuration = 200000;
+        private static readonly long AnimationPointDuration = 200000;
 
         #endregion
     }
