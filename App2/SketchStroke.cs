@@ -46,6 +46,11 @@ namespace App2
             return new SketchStroke(reversedPoints, sketchStroke.TimeStamp);
         }
 
+        public static SketchStroke Substroke(SketchStroke stroke, int start, int end)
+        {
+            return new SketchStroke(stroke.Points.GetRange(start, end - start + 1), stroke.TimeStamp.GetRange(start, end - start + 1));
+        }
+
         #endregion
 
         #region properties

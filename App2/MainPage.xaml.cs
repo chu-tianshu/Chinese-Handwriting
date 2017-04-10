@@ -169,6 +169,20 @@ namespace App2
 
             #endregion
 
+            #region finds corners with shortstraw
+
+            foreach (var stroke in sketchStrokes)
+            {
+                var corners = ShortStraw.FindCorners(stroke);
+
+                foreach (var point in corners)
+                {
+                    InteractionTools.HighlightWrongIntersection(AnimationCanvas, point);
+                }
+            }
+
+            #endregion
+
             if (answer == resultLabels[resultLabels.Count - 1] || 
                 answer == resultLabels[resultLabels.Count - 2] || 
                 answer == resultLabels[resultLabels.Count - 3])

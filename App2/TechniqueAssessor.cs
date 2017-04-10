@@ -27,47 +27,12 @@ namespace App2
 
         private bool JudgeStrokeOrder(List<SketchStroke> sample, List<SketchStroke> template)
         {
-            if (!IsCorrectStrokeCount) return false;
+            Correspondence = SketchFeatureExtraction.GetStrokeCorrespondence(sample, template);
 
-            bool result = true;
+            for (int i = 0; i < Correspondence.Length; i++)
+                if (Correspondence[i] != i) return false;
 
-            List<SketchStroke> sampleNormalized = SketchPreprocessing.Normalize(sample, 128, 500, new SketchPoint(0.0, 0.0));
-            List<SketchStroke> templateNormalized = SketchPreprocessing.Normalize(template, 128, 500, new SketchPoint(0.0, 0.0));
-
-            int numStroke = template.Count;
-
-            /**
-             * Correspondance[i] denotes the mapped template stroke number of the ith stroke in the sample
-             */
-
-            Correspondance = new int[numStroke];
-            bool[] hasCompared = new bool[numStroke];
-
-            for (int i = 0; i < numStroke; i++)
-            {
-                double minDis = double.MaxValue;
-                int matchedIdx = -1;
-
-                for (int j = 0; j < numStroke; j++)
-                {
-                    if (hasCompared[j]) continue;
-
-                    double dis = SketchTools.HausdorffDistance(sampleNormalized[i], templateNormalized[j]);
-
-                    if (dis < minDis)
-                    {
-                        minDis = dis;
-                        matchedIdx = j;
-                    }
-                }
-
-                if (i != matchedIdx) result = false;
-
-                Correspondance[i] = matchedIdx;
-                hasCompared[matchedIdx] = true;
-            }
-
-            return result;
+            return true;
         }
 
         private bool JudgeStrokeDirection(List<SketchStroke> sample, List<SketchStroke> template)
@@ -82,7 +47,7 @@ namespace App2
             for (int i = 0; i < numStroke; i++)
             {
                 SketchStroke sampleStroke = sample[i];
-                SketchStroke templateStroke = template[Correspondance[i]];
+                SketchStroke templateStroke = template[Correspondence[i]];
 
                 Vector2 sampleStartToEndVector = new Vector2((float)(sampleStroke.EndPoint.Y - sampleStroke.StartPoint.Y), (float)(sampleStroke.EndPoint.X - sampleStroke.StartPoint.X));
                 Vector2 templateStartToEndVector = new Vector2((float)(templateStroke.EndPoint.Y - templateStroke.StartPoint.Y), (float)(templateStroke.EndPoint.X - templateStroke.StartPoint.X));
@@ -121,7 +86,7 @@ namespace App2
         public bool IsCorrectStrokeDirection { get; private set; }
         public bool IsCorrectIntersection { get; private set; }
         public bool IsCorrectOverall { get; private set; }
-        public int[] Correspondance { get; private set; }
+        public int[] Correspondence { get; private set; }
         public HashSet<int> WrongDirectionStrokeIndices { get; private set; }
         public string[,] SampleIntersectionMatrix { get; private set; }
         public string[,] TemplateIntersectionMatrix { get; private set; }

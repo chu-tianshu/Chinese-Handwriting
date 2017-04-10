@@ -28,13 +28,13 @@
     <AppXManifest Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\bin\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-03-25T06:59:23.744</Modified>
+      <Modified>2017-04-09T22:46:13.774</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\bin\x86\Debug\App2.exe">
       <PackagePath>entrypoint\App2.exe</PackagePath>
-      <Modified>2017-03-25T06:59:23.419</Modified>
+      <Modified>2017-04-09T22:46:13.451</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\.nuget\packages\Microsoft.ApplicationInsights\1.0.0\lib\portable-win81+wpa81\Microsoft.ApplicationInsights.dll">
       <PackagePath>Microsoft.ApplicationInsights.dll</PackagePath>
@@ -697,7 +697,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\bin\x86\Debug\Core\App2.exe">
       <PackagePath>App2.exe</PackagePath>
-      <Modified>2017-03-25T06:59:23.738</Modified>
+      <Modified>2017-04-09T22:46:13.769</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

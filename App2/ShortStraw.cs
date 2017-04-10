@@ -1,10 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace App2
 {
     public class ShortStraw
     {
+        public static List<SketchStroke> FindStrokeSegments(SketchStroke stroke)
+        {
+            List<SketchStroke> result = new List<SketchStroke>();
+
+            List<int> cornerIndices = FindCornerIndices(stroke);
+            for (int i = 0; i < cornerIndices.Count - 1; i++) result.Add(SketchStroke.Substroke(stroke, cornerIndices[i], cornerIndices[i + 1]));
+
+            return result;
+        }
+
         public static List<SketchPoint> FindCorners(SketchStroke stroke)
         {
             var resampledStroke = ResampleForCornerFinding(stroke);
@@ -77,12 +88,20 @@ namespace App2
 
             while (!shouldContinue)
             {
+                foreach (var cornerIndex in cornerIndices)
+                    Debug.Write(cornerIndex + " ");
+
+                Debug.WriteLine("");
+
                 shouldContinue = true;
 
                 for (int i = 1; i < cornerIndices.Count; i++)
                 {
-                    if (IsLine(resampledStroke, i - 1, i))
+                    if (cornerIndices[i] - cornerIndices[i - 1] > 3 && !IsLine(resampledStroke, cornerIndices[i - 1], cornerIndices[i]))
                     {
+                        Debug.WriteLine("point 1: " + cornerIndices[i - 1]);
+                        Debug.WriteLine("point 2: " + cornerIndices[i]);
+
                         cornerIndices.Insert(i, HalfwayCornerIndex(straws, cornerIndices[i - 1], cornerIndices[i]));
                         shouldContinue = false;
                     }

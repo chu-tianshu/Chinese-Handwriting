@@ -73,10 +73,7 @@ namespace App2
 
         public static double HausdorffDistance(SketchStroke strokeA, SketchStroke strokeB)
         {
-            List<SketchPoint> pointSetA = strokeA.Points;
-            List<SketchPoint> pointSetB = strokeB.Points;
-
-            return (HausdorffDistance(pointSetA, pointSetB));
+            return (HausdorffDistance(strokeA.Points, strokeB.Points));
         }
 
         public static double HausdorffDistance(List<SketchPoint> pointSetA, List<SketchPoint> pointSetB)
@@ -95,7 +92,6 @@ namespace App2
                 foreach(SketchPoint pb in pointSetB)
                 {
                     double currentDistance = MathHelpers.EuclideanDistance(pa, pb);
-
                     if (currentDistance < minDis) minDis = currentDistance;
                 }
 

@@ -7,33 +7,6 @@ namespace App2
     {
         #region sketch preprocessing methods
 
-        public static List<SketchStroke> ScaleToFrame(Sketch sketch, double frameLength)
-        {
-            List<SketchStroke> result = new List<SketchStroke>();
-
-            double templateFrameWidth = sketch.FrameMaxX - sketch.FrameMinX;
-            double templateFrameHeight = sketch.FrameMaxY - sketch.FrameMinY;
-
-            foreach (SketchStroke origStroke in sketch.Strokes)
-            {
-                List<SketchPoint> origPoints = origStroke.Points;
-                List<SketchPoint> scaledPoints = new List<SketchPoint>();
-
-                foreach (SketchPoint origPoint in origPoints)
-                {
-                    double scaledX = origPoint.X / templateFrameWidth * frameLength;
-                    double scaledY = origPoint.Y / templateFrameHeight * frameLength;
-                    SketchPoint scaledPoint = new SketchPoint(scaledX, scaledY);
-                    scaledPoints.Add(scaledPoint);
-                }
-
-                SketchStroke scaledStroke = new SketchStroke(scaledPoints, origStroke.TimeStamp);
-                result.Add(scaledStroke);
-            }
-
-            return result;
-        }
-
         public static List<SketchStroke> Normalize(List<SketchStroke> strokes, int n, double size, SketchPoint origin)
         {
             List<SketchStroke> resampled = Resample(strokes, n);
@@ -123,6 +96,33 @@ namespace App2
             }
 
             return newStrokes;
+        }
+
+        public static List<SketchStroke> ScaleToFrame(Sketch sketch, double frameLength)
+        {
+            List<SketchStroke> result = new List<SketchStroke>();
+
+            double templateFrameWidth = sketch.FrameMaxX - sketch.FrameMinX;
+            double templateFrameHeight = sketch.FrameMaxY - sketch.FrameMinY;
+
+            foreach (SketchStroke origStroke in sketch.Strokes)
+            {
+                List<SketchPoint> origPoints = origStroke.Points;
+                List<SketchPoint> scaledPoints = new List<SketchPoint>();
+
+                foreach (SketchPoint origPoint in origPoints)
+                {
+                    double scaledX = origPoint.X / templateFrameWidth * frameLength;
+                    double scaledY = origPoint.Y / templateFrameHeight * frameLength;
+                    SketchPoint scaledPoint = new SketchPoint(scaledX, scaledY);
+                    scaledPoints.Add(scaledPoint);
+                }
+
+                SketchStroke scaledStroke = new SketchStroke(scaledPoints, origStroke.TimeStamp);
+                result.Add(scaledStroke);
+            }
+
+            return result;
         }
 
         public static List<SketchStroke> ScaleSquare(List<SketchStroke> strokes, double size)
