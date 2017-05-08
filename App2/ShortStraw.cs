@@ -6,6 +6,13 @@ namespace App2
 {
     public class ShortStraw
     {
+        public static List<SketchStroke> FindStrokeSegments(List<SketchStroke> strokes)
+        {
+            List<SketchStroke> result = new List<SketchStroke>();
+            foreach (SketchStroke stroke in strokes) result.AddRange(FindStrokeSegments(stroke));
+            return result;
+        }
+
         public static List<SketchStroke> FindStrokeSegments(SketchStroke stroke)
         {
             List<SketchStroke> result = new List<SketchStroke>();
@@ -88,20 +95,12 @@ namespace App2
 
             while (!shouldContinue)
             {
-                foreach (var cornerIndex in cornerIndices)
-                    Debug.Write(cornerIndex + " ");
-
-                Debug.WriteLine("");
-
                 shouldContinue = true;
 
                 for (int i = 1; i < cornerIndices.Count; i++)
                 {
                     if (cornerIndices[i] - cornerIndices[i - 1] > 3 && !IsLine(resampledStroke, cornerIndices[i - 1], cornerIndices[i]))
                     {
-                        Debug.WriteLine("point 1: " + cornerIndices[i - 1]);
-                        Debug.WriteLine("point 2: " + cornerIndices[i]);
-
                         cornerIndices.Insert(i, HalfwayCornerIndex(straws, cornerIndices[i - 1], cornerIndices[i]));
                         shouldContinue = false;
                     }

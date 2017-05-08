@@ -27,10 +27,17 @@ namespace App2
 
         private bool JudgeStrokeOrder(List<SketchStroke> sample, List<SketchStroke> template)
         {
-            Correspondence = SketchFeatureExtraction.GetStrokeCorrespondence(sample, template);
+            if (IsCorrectStrokeCount)
+            {
+                StrokeToStrokeCorrespondence = SketchFeatureExtraction.GetStrokeToStrokeCorrespondence(sample, template);
 
-            for (int i = 0; i < Correspondence.Length; i++)
-                if (Correspondence[i] != i) return false;
+                for (int i = 0; i < StrokeToStrokeCorrespondence.Length; i++)
+                    if (StrokeToStrokeCorrespondence[i] != i) return false;
+            }
+            else
+            {
+                StrokeToSegmentCorrespondence = SketchFeatureExtraction.GetStrokeToSegmentCorrespondence(sample, template);
+            }
 
             return true;
         }
@@ -86,7 +93,8 @@ namespace App2
         public bool IsCorrectStrokeDirection { get; private set; }
         public bool IsCorrectIntersection { get; private set; }
         public bool IsCorrectOverall { get; private set; }
-        public int[] Correspondence { get; private set; }
+        public int[] StrokeToStrokeCorrespondence { get; private set; }
+        public Dictionary<int, SketchStroke> StrokeToSegmentCorrespondence { get; private set; }
         public HashSet<int> WrongDirectionStrokeIndices { get; private set; }
         public string[,] SampleIntersectionMatrix { get; private set; }
         public string[,] TemplateIntersectionMatrix { get; private set; }

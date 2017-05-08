@@ -446,7 +446,7 @@ namespace App2
 
         private async void ShowIncorrectWritingWarning()
         {
-            var incorrectWritingWarning = new MessageDialog("Please first try to write the character correctly.");
+            var incorrectWritingWarning = new MessageDialog("Please try to write the character correctly.");
             incorrectWritingWarning.Commands.Add(new UICommand("Ok") { Id = 0 });
             incorrectWritingWarning.DefaultCommandIndex = 0;
             await incorrectWritingWarning.ShowAsync();
