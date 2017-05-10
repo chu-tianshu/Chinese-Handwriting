@@ -67,7 +67,7 @@ namespace App2
             return IntersectionMatrix(restored);
         }
 
-        public static int[] GetStrokeToStrokeCorrespondence(List<SketchStroke> sample, List<SketchStroke> template)
+        public static int[] StrokeToStrokeCorrespondence(List<SketchStroke> sample, List<SketchStroke> template)
         {
             int numStroke = sample.Count;
             int[] correspondence = new int[numStroke];
@@ -107,33 +107,35 @@ namespace App2
 
             List<SketchStroke> sampleNormalized = SketchPreprocessing.Normalize(sample, 128, 500, new SketchPoint(0.0, 0.0));
             List<SketchStroke> templateNormalized = SketchPreprocessing.Normalize(template, 128, 500, new SketchPoint(0.0, 0.0));
-            List<SketchStroke> templateSegments = ShortStraw.FindStrokeSegments(templateNormalized);
-            List<SketchStroke> sampleSegments = ShortStraw.FindStrokeSegments(sampleNormalized);
+            Segmentation templateSegmentation = new Segmentation(templateNormalized);
+            Segmentation sampleSegmentation = new Segmentation(sampleNormalized);
 
             HashSet<int> sampleSegmentTaken = new HashSet<int>();
 
-            for (int i = 0; i < template.Count; i++)
+            for (int i = 0; i < templateSegmentation.Segments.Count; i++)
             {
-                /**
-                 * Two phases of segment correspondence detection:
-                 * 1. For those strokes in the templates that only has one segment (straight lines), find their corresponding stroke(s) from the sample
-                 * 2. For those strokes composed of multiple segments, find the correspondence of each segment, and then transforms it to stroke correspondence
-                 **/
+                double minDistance = double.MaxValue;
+                int matchedIndex = -1;
+                SketchStroke matchedSegment = new SketchStroke();
 
-                if (templateSegments[i].Count == 1)
+                for (int j = 0; j < sampleSegmentation.Segments.Count; j++)
                 {
-                    double minDistance = double.MaxValue;
-                    int matchedIndex = -1;
+                    if (sampleSegmentTaken.Contains(j)) continue;
 
-                    for (int j = 0; j < sampleSegments.Count; j++)
+                    double dis = SketchTools.HausdorffDistance(templateSegmentation.Segments[i], sampleSegmentation.Segments[j]);
+
+                    if (dis < minDistance)
                     {
-                        if (sampleSegmentTaken.Contains(j)) continue;
-
-                        double currDistance = SketchTools.HausdorffDistance()
+                        minDistance = dis;
+                        matchedIndex = j;
+                        matchedSegment = sampleSegmentation.Segments[j];
                     }
                 }
-                else
+
+                for (int j = matchedIndex - 1; j >= 0; j--)
                 {
+                    if (sampleSegmentTaken.Contains(j)) break;
+
 
                 }
             }

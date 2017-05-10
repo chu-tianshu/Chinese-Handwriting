@@ -6,13 +6,6 @@ namespace App2
 {
     public class ShortStraw
     {
-        public static List<SketchStroke> FindStrokeSegments(List<SketchStroke> strokes)
-        {
-            List<SketchStroke> result = new List<SketchStroke>();
-            foreach (SketchStroke stroke in strokes) result.AddRange(FindStrokeSegments(stroke));
-            return result;
-        }
-
         public static List<SketchStroke> FindStrokeSegments(SketchStroke stroke)
         {
             List<SketchStroke> result = new List<SketchStroke>();

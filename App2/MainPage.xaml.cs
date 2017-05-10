@@ -245,7 +245,7 @@ namespace App2
 
             AnimationCanvas.Children.Clear();
 
-            int[] correspondance = techAssessor.Correspondance;
+            int[] correspondance = techAssessor.StrokeToStrokeCorrespondence;
 
             string[,] sampleIntersections = techAssessor.SampleIntersectionMatrix;
             string[,] templateIntersections = techAssessor.TemplateIntersectionMatrix;

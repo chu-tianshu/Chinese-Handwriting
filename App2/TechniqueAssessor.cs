@@ -29,14 +29,14 @@ namespace App2
         {
             if (IsCorrectStrokeCount)
             {
-                StrokeToStrokeCorrespondence = SketchFeatureExtraction.GetStrokeToStrokeCorrespondence(sample, template);
+                StrokeToStrokeCorrespondence = SketchFeatureExtraction.StrokeToStrokeCorrespondence(sample, template);
 
                 for (int i = 0; i < StrokeToStrokeCorrespondence.Length; i++)
                     if (StrokeToStrokeCorrespondence[i] != i) return false;
             }
             else
             {
-                StrokeToSegmentCorrespondence = SketchFeatureExtraction.GetStrokeToSegmentCorrespondence(sample, template);
+                StrokeToSegmentCorrespondence = SketchFeatureExtraction.StrokeToSegmentCorrespondence(sample, template);
             }
 
             return true;
@@ -54,7 +54,7 @@ namespace App2
             for (int i = 0; i < numStroke; i++)
             {
                 SketchStroke sampleStroke = sample[i];
-                SketchStroke templateStroke = template[Correspondence[i]];
+                SketchStroke templateStroke = template[StrokeToStrokeCorrespondence[i]];
 
                 Vector2 sampleStartToEndVector = new Vector2((float)(sampleStroke.EndPoint.Y - sampleStroke.StartPoint.Y), (float)(sampleStroke.EndPoint.X - sampleStroke.StartPoint.X));
                 Vector2 templateStartToEndVector = new Vector2((float)(templateStroke.EndPoint.Y - templateStroke.StartPoint.Y), (float)(templateStroke.EndPoint.X - templateStroke.StartPoint.X));
@@ -74,7 +74,7 @@ namespace App2
         {
             if (!IsCorrectStrokeCount) return false;
 
-            SampleIntersectionMatrix = SketchFeatureExtraction.IntersectionMatrix(sample, Correspondance, WrongDirectionStrokeIndices);
+            SampleIntersectionMatrix = SketchFeatureExtraction.IntersectionMatrix(sample, StrokeToStrokeCorrespondence, WrongDirectionStrokeIndices);
             TemplateIntersectionMatrix = SketchFeatureExtraction.IntersectionMatrix(template);
 
             for (int i = 0; i < sample.Count; i++)
