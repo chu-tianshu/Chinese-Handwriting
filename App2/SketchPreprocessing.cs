@@ -135,7 +135,10 @@ namespace App2
             foreach (SketchStroke stroke in strokes)
             {
                 List<SketchPoint> newPoints = new List<SketchPoint>();
-                foreach (SketchPoint point in stroke.Points) newPoints.Add(new SketchPoint(point.X * size / width, point.Y * size / height));
+                foreach (SketchPoint point in stroke.Points)
+                {
+                    newPoints.Add(new SketchPoint(point.X * size / width, point.Y * size / height));
+                }
                 SketchStroke newStroke = new SketchStroke(newPoints, stroke.TimeStamp);
                 newStrokes.Add(newStroke);
             }
@@ -155,7 +158,10 @@ namespace App2
             foreach (SketchStroke stroke in strokes)
             {
                 List<SketchPoint> newPoints = new List<SketchPoint>();
-                foreach (SketchPoint point in stroke.Points) newPoints.Add(new SketchPoint(point.X + origin.X - centroid.X, point.Y + origin.Y - centroid.Y));
+                foreach (SketchPoint point in stroke.Points)
+                {
+                    newPoints.Add(new SketchPoint(point.X + origin.X - centroid.X, point.Y + origin.Y - centroid.Y));
+                }
                 SketchStroke newStroke = new SketchStroke(newPoints, stroke.TimeStamp);
                 newStrokes.Add(newStroke);
             }

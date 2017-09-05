@@ -45,9 +45,19 @@ namespace App2
             string[,] intersectionMatrix = new string[strokes.Count, strokes.Count];
 
             for (int i = 0; i < strokes.Count; i++)
+            {
                 for (int j = 0; j < strokes.Count; j++)
-                    if (i == j) intersectionMatrix[i, j] = "none";
-                    else intersectionMatrix[i, j] = SketchStrokeFeatureExtraction.IntersectionRelationship(strokes[i], strokes[j]);
+                {
+                    if (i == j)
+                    {
+                        intersectionMatrix[i, j] = "none";
+                    }
+                    else
+                    {
+                        intersectionMatrix[i, j] = SketchStrokeFeatureExtraction.IntersectionRelationship(strokes[i], strokes[j]);
+                    }
+                }
+            }
 
             return intersectionMatrix;
         }
@@ -60,14 +70,26 @@ namespace App2
             {
                 int strokeIndex = Array.IndexOf(correspondance, i);
 
-                if (wrongDirectionStrokeIndices.Contains(strokeIndex)) restored.Add(SketchStroke.Reverse(strokes[strokeIndex]));
-                else restored.Add(strokes[strokeIndex]);
+                if (wrongDirectionStrokeIndices.Contains(strokeIndex))
+                {
+                    restored.Add(SketchStroke.Reverse(strokes[strokeIndex]));
+                }
+                else
+                {
+                    restored.Add(strokes[strokeIndex]);
+                }
             }
 
             return IntersectionMatrix(restored);
         }
 
-        public static int[] StrokeToStrokeCorrespondence(List<SketchStroke> sample, List<SketchStroke> template)
+        /// <summary>
+        /// When sample and template have same numbers of strokes
+        /// </summary>
+        /// <param name="sample">sample strokes</param>
+        /// <param name="template">template strokes</param>
+        /// <returns>An array where corr[i] = j denotes the ith stroke from the sample corresponds to the jth stroke from the template.</returns>
+        public static int[] StrokeToStrokeCorrespondenceSameCount(List<SketchStroke> sample, List<SketchStroke> template)
         {
             int numStroke = sample.Count;
             int[] correspondence = new int[numStroke];
@@ -83,7 +105,10 @@ namespace App2
 
                 for (int j = 0; j < numStroke; j++)
                 {
-                    if (hasCompared[j]) continue;
+                    if (hasCompared[j])
+                    {
+                        continue;
+                    }
 
                     double dis = SketchTools.HausdorffDistance(sampleNormalized[i], templateNormalized[j]);
 
@@ -101,6 +126,211 @@ namespace App2
             return correspondence;
         }
 
+        /// <summary>
+        /// When sample and template have difference numbers of strokes
+        /// </summary>
+        /// <param name="sample">sample strokes</param>
+        /// <param name="template">template strokes</param>
+        /// <returns>The ith element in the result list is an array of two lists, {{ti, tj, ... ,tk}, {sa}} which denotes the a correspondence between 
+        /// a set of strokes from the template with a set of strokes from the sample. Note that it's either one-to-many or many-to-one.</returns>
+        public static List<List<int>[]> StrokeToStrokeCorrespondenceDifferentCount(List<SketchStroke> sample, List<SketchStroke> template)
+        {
+            List<List<int>[]> result = new List<List<int>[]>();
+            HashSet<int> usedSampleIndices = new HashSet<int>();
+            HashSet<int> usedTemplateIndices = new HashSet<int>();
+
+            List<SketchStroke> sampleNormalized = SketchPreprocessing.Normalize(sample, 128, 500, new SketchPoint(0.0, 0.0));
+            List<SketchStroke> templateNormalized = SketchPreprocessing.Normalize(template, 128, 500, new SketchPoint(0.0, 0.0));
+
+            int ti = 0;
+            while (ti < template.Count && usedSampleIndices.Count < sample.Count)
+            {
+                if (usedTemplateIndices.Contains(ti))
+                {
+                    ti++;
+                    continue;
+                }
+
+                double oneToOneDis = double.MaxValue;
+                int matchedIdx = -1;
+                for (int si = 0; si < sample.Count; si++)
+                {
+                    if (usedSampleIndices.Contains(si))
+                    {
+                        continue;
+                    }
+
+                    double dis = SketchTools.HausdorffDistance(sampleNormalized[si], templateNormalized[ti]);
+
+                    if (dis < oneToOneDis)
+                    {
+                        oneToOneDis = dis;
+                        matchedIdx = si;
+                    }
+                }
+
+                usedTemplateIndices.Add(ti);
+                usedSampleIndices.Add(matchedIdx);
+
+                List<int> oneToManyIndices = new List<int>();
+                oneToManyIndices.Add(matchedIdx);
+                List<int> manyToOneIndices = new List<int>();
+                manyToOneIndices.Add(ti);
+
+                SketchStroke currSampleStroke = sampleNormalized[matchedIdx];
+                double oneToManyDis = oneToOneDis;
+
+                int preSample = matchedIdx - 1;
+                int postSample = matchedIdx + 1;
+                while (preSample > 0 && !usedSampleIndices.Contains(preSample))
+                {
+                    SketchStroke concatenatedStroke = SketchStroke.ConcatenateStrokes(sampleNormalized[preSample], currSampleStroke);
+                    double dis = SketchTools.HausdorffDistance(concatenatedStroke, templateNormalized[ti]);
+
+                    if (dis < oneToManyDis)
+                    {
+                        oneToManyDis = dis;
+                        oneToManyIndices.Insert(0, preSample);
+                        currSampleStroke = concatenatedStroke;
+                    }
+                    else
+                    {
+                        break;
+                    }
+
+                    preSample--;
+                }
+                while (postSample < sample.Count && !usedSampleIndices.Contains(postSample))
+                {
+                    SketchStroke concatenatedStroke = SketchStroke.ConcatenateStrokes(currSampleStroke, sampleNormalized[postSample]);
+                    double dis = SketchTools.HausdorffDistance(concatenatedStroke, templateNormalized[ti]);
+
+                    if (dis < oneToManyDis)
+                    {
+                        oneToManyDis = dis;
+                        oneToManyIndices.Add(postSample);
+                        currSampleStroke = concatenatedStroke;
+                    }
+                    else
+                    {
+                        break;
+                    }
+
+                    postSample++;
+                }
+
+                SketchStroke currTemplateStroke = templateNormalized[ti];
+                double manyToOneDis = oneToOneDis;
+
+                int preTemplate = ti - 1;
+                int postTemplate = ti + 1;
+                while (preTemplate > 0 && !usedTemplateIndices.Contains(preTemplate))
+                {
+                    SketchStroke concatenatedStroke = SketchStroke.ConcatenateStrokes(templateNormalized[preTemplate], currTemplateStroke);
+                    double dis = SketchTools.HausdorffDistance(concatenatedStroke, sampleNormalized[matchedIdx]);
+
+                    if (dis < manyToOneDis)
+                    {
+                        manyToOneDis = dis;
+                        manyToOneIndices.Insert(0, preTemplate);
+                        currTemplateStroke = concatenatedStroke;
+                    }
+                    else
+                    {
+                        break;
+                    }
+
+                    preTemplate--;
+                }
+                while (postTemplate < template.Count && !usedTemplateIndices.Contains(postTemplate))
+                {
+                    SketchStroke concatenatedStroke = SketchStroke.ConcatenateStrokes(currTemplateStroke, templateNormalized[postTemplate]);
+                    double dis = SketchTools.HausdorffDistance(concatenatedStroke, sampleNormalized[matchedIdx]);
+
+                    if (dis < manyToOneDis)
+                    {
+                        manyToOneDis = dis;
+                        manyToOneIndices.Add(postTemplate);
+                        currTemplateStroke = concatenatedStroke;
+                    }
+                    else
+                    {
+                        break;
+                    }
+
+                    postTemplate++;
+                }
+
+                if (oneToManyDis < oneToOneDis && manyToOneDis < oneToOneDis)
+                {
+                    if (oneToManyDis < manyToOneDis)
+                    {
+                        List<int> one = new List<int>();
+                        List<int> many = new List<int>();
+                        one.Add(ti);
+                        foreach (int index in oneToManyIndices)
+                        {
+                            usedSampleIndices.Add(index);
+                            many.Add(index);
+                        }
+                        result.Add(new List<int>[] { one, many });
+                        ti++;
+                    }
+                    else
+                    {
+                        List<int> many = new List<int>();
+                        List<int> one = new List<int>();
+                        foreach (int index in manyToOneIndices)
+                        {
+                            usedTemplateIndices.Add(index);
+                            many.Add(index);
+                        }
+                        one.Add(matchedIdx);
+                        result.Add(new List<int>[] { many, one });
+                        ti = many[many.Count - 1] + 1;
+                    }
+                }
+                else if (oneToManyDis < oneToOneDis)
+                {
+                    List<int> one = new List<int>();
+                    List<int> many = new List<int>();
+                    one.Add(ti);
+                    foreach (int index in oneToManyIndices)
+                    {
+                        usedSampleIndices.Add(index);
+                        many.Add(index);
+                    }
+                    result.Add(new List<int>[] { one, many });
+                    ti++;
+                }
+                else if (manyToOneDis < oneToOneDis)
+                {
+                    List<int> many = new List<int>();
+                    List<int> one = new List<int>();
+                    foreach (int index in manyToOneIndices)
+                    {
+                        usedTemplateIndices.Add(index);
+                        many.Add(index);
+                    }
+                    one.Add(matchedIdx);
+                    result.Add(new List<int>[] { many, one });
+                    ti = many[many.Count - 1] + 1;
+                }
+                else
+                {
+                    List<int> oneTemplate = new List<int>();
+                    List<int> oneSample = new List<int>();
+                    oneTemplate.Add(ti);
+                    oneSample.Add(matchedIdx);
+                    result.Add(new List<int>[] { oneTemplate, oneSample });
+                    ti++;
+                }
+            }
+
+            return result;
+        }
+
+        /*
         public static Dictionary<int, SketchStroke> StrokeToSegmentCorrespondence(List<SketchStroke> sample, List<SketchStroke> template)
         {
             Dictionary<int, SketchStroke> result = new Dictionary<int, SketchStroke>();
@@ -142,5 +372,6 @@ namespace App2
 
             return result;
         }
+        */
     }
 }

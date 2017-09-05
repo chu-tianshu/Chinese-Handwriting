@@ -109,10 +109,16 @@ namespace App2
             StorageFolder imageTemplateFolder = await templatesFolder.GetFolderAsync("Images");
 
             var strokeTemplateFileList = await strokeTemplateFolder.GetFilesAsync();
-            foreach (var strokeTemplateFile in strokeTemplateFileList) ReadInTemplateXML(strokeTemplateFile);
+            foreach (var strokeTemplateFile in strokeTemplateFileList)
+            {
+                ReadInTemplateXML(strokeTemplateFile);
+            }
 
             var templateImageFileList = await imageTemplateFolder.GetFilesAsync();
-            foreach (var templateImageFile in templateImageFileList) templateImageFiles.Add(XMLHelpers.RemoveExtension(templateImageFile.Name), templateImageFile);
+            foreach (var templateImageFile in templateImageFileList)
+            {
+                templateImageFiles.Add(XMLHelpers.RemoveExtension(templateImageFile.Name), templateImageFile);
+            }
         }
 
         #endregion
@@ -224,14 +230,20 @@ namespace App2
 
         private void StrokeOrderPlayButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!techAssessor.IsCorrectStrokeCount) return;
+            if (!techAssessor.IsCorrectStrokeCount)
+            {
+                return;
+            }
 
             AnimationCanvas.Children.Clear();
         }
 
         private void StrokeDirectionPlayButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!techAssessor.IsCorrectStrokeCount) return;
+            if (!techAssessor.IsCorrectStrokeCount)
+            {
+                return;
+            }
 
             AnimationCanvas.Children.Clear();
             DisablePlayButtons();
@@ -241,11 +253,14 @@ namespace App2
 
         private void StrokeIntersectionPlayButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!techAssessor.IsCorrectStrokeCount) return;
+            if (!techAssessor.IsCorrectStrokeCount)
+            {
+                return;
+            }
 
             AnimationCanvas.Children.Clear();
 
-            int[] correspondance = techAssessor.StrokeToStrokeCorrespondence;
+            int[] correspondance = techAssessor.StrokeToStrokeCorrespondenceSameCount;
 
             string[,] sampleIntersections = techAssessor.SampleIntersectionMatrix;
             string[,] templateIntersections = techAssessor.TemplateIntersectionMatrix;
@@ -254,7 +269,10 @@ namespace App2
             {
                 for (int j = 0; j < sampleIntersections.GetLength(0); j++)
                 {
-                    if (i == j) continue;
+                    if (i == j)
+                    {
+                        continue;
+                    }
 
                     if (sampleIntersections[i, j] != templateIntersections[i, j])
                     {
@@ -318,8 +336,14 @@ namespace App2
                     break;
                 case "visual":
                     HidePlayButtons();
-                    if (!isWrittenCorrectly) ShowIncorrectWritingWarning();
-                    else ShowVisualFeedback();
+                    if (!isWrittenCorrectly)
+                    {
+                        ShowIncorrectWritingWarning();
+                    }
+                    else
+                    {
+                        ShowVisualFeedback();
+                    }
                     break;
                 default:
                     break;
@@ -348,14 +372,23 @@ namespace App2
 
         private void UpdateTime(bool hasStarted, bool hasEnded)
         {
-            if (hasStarted && hasEnded) throw new Exception("Cannot start and end stroke at the same time.");
+            if (hasStarted && hasEnded)
+            {
+                throw new Exception("Cannot start and end stroke at the same time.");
+            }
 
-            if (hasStarted) times = new List<long>();
+            if (hasStarted)
+            {
+                times = new List<long>();
+            }
 
             long time = DateTime.Now.Ticks - DateTimeOffset;
             times.Add(time);
 
-            if (hasEnded) timeCollection.Add(times);
+            if (hasEnded)
+            {
+                timeCollection.Add(times);
+            }
         }
 
         private void ShowTechniqueFeedback()
@@ -439,9 +472,14 @@ namespace App2
             wrongAnswerWarning.Commands.Add(showAnswerCommand);
 
             var result = await wrongAnswerWarning.ShowAsync();
-
-            if (result == retryCommand) Clear();
-            if (result == showAnswerCommand) InteractionTools.ShowTemplateImage(TemplateImage, currentImageTemplate);
+            if (result == retryCommand)
+            {
+                Clear();
+            }
+            if (result == showAnswerCommand)
+            {
+                InteractionTools.ShowTemplateImage(TemplateImage, currentImageTemplate);
+            }
         }
 
         private async void ShowIncorrectWritingWarning()

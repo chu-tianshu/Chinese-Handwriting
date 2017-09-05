@@ -10,8 +10,15 @@ namespace App2
             bool[,] array = new bool[length, length];
 
             foreach (SketchStroke stroke in strokes)
+            {
                 foreach (SketchPoint point in stroke.Points)
-                    if (IsInsideBoard(point, length)) array[(int)point.X, (int)point.Y] = true;
+                {
+                    if (IsInsideBoard(point, length))
+                    {
+                        array[(int)point.X, (int)point.Y] = true;
+                    }
+                }
+            }
 
             return array;
         }
@@ -30,8 +37,15 @@ namespace App2
             double ratio = scaledLength * 1.0 / origLength;
 
             for (int i = 0; i < origLength; i++)
+            {
                 for (int j = 0; j < origLength; j++)
-                    if (array[i, j]) scaled[(int)(i * ratio), (int)(j * ratio)] = true;
+                {
+                    if (array[i, j])
+                    {
+                        scaled[(int)(i * ratio), (int)(j * ratio)] = true;
+                    }
+                }
+            }
 
             return scaled;
         }
@@ -69,7 +83,9 @@ namespace App2
             double maxY = Double.MinValue;
 
             for (int i = 0; i < array.GetLength(0); i++)
+            {
                 for (int j = 0; j < array.GetLength(1); j++)
+                {
                     if (array[i, j])
                     {
                         minX = j < minX ? j : minX;
@@ -77,6 +93,8 @@ namespace App2
                         minY = i < minY ? i : minY;
                         maxY = i > maxY ? i : maxY;
                     }
+                }
+            }
 
             return new BoundingBox(minX, minY, maxX, maxY);
         }
@@ -85,8 +103,20 @@ namespace App2
         {
             int h = array.GetLength(0);
             int[] projection = new int[h];
-            for (int i = 0; i < h; i++) projection[i] = 0;
-            for (int i = 0; i < array.GetLength(0); i++) for (int j = 0; j < array.GetLength(1); j++) if (array[i, j]) projection[i]++;
+            for (int i = 0; i < h; i++)
+            {
+                projection[i] = 0;
+            }
+            for (int i = 0; i < array.GetLength(0); i++)
+            {
+                for (int j = 0; j < array.GetLength(1); j++)
+                {
+                    if (array[i, j])
+                    {
+                        projection[i]++;
+                    }
+                }
+            }
             return projection;
         }
 
@@ -94,8 +124,20 @@ namespace App2
         {
             int w = array.GetLength(1);
             int[] projection = new int[w];
-            for (int i = 0; i < w; i++) projection[i] = 0;
-            for (int i = 0; i < array.GetLength(0); i++) for (int j = 0; j < array.GetLength(1); j++) if (array[i, j]) projection[j]++;
+            for (int i = 0; i < w; i++)
+            {
+                projection[i] = 0;
+            }
+            for (int i = 0; i < array.GetLength(0); i++)
+            {
+                for (int j = 0; j < array.GetLength(1); j++)
+                {
+                    if (array[i, j])
+                    {
+                        projection[j]++;
+                    }
+                }
+            }
             return projection;
         }
 

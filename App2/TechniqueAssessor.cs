@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Numerics;
 
 namespace App2
@@ -13,7 +14,31 @@ namespace App2
             IsCorrectStrokeOrder = JudgeStrokeOrder(sample, template);
             IsCorrectStrokeDirection = JudgeStrokeDirection(sample, template);
             IsCorrectIntersection = JudgeIntersection(sample, template);
-            IsCorrectOverall = IsCorrectStrokeCount && IsCorrectStrokeDirection && IsCorrectStrokeOrder;
+            IsCorrectOverall = IsCorrectStrokeCount && IsCorrectStrokeDirection && IsCorrectStrokeOrder && IsCorrectIntersection;
+
+            if (sample.Count == template.Count)
+            {
+                this.StrokeToStrokeCorrespondenceSameCount = SketchFeatureExtraction.StrokeToStrokeCorrespondenceSameCount(sample, template);
+            }
+            else
+            {
+                this.StrokeToStrokeCorrespondenceDifferentCount = SketchFeatureExtraction.StrokeToStrokeCorrespondenceDifferentCount(sample, template);
+
+                foreach (List<int>[] arr in StrokeToStrokeCorrespondenceDifferentCount)
+                {
+                    Debug.WriteLine("");
+                    Debug.Write("templates: ");
+                    foreach (int ti in arr[0])
+                    {
+                        Debug.Write(ti + ", ");
+                    }
+                    Debug.Write("........");
+                    foreach (int si in arr[1])
+                    {
+                        Debug.Write(si + ", ");
+                    }
+                }
+            }
         }
 
         #endregion
@@ -29,14 +54,13 @@ namespace App2
         {
             if (IsCorrectStrokeCount)
             {
-                StrokeToStrokeCorrespondence = SketchFeatureExtraction.StrokeToStrokeCorrespondence(sample, template);
-
-                for (int i = 0; i < StrokeToStrokeCorrespondence.Length; i++)
-                    if (StrokeToStrokeCorrespondence[i] != i) return false;
-            }
-            else
-            {
-                StrokeToSegmentCorrespondence = SketchFeatureExtraction.StrokeToSegmentCorrespondence(sample, template);
+                for (int i = 0; i < StrokeToStrokeCorrespondenceSameCount.Length; i++)
+                {
+                    if (StrokeToStrokeCorrespondenceSameCount[i] != i)
+                    {
+                        return false;
+                    }
+                }
             }
 
             return true;
@@ -54,7 +78,7 @@ namespace App2
             for (int i = 0; i < numStroke; i++)
             {
                 SketchStroke sampleStroke = sample[i];
-                SketchStroke templateStroke = template[StrokeToStrokeCorrespondence[i]];
+                SketchStroke templateStroke = template[StrokeToStrokeCorrespondenceSameCount[i]];
 
                 Vector2 sampleStartToEndVector = new Vector2((float)(sampleStroke.EndPoint.Y - sampleStroke.StartPoint.Y), (float)(sampleStroke.EndPoint.X - sampleStroke.StartPoint.X));
                 Vector2 templateStartToEndVector = new Vector2((float)(templateStroke.EndPoint.Y - templateStroke.StartPoint.Y), (float)(templateStroke.EndPoint.X - templateStroke.StartPoint.X));
@@ -64,7 +88,10 @@ namespace App2
 
                 double cosBetweenSampleAndTemplateStrokes = Vector2.Dot(sampleStartToEndVectorNormalized, templateStartToEndVectorNormalized);
 
-                if (cosBetweenSampleAndTemplateStrokes < 0) WrongDirectionStrokeIndices.Add(i);
+                if (cosBetweenSampleAndTemplateStrokes < 0)
+                {
+                    WrongDirectionStrokeIndices.Add(i);
+                }
             }
 
             return WrongDirectionStrokeIndices.Count == 0;
@@ -72,14 +99,24 @@ namespace App2
 
         private bool JudgeIntersection(List<SketchStroke> sample, List<SketchStroke> template)
         {
-            if (!IsCorrectStrokeCount) return false;
+            if (!IsCorrectStrokeCount)
+            {
+                return false;
+            }
 
-            SampleIntersectionMatrix = SketchFeatureExtraction.IntersectionMatrix(sample, StrokeToStrokeCorrespondence, WrongDirectionStrokeIndices);
+            SampleIntersectionMatrix = SketchFeatureExtraction.IntersectionMatrix(sample, StrokeToStrokeCorrespondenceSameCount, WrongDirectionStrokeIndices);
             TemplateIntersectionMatrix = SketchFeatureExtraction.IntersectionMatrix(template);
 
             for (int i = 0; i < sample.Count; i++)
+            {
                 for (int j = 0; j < sample.Count; j++)
-                    if (SampleIntersectionMatrix[i, j] != TemplateIntersectionMatrix[i, j]) return false;
+                {
+                    if (SampleIntersectionMatrix[i, j] != TemplateIntersectionMatrix[i, j])
+                    {
+                        return false;
+                    }
+                }
+            }
 
             return true;
         }
@@ -93,7 +130,8 @@ namespace App2
         public bool IsCorrectStrokeDirection { get; private set; }
         public bool IsCorrectIntersection { get; private set; }
         public bool IsCorrectOverall { get; private set; }
-        public int[] StrokeToStrokeCorrespondence { get; private set; }
+        public int[] StrokeToStrokeCorrespondenceSameCount { get; private set; }
+        public List<List<int>[]> StrokeToStrokeCorrespondenceDifferentCount { get; private set; }
         public Dictionary<int, SketchStroke> StrokeToSegmentCorrespondence { get; private set; }
         public HashSet<int> WrongDirectionStrokeIndices { get; private set; }
         public string[,] SampleIntersectionMatrix { get; private set; }

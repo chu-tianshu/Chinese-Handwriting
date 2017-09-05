@@ -1,4 +1,17 @@
-﻿using System;
+﻿//-------------------------------------------------------------------------------
+// reference: https://faculty.washington.edu/wobbrock/pubs/icmi-12.pdf
+//
+// @inproceedings{vatavu2012gestures,
+//  title={Gestures as point clouds: a $ P recognizer for user interface prototypes},
+//  author={Vatavu, Radu-Daniel and Anthony, Lisa and Wobbrock, Jacob O},
+//  booktitle={Proceedings of the 14th ACM international conference on Multimodal interaction},
+//  pages={273--280},
+//  year={2012},
+//  organization={ACM}
+// }
+//-------------------------------------------------------------------------------
+
+using System;
 using System.Collections.Generic;
 
 namespace App2
@@ -53,7 +66,10 @@ namespace App2
 
         #region helper methods
 
-        private double ToScore(double distance) { return (100.0 - (distance / (0.5 * (Math.Sqrt(Size * Size + Size * Size))))); }
+        private double ToScore(double distance)
+        {
+            return (100.0 - (distance / (0.5 * (Math.Sqrt(Size * Size + Size * Size)))));
+        }
 
         #endregion
 
