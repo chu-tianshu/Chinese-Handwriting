@@ -12,8 +12,14 @@ namespace App2
             List<SketchPoint> alphaPoints = new List<SketchPoint>();
             List<SketchPoint> betaPoints = new List<SketchPoint>();
 
-            foreach (SketchStroke alphaStroke in alphaStrokeList) alphaPoints.AddRange(alphaStroke.Points);
-            foreach (SketchStroke betaStroke in betaStrokeList) betaPoints.AddRange(betaStroke.Points);
+            foreach (SketchStroke alphaStroke in alphaStrokeList)
+            {
+                alphaPoints.AddRange(alphaStroke.Points);
+            }
+            foreach (SketchStroke betaStroke in betaStrokeList)
+            {
+                betaPoints.AddRange(betaStroke.Points);
+            }
 
             return Distance(alphaPoints, betaPoints);
         }

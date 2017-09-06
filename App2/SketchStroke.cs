@@ -9,34 +9,49 @@ namespace App2
         #region initializers
         public SketchStroke()
         {
-            points = new List<SketchPoint>();
-            timeStamp = new List<long>();
+            this.points = new List<SketchPoint>();
+            this.timeStamp = new List<long>();
         }
 
         public SketchStroke(List<SketchPoint> ps, List<long> ts)
         {
-            points = ps;
-            timeStamp = ts;
+            this.points = ps;
+            this.timeStamp = ts;
         }
 
         public SketchStroke(InkStroke inkStroke, List<long> list)
         {
-            points = new List<SketchPoint>();
+            this.points = new List<SketchPoint>();
             var inkPoints = inkStroke.GetInkPoints();
             for (int j = 0; j < inkPoints.Count; j++)
             {
                 AppendPoint(new SketchPoint(inkPoints.ElementAt(j)));
             }
-            timeStamp = list;
+            this.timeStamp = list;
         }
         #endregion
 
         #region modifiers
-        public void AppendPoint(SketchPoint p) { points.Add(p); }
-        public void AppendTime(long t) { timeStamp.Add(t); }
+        public void AppendPoint(SketchPoint p) { this.points.Add(p); }
+        public void AppendTime(long t) { this.timeStamp.Add(t); }
         #endregion
 
         #region static methods
+        public static SketchStroke Copy(SketchStroke orig)
+        {
+            List<SketchPoint> newPoints = new List<SketchPoint>();
+            List<long> newTimestamps = new List<long>();
+            for (int i = 0; i < orig.PointsCount; i++)
+            {
+                newPoints.Add(orig.Points[i]);
+            }
+            for (int i = 0; i < orig.TimesCount; i++)
+            {
+                newTimestamps.Add(orig.TimeStamp[i]);
+            }
+            return new SketchStroke(newPoints, newTimestamps);
+        }
+
         public static SketchStroke Reverse(SketchStroke sketchStroke)
         {
             List<SketchPoint> reversedPoints = new List<SketchPoint>();
@@ -61,17 +76,30 @@ namespace App2
         public static SketchStroke ConcatenateStrokes(SketchStroke s1, SketchStroke s2)
         {
             SketchStroke result = new SketchStroke();
-
             for (int i = 0; i < s1.PointsCount; i++)
             {
                 result.AppendPoint(s1.Points[i]);
                 result.AppendTime(s1.TimeStamp[i]);
             }
-
             for (int i = 0; i < s2.PointsCount; i++)
             {
                 result.AppendPoint(s2.Points[i]);
                 result.AppendTime(s2.TimeStamp[i]);
+            }
+            return result;
+        }
+
+        public static SketchStroke ConcatenateStrokes(List<SketchStroke> strokes)
+        {
+            SketchStroke result = new SketchStroke();
+
+            foreach (SketchStroke stroke in strokes)
+            {
+                for (int i = 0; i < stroke.PointsCount; i++)
+                {
+                    result.AppendPoint(stroke.Points[i]);
+                    result.AppendTime(stroke.TimeStamp[i]);
+                }
             }
 
             return result;
@@ -79,11 +107,12 @@ namespace App2
         #endregion
 
         #region properties
-        public int PointsCount { get { return points.Count; } }
-        public List<SketchPoint> Points { get { return points; } }
-        public SketchPoint StartPoint { get { return points[0]; } }
-        public SketchPoint EndPoint { get { return points[Points.Count - 1]; } }
-        public List<long> TimeStamp { get { return timeStamp; } set { timeStamp = value; } }
+        public int PointsCount { get { return this.points.Count; } }
+        public int TimesCount { get { return this.timeStamp.Count; } }
+        public List<SketchPoint> Points { get { return this.points; } }
+        public SketchPoint StartPoint { get { return this.points[0]; } }
+        public SketchPoint EndPoint { get { return this.points[Points.Count - 1]; } }
+        public List<long> TimeStamp { get { return this.timeStamp; } set { this.timeStamp = value; } }
         #endregion
 
         #region fields

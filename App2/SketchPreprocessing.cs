@@ -9,7 +9,13 @@ namespace App2
 
         public static List<SketchStroke> Normalize(List<SketchStroke> strokes, int n, double size, SketchPoint origin)
         {
-            List<SketchStroke> resampled = Resample(strokes, n);
+            List<SketchStroke> sampleCopy = new List<SketchStroke>();
+            foreach (SketchStroke orig in strokes)
+            {
+                sampleCopy.Add(SketchStroke.Copy(orig));
+            }
+
+            List<SketchStroke> resampled = Resample(sampleCopy, n);
             List<SketchStroke> scaled = ScaleSquare(resampled, size);
             List<SketchStroke> translated = TranslateCentroid(scaled, origin);
 
@@ -20,7 +26,10 @@ namespace App2
         {
             double totalLength = 0;
 
-            foreach (SketchStroke stroke in strokes) totalLength += SketchStrokeFeatureExtraction.PathLength(stroke);
+            foreach (SketchStroke stroke in strokes)
+            {
+                totalLength += SketchStrokeFeatureExtraction.PathLength(stroke);
+            }
 
             double I = totalLength / (n - 1);
             double D = 0.0;
@@ -168,12 +177,6 @@ namespace App2
 
             return newStrokes;
         }
-
-        #endregion
-
-        #region read only fields
-
-        private readonly int MergeDistanceThreshold = 10;
 
         #endregion
     }

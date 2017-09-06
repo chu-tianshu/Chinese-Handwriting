@@ -10,12 +10,6 @@ namespace App2
 
         public TechniqueAssessor(List<SketchStroke> sample, List<SketchStroke> template)
         {
-            IsCorrectStrokeCount = JudgeStrokeCount(sample, template);
-            IsCorrectStrokeOrder = JudgeStrokeOrder(sample, template);
-            IsCorrectStrokeDirection = JudgeStrokeDirection(sample, template);
-            IsCorrectIntersection = JudgeIntersection(sample, template);
-            IsCorrectOverall = IsCorrectStrokeCount && IsCorrectStrokeDirection && IsCorrectStrokeOrder && IsCorrectIntersection;
-
             if (sample.Count == template.Count)
             {
                 this.StrokeToStrokeCorrespondenceSameCount = SketchFeatureExtraction.StrokeToStrokeCorrespondenceSameCount(sample, template);
@@ -23,22 +17,13 @@ namespace App2
             else
             {
                 this.StrokeToStrokeCorrespondenceDifferentCount = SketchFeatureExtraction.StrokeToStrokeCorrespondenceDifferentCount(sample, template);
-
-                foreach (List<int>[] arr in StrokeToStrokeCorrespondenceDifferentCount)
-                {
-                    Debug.WriteLine("");
-                    Debug.Write("templates: ");
-                    foreach (int ti in arr[0])
-                    {
-                        Debug.Write(ti + ", ");
-                    }
-                    Debug.Write("........");
-                    foreach (int si in arr[1])
-                    {
-                        Debug.Write(si + ", ");
-                    }
-                }
             }
+
+            IsCorrectStrokeCount = JudgeStrokeCount(sample, template);
+            IsCorrectStrokeOrder = JudgeStrokeOrder(sample, template);
+            IsCorrectStrokeDirection = JudgeStrokeDirection(sample, template);
+            IsCorrectIntersection = JudgeIntersection(sample, template);
+            IsCorrectOverall = IsCorrectStrokeCount && IsCorrectStrokeDirection && IsCorrectStrokeOrder && IsCorrectIntersection;
         }
 
         #endregion
@@ -54,7 +39,7 @@ namespace App2
         {
             if (IsCorrectStrokeCount)
             {
-                for (int i = 0; i < StrokeToStrokeCorrespondenceSameCount.Length; i++)
+                for (int i = 0; i < this.StrokeToStrokeCorrespondenceSameCount.Length; i++)
                 {
                     if (StrokeToStrokeCorrespondenceSameCount[i] != i)
                     {

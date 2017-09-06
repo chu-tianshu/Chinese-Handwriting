@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Windows.Foundation;
 using Windows.UI;
+using Windows.UI.Input.Inking;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
@@ -19,12 +21,78 @@ namespace App2
         public static void DemoCorrectStrokes(Canvas canvas, List<SketchStroke> correctStrokes)
         {
             List<List<SketchPoint>> solutionStrokeTraces = new List<List<SketchPoint>>();
-            foreach (SketchStroke stroke in correctStrokes) solutionStrokeTraces.Add(stroke.Points);
+            foreach (SketchStroke stroke in correctStrokes)
+            {
+                solutionStrokeTraces.Add(stroke.Points);
+            }
             List<Storyboard> storyboards = GenerateStoryBoards(canvas, solutionStrokeTraces, AnimationPointSize, AnimationPointDuration);
-            foreach (var sb in storyboards) sb.Begin();
+            foreach (var sb in storyboards)
+            {
+                sb.Begin();
+            }
         }
 
-        public static void DemoCorrectStrokes(Canvas canvas, List<SketchStroke> strokes, HashSet<int> wrongDirectionStrokeIndices)
+        /// <summary>
+        /// Demos correct stroke counts. For one-to-many errors, we concatenate the broken strokes and demo smooth stroke. For extra strokes, we
+        /// highlight them. For many-to-one errors, we try to break those too-long strokes and make demo the correct parts one by one.
+        /// </summary>
+        /// <param name="canvas">animation canvas</param>
+        /// <param name="inkCanvas">ink canvas</param>
+        /// <param name="strokes">sketchstrokes</param>
+        /// <param name="correspondence">template to sample stroke correspondence</param>
+        public static void DemoStrokeCount(Canvas canvas, InkCanvas inkCanvas, List<SketchStroke> strokes, List<List<int>[]> correspondence)
+        {
+            // Make extra strokes red
+            HashSet<int> extraStrokeIndices = new HashSet<int>();
+            for (int i = 0; i < strokes.Count; i++)
+            {
+                extraStrokeIndices.Add(i);
+            }
+            foreach (List<int>[] pair in correspondence)
+            {
+                foreach (int index in pair[1])
+                {
+                    extraStrokeIndices.Remove(index);
+                }
+            }
+            foreach (int extraIndex in extraStrokeIndices)
+            {
+                InkStroke extraStroke = inkCanvas.InkPresenter.StrokeContainer.GetStrokes()[extraIndex];
+                InkDrawingAttributes drawingAttributes = new InkDrawingAttributes();
+                drawingAttributes.Color = Windows.UI.Colors.Red;
+                drawingAttributes.PenTip = PenTipShape.Circle;
+                drawingAttributes.Size = new Size(20, 20);
+                extraStroke.DrawingAttributes = drawingAttributes;
+            }
+
+            // Feedback for broken strokes (one-to-many errors)
+            List<SketchStroke> concatenatedStrokes = new List<SketchStroke>();
+            foreach (List<int>[] pair in correspondence)
+            {
+                if (pair[1].Count > 1)
+                {
+                    List<SketchStroke> brokenStrokes = new List<SketchStroke>();
+                    foreach (int index in pair[1])
+                    {
+                        brokenStrokes.Add(strokes[index]);
+                    }
+                    SketchStroke concatenatedStroke = SketchStroke.ConcatenateStrokes(brokenStrokes);
+                    concatenatedStrokes.Add(concatenatedStroke);
+                }
+            }
+            List<List<SketchPoint>> concatenatedPointLists = new List<List<SketchPoint>>();
+            foreach (SketchStroke stroke in concatenatedStrokes)
+            {
+                concatenatedPointLists.Add(stroke.Points);
+            }
+            List<Storyboard> storyboards = InteractionTools.GenerateStoryBoards(canvas, concatenatedPointLists, AnimationPointSize, AnimationPointDuration);
+            foreach (var sb in storyboards)
+            {
+                sb.Begin();
+            }
+        }
+
+        public static void DemoStrokeDirection(Canvas canvas, List<SketchStroke> strokes, HashSet<int> wrongDirectionStrokeIndices)
         {
             List<List<SketchPoint>> solutionStrokeTraces = new List<List<SketchPoint>>();
 
@@ -32,13 +100,18 @@ namespace App2
             {
                 List<SketchPoint> origPoints = strokes[index].Points;
                 List<SketchPoint> reversed = new List<SketchPoint>();
-                for (int i = origPoints.Count - 1; i >= 0; i--) reversed.Add(origPoints[i]);
+                for (int i = origPoints.Count - 1; i >= 0; i--)
+                {
+                    reversed.Add(origPoints[i]);
+                }
                 solutionStrokeTraces.Add(reversed);
             }
 
-            List<Storyboard> storyboards = GenerateStoryBoards(canvas, solutionStrokeTraces, AnimationPointSize, AnimationPointDuration);
-
-            foreach (var sb in storyboards) sb.Begin();
+            List<Storyboard> storyboards = InteractionTools.GenerateStoryBoards(canvas, solutionStrokeTraces, AnimationPointSize, AnimationPointDuration);
+            foreach (var sb in storyboards)
+            {
+                sb.Begin();
+            }
         }
 
         public static void HighlightWrongIntersection(Canvas animationCanvas, SketchPoint intersection)

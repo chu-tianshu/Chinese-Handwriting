@@ -33,53 +33,51 @@ namespace App2
             // Adjust canvas size
             double writingBorderHeight = WritingBorder.ActualHeight;
             double writingBorderWidth = WritingBorder.ActualWidth;
-            writingFrameLength = writingBorderHeight < writingBorderWidth ? writingBorderHeight : writingBorderWidth;
-            WritingBorder.Height = WritingBorder.Width = writingFrameLength;
+            this.writingFrameLength = writingBorderHeight < writingBorderWidth ? writingBorderHeight : writingBorderWidth;
+            this.WritingBorder.Height = WritingBorder.Width = writingFrameLength;
 
             // Load questions
-            LoadQuestions(out questionFiles);
-            questions = new List<Question>();
+            this.LoadQuestions(out questionFiles);
+            this.questions = new List<Question>();
             foreach (StorageFile questionFile in questionFiles)
             {
                 Question question = null;
                 Task task = Task.Run(async () => question = await XMLHelpers.XMLToQuestion(questionFile));
                 task.Wait();
 
-                questions.Add(question);
+                this.questions.Add(question);
             }
 
-            currentQuestionIndex = 0;
-            LoadQuestion(0);
+            this.currentQuestionIndex = 0;
+            this.LoadQuestion(0);
 
             // Load templates
-            strokeTemplates = new Dictionary<string, Sketch>();
-            templateImageFiles = new Dictionary<string, StorageFile>();
-            LoadTemplates();
+            this.strokeTemplates = new Dictionary<string, Sketch>();
+            this.templateImageFiles = new Dictionary<string, StorageFile>();
+            this.LoadTemplates();
 
             // Initialize user input
-            timeCollection = new List<List<long>>();
-            sketchStrokes = new List<SketchStroke>();
+            this.timeCollection = new List<List<long>>();
+            this.sketchStrokes = new List<SketchStroke>();
 
             HidePlayButtons();
         }
 
         private void InitializeWritingInkCanvas()
         {
-            WritingInkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Mouse
-                | Windows.UI.Core.CoreInputDeviceTypes.Pen
+            this.WritingInkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Mouse 
+                | Windows.UI.Core.CoreInputDeviceTypes.Pen 
                 | Windows.UI.Core.CoreInputDeviceTypes.Touch;
+            this.WritingInkCanvas.InkPresenter.StrokeInput.StrokeStarted += StrokeInput_StrokeStarted;
+            this.WritingInkCanvas.InkPresenter.StrokeInput.StrokeContinued += StrokeInput_StrokeContinued;
+            this.WritingInkCanvas.InkPresenter.StrokeInput.StrokeEnded += StrokeInput_StrokeEnded;
 
-            WritingInkCanvas.InkPresenter.StrokeInput.StrokeStarted += StrokeInput_StrokeStarted;
-            WritingInkCanvas.InkPresenter.StrokeInput.StrokeContinued += StrokeInput_StrokeContinued;
-            WritingInkCanvas.InkPresenter.StrokeInput.StrokeEnded += StrokeInput_StrokeEnded;
-
-            StrokeVisuals = new InkDrawingAttributes();
-            StrokeVisuals.Color = Colors.Purple;
-            StrokeVisuals.IgnorePressure = true;
-            StrokeVisuals.PenTip = PenTipShape.Circle;
-            StrokeVisuals.Size = new Size(20, 20);
-
-            WritingInkCanvas.InkPresenter.UpdateDefaultDrawingAttributes(StrokeVisuals);
+            this.StrokeVisuals = new InkDrawingAttributes();
+            this.StrokeVisuals.Color = Colors.Purple;
+            this.StrokeVisuals.IgnorePressure = true;
+            this.StrokeVisuals.PenTip = PenTipShape.Circle;
+            this.StrokeVisuals.Size = new Size(20, 20);
+            this.WritingInkCanvas.InkPresenter.UpdateDefaultDrawingAttributes(StrokeVisuals);
         }
 
         private void LoadQuestions(out List<StorageFile> targetFiles)
@@ -95,7 +93,10 @@ namespace App2
             task.Wait();
 
             targetFiles = new List<StorageFile>();
-            foreach (StorageFile file in files) targetFiles.Add(file);
+            foreach (StorageFile file in files)
+            {
+                targetFiles.Add(file);
+            }
         }
 
         private async void LoadTemplates()
@@ -127,105 +128,94 @@ namespace App2
 
         private void PreviousButton_Click(object sender, RoutedEventArgs e)
         {
-            currentQuestionIndex = currentQuestionIndex == 0 ? questions.Count - 1 : currentQuestionIndex - 1;
-            LoadQuestion(currentQuestionIndex);
-            Clear();
+            this.currentQuestionIndex = this.currentQuestionIndex == 0 ? this.questions.Count - 1 : this.currentQuestionIndex - 1;
+            this.LoadQuestion(this.currentQuestionIndex);
+            this.Clear();
         }
 
         private void NextButton_Click(object sender, RoutedEventArgs e)
         {
-            currentQuestionIndex = currentQuestionIndex == questions.Count - 1 ? 0 : currentQuestionIndex + 1;
-            LoadQuestion(currentQuestionIndex);
-            Clear();
+            this.currentQuestionIndex = this.currentQuestionIndex == this.questions.Count - 1 ? 0 : this.currentQuestionIndex + 1;
+            this.LoadQuestion(currentQuestionIndex);
+            this.Clear();
         }
 
         private void ClearButton_Click(object sender, RoutedEventArgs e)
         {
-            Clear();
+            this.Clear();
         }
 
         private void UndoButton_Click(object sender, RoutedEventArgs e)
         {
-            AnimationCanvas.Children.Clear();
+            this.AnimationCanvas.Children.Clear();
 
-            var strokes = WritingInkCanvas.InkPresenter.StrokeContainer.GetStrokes();
+            var strokes = this.WritingInkCanvas.InkPresenter.StrokeContainer.GetStrokes();
 
             if (strokes.Count != 0)
             {
                 strokes[strokes.Count - 1].Selected = true;
-                WritingInkCanvas.InkPresenter.StrokeContainer.DeleteSelected();
-                timeCollection.RemoveAt(timeCollection.Count - 1);
+                this.WritingInkCanvas.InkPresenter.StrokeContainer.DeleteSelected();
+                this.timeCollection.RemoveAt(timeCollection.Count - 1);
             }
 
-            isWrittenCorrectly = false;
+            this.isWrittenCorrectly = false;
         }
 
         private void FinishButton_Click(object sender, RoutedEventArgs e)
         {
-            CaptureSketchStrokes();
+            this.CaptureSketchStrokes();
 
             string answer = currentQuestion.Answer;
-            LoadTemplateImage(answer);
+            this.LoadTemplateImage(answer);
 
-            #region recognizes using $P
-
-            pDollarClassifier = new PDollarClassifier(NumResampleForPDollar, SizeScaleForPDollar, new SketchPoint(0, 0), strokeTemplates);
-            pDollarClassifier.run(sketchStrokes);
+            // recognizes with $P
+            this.pDollarClassifier = new PDollarClassifier(NumResampleForPDollar, SizeScaleForPDollar, new SketchPoint(0, 0), strokeTemplates);
+            this.pDollarClassifier.run(sketchStrokes);
             List<string> resultLabels = pDollarClassifier.Labels;
-
-            #endregion
-
-            #region finds corners with shortstraw
-
-            foreach (var stroke in sketchStrokes)
-            {
-                var corners = ShortStraw.FindCorners(stroke);
-
-                foreach (var point in corners)
-                {
-                    InteractionTools.HighlightWrongIntersection(AnimationCanvas, point);
-                }
-            }
-
-            #endregion
 
             if (answer == resultLabels[resultLabels.Count - 1] || 
                 answer == resultLabels[resultLabels.Count - 2] || 
                 answer == resultLabels[resultLabels.Count - 3])
             {
-                currentTemplateSketch = strokeTemplates[answer];
-                currentTemplateSketchStrokes = SketchPreprocessing.ScaleToFrame(currentTemplateSketch, writingFrameLength);
+                this.currentTemplateSketch = strokeTemplates[answer];
+                this.currentTemplateSketchStrokes = SketchPreprocessing.ScaleToFrame(currentTemplateSketch, writingFrameLength);
 
-                techAssessor = new TechniqueAssessor(sketchStrokes, currentTemplateSketchStrokes);
-                isWrittenCorrectly = techAssessor.IsCorrectOverall;
+                this.techAssessor = new TechniqueAssessor(sketchStrokes, currentTemplateSketchStrokes);
+                this.isWrittenCorrectly = techAssessor.IsCorrectOverall;
 
-                LoadFeedback("technique");
+                this.LoadFeedback("technique");
 
-                if (isWrittenCorrectly) visAssessor = new VisionAssessor(sketchStrokes, (int) writingFrameLength, currentTemplateSketch.Strokes, currentTemplateSketch.FrameMaxX - currentTemplateSketch.FrameMinX);
+                if (this.isWrittenCorrectly)
+                {
+                    this.visAssessor = new VisionAssessor(sketchStrokes, (int)writingFrameLength, currentTemplateSketch.Strokes, currentTemplateSketch.FrameMaxX - currentTemplateSketch.FrameMinX);
+                }
             }
             else
             {
-                LoadFeedback("wrong");
+                this.LoadFeedback("wrong");
             }
         }
 
         private void VisualFeedbackButton_Click(object sender, RoutedEventArgs e)
         {
-            LoadFeedback("visual");
+            this.LoadFeedback("visual");
         }
 
         private void TechniqueFeedbackButton_Click(object sender, RoutedEventArgs e)
         {
-            LoadFeedback("technique");
+            this.LoadFeedback("technique");
         }
 
-        // Stroke count button
         private void StrokeCountPlayButton_Click(object sender, RoutedEventArgs e)
         {
-            AnimationCanvas.Children.Clear();
+            this.AnimationCanvas.Children.Clear();
 
-            InteractionTools.ShowTemplateImage(TemplateImage, currentImageTemplate);
-            InteractionTools.DemoTemplate(AnimationCanvas, currentTemplateSketchStrokes);
+            if (!this.techAssessor.IsCorrectStrokeCount)
+            {
+                this.DisablePlayButtons();
+                InteractionTools.DemoStrokeCount(this.AnimationCanvas, this.WritingInkCanvas, this.sketchStrokes, this.techAssessor.StrokeToStrokeCorrespondenceDifferentCount);
+                this.EnablePlayButtons();
+            }
         }
 
         private void StrokeOrderPlayButton_Click(object sender, RoutedEventArgs e)
@@ -235,7 +225,7 @@ namespace App2
                 return;
             }
 
-            AnimationCanvas.Children.Clear();
+            this.AnimationCanvas.Children.Clear();
         }
 
         private void StrokeDirectionPlayButton_Click(object sender, RoutedEventArgs e)
@@ -247,7 +237,7 @@ namespace App2
 
             AnimationCanvas.Children.Clear();
             DisablePlayButtons();
-            InteractionTools.DemoCorrectStrokes(AnimationCanvas, sketchStrokes, techAssessor.WrongDirectionStrokeIndices);
+            InteractionTools.DemoStrokeDirection(this.AnimationCanvas, this.sketchStrokes, this.techAssessor.WrongDirectionStrokeIndices);
             EnablePlayButtons();
         }
 
@@ -281,8 +271,14 @@ namespace App2
 
                         for (int index = 0; index < correspondance.GetLength(0); index++)
                         {
-                            if (correspondance[index] == i) realI = index;
-                            if (correspondance[index] == j) realJ = index;
+                            if (correspondance[index] == i)
+                            {
+                                realI = index;
+                            }
+                            if (correspondance[index] == j)
+                            {
+                                realJ = index;
+                            }
                         }
 
                         SketchPoint intersection = SketchStrokeFeatureExtraction.Intersection(sketchStrokes[realI], sketchStrokes[realJ]);
@@ -319,7 +315,7 @@ namespace App2
             for (int i = 0; i < strokes.Count; i++)
             {
                 SketchStroke curSketchStroke = new SketchStroke(strokes.ElementAt(i), timeCollection.ElementAt(i));
-                sketchStrokes.Add(curSketchStroke);
+                this.sketchStrokes.Add(curSketchStroke);
             }
         }
 
