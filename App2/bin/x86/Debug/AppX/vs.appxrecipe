@@ -28,13 +28,13 @@
     <AppXManifest Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\bin\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-09-06T07:01:31.195</Modified>
+      <Modified>2017-09-10T06:22:54.407</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\bin\x86\Debug\App2.exe">
       <PackagePath>entrypoint\App2.exe</PackagePath>
-      <Modified>2017-09-06T07:01:30.867</Modified>
+      <Modified>2017-09-10T06:22:52.313</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\.nuget\packages\Microsoft.ApplicationInsights\1.0.0\lib\portable-win81+wpa81\Microsoft.ApplicationInsights.dll">
       <PackagePath>Microsoft.ApplicationInsights.dll</PackagePath>
@@ -484,6 +484,62 @@
       <PackagePath>Questions\005.xml.xml</PackagePath>
       <Modified>2017-01-03T21:50:27.702</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\006.xml.xml">
+      <PackagePath>Questions\006.xml.xml</PackagePath>
+      <Modified>2017-09-10T00:43:47.273</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\007.xml.xml">
+      <PackagePath>Questions\007.xml.xml</PackagePath>
+      <Modified>2017-09-10T00:57:28.462</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\008.xml.xml">
+      <PackagePath>Questions\008.xml.xml</PackagePath>
+      <Modified>2017-09-10T00:58:10.205</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\009.xml.xml">
+      <PackagePath>Questions\009.xml.xml</PackagePath>
+      <Modified>2017-09-10T00:58:41.506</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\010.xml.xml">
+      <PackagePath>Questions\010.xml.xml</PackagePath>
+      <Modified>2017-09-10T00:59:27.207</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\011.xml.xml">
+      <PackagePath>Questions\011.xml.xml</PackagePath>
+      <Modified>2017-09-10T00:59:58.711</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\012.xml.xml">
+      <PackagePath>Questions\012.xml.xml</PackagePath>
+      <Modified>2017-09-10T01:00:39.991</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\013.xml.xml">
+      <PackagePath>Questions\013.xml.xml</PackagePath>
+      <Modified>2017-09-10T01:01:11.413</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\014.xml.xml">
+      <PackagePath>Questions\014.xml.xml</PackagePath>
+      <Modified>2017-09-10T01:01:48.580</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\015.xml.xml">
+      <PackagePath>Questions\015.xml.xml</PackagePath>
+      <Modified>2017-09-10T01:02:15.356</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\016.xml.xml">
+      <PackagePath>Questions\016.xml.xml</PackagePath>
+      <Modified>2017-09-10T01:02:42.441</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\017.xml.xml">
+      <PackagePath>Questions\017.xml.xml</PackagePath>
+      <Modified>2017-09-10T01:03:04.436</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\018.xml.xml">
+      <PackagePath>Questions\018.xml.xml</PackagePath>
+      <Modified>2017-09-10T01:08:46.654</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\019.xml.xml">
+      <PackagePath>Questions\019.xml.xml</PackagePath>
+      <Modified>2017-09-10T01:04:19.794</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\StrokeData\ba_636047663981101947.xml">
       <PackagePath>Templates\StrokeData\ba_636047663981101947.xml</PackagePath>
       <Modified>2017-01-03T21:50:27.827</Modified>
@@ -693,11 +749,11 @@
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\bin\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-05-10T05:41:00.537</Modified>
+      <Modified>2017-09-10T06:22:53.727</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\bin\x86\Debug\Core\App2.exe">
       <PackagePath>App2.exe</PackagePath>
-      <Modified>2017-09-06T07:01:31.190</Modified>
+      <Modified>2017-09-10T06:22:54.400</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

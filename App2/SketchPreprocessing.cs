@@ -41,9 +41,7 @@ namespace App2
 
             foreach (SketchStroke stroke in strokes)
             {
-                /*
-                 * Resamples point locations
-                 */
+                //Resamples point locations
                 List<SketchPoint> points = stroke.Points;
                 List<SketchPoint> newPoints = new List<SketchPoint>();
 
@@ -84,9 +82,7 @@ namespace App2
 
                 D = 0.0;
 
-                /*
-                 * Resamples time stamps
-                 */
+                // Resamples time stamps
                 List<long> timeStamp = stroke.TimeStamp;
                 List<long> newTimeStamp = new List<long>();
 

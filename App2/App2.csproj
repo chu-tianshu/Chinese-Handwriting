@@ -97,6 +97,20 @@
     <Content Include="Questions\003.xml.xml" />
     <Content Include="Questions\004.xml.xml" />
     <Content Include="Questions\005.xml.xml" />
+    <Content Include="Questions\006.xml.xml" />
+    <Content Include="Questions\007.xml.xml" />
+    <Content Include="Questions\008.xml.xml" />
+    <Content Include="Questions\009.xml.xml" />
+    <Content Include="Questions\010.xml.xml" />
+    <Content Include="Questions\011.xml.xml" />
+    <Content Include="Questions\012.xml.xml" />
+    <Content Include="Questions\013.xml.xml" />
+    <Content Include="Questions\014.xml.xml" />
+    <Content Include="Questions\015.xml.xml" />
+    <Content Include="Questions\016.xml.xml" />
+    <Content Include="Questions\017.xml.xml" />
+    <Content Include="Questions\018.xml.xml" />
+    <Content Include="Questions\019.xml.xml" />
     <Content Include="Templates\Images\ba.png" />
     <Content Include="Templates\Images\bu.png" />
     <Content Include="Templates\Images\er.png" />
@@ -143,6 +157,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BoponotoTechniqueAssessor.cs" />
     <Compile Include="BoundingBox.cs" />
     <Compile Include="Fuzzy.cs" />
     <Compile Include="InteractionTools.cs" />

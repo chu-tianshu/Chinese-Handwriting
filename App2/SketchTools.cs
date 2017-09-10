@@ -107,6 +107,20 @@ namespace App2
             return maxDis;
         }
 
+        public static double TrioDistance(SketchStroke strokeA, SketchStroke strokeB)
+        {
+            SketchPoint startA = strokeA.StartPoint;
+            SketchPoint startB = strokeB.StartPoint;
+            SketchPoint midA = strokeA.MidPoint;
+            SketchPoint midB = strokeB.MidPoint;
+            SketchPoint endA = strokeA.EndPoint;
+            SketchPoint endB = strokeB.EndPoint;
+
+            return (MathHelpers.EuclideanDistance(startA, startB) +
+                MathHelpers.EuclideanDistance(midA, midB) +
+                MathHelpers.EuclideanDistance(endA, endB));
+        }
+
         #endregion
     }
 }

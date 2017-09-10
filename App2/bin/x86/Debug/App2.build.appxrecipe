@@ -361,6 +361,48 @@
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\005.xml.xml">
       <PackagePath>Questions\005.xml.xml</PackagePath>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\006.xml.xml">
+      <PackagePath>Questions\006.xml.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\007.xml.xml">
+      <PackagePath>Questions\007.xml.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\008.xml.xml">
+      <PackagePath>Questions\008.xml.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\009.xml.xml">
+      <PackagePath>Questions\009.xml.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\010.xml.xml">
+      <PackagePath>Questions\010.xml.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\011.xml.xml">
+      <PackagePath>Questions\011.xml.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\012.xml.xml">
+      <PackagePath>Questions\012.xml.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\013.xml.xml">
+      <PackagePath>Questions\013.xml.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\014.xml.xml">
+      <PackagePath>Questions\014.xml.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\015.xml.xml">
+      <PackagePath>Questions\015.xml.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\016.xml.xml">
+      <PackagePath>Questions\016.xml.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\017.xml.xml">
+      <PackagePath>Questions\017.xml.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\018.xml.xml">
+      <PackagePath>Questions\018.xml.xml</PackagePath>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\019.xml.xml">
+      <PackagePath>Questions\019.xml.xml</PackagePath>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\StrokeData\ba_636047663981101947.xml">
       <PackagePath>Templates\StrokeData\ba_636047663981101947.xml</PackagePath>
     </AppxPackagedFile>

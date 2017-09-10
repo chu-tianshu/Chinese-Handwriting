@@ -10,6 +10,8 @@ namespace App2
 
         public TechniqueAssessor(List<SketchStroke> sample, List<SketchStroke> template)
         {
+            // this.StrokeToStrokeCorrespondenceDifferentCount = SketchFeatureExtraction.StrokeToStrokeCorrespondenceDifferentCountStartFromSample(sample, template);
+
             if (sample.Count == template.Count)
             {
                 this.StrokeToStrokeCorrespondenceSameCount = SketchFeatureExtraction.StrokeToStrokeCorrespondenceSameCount(sample, template);
@@ -33,6 +35,22 @@ namespace App2
         private bool JudgeStrokeCount(List<SketchStroke> sample, List<SketchStroke> template)
         {
             return (sample.Count == template.Count);
+
+            /*
+            if (this.StrokeToStrokeCorrespondenceDifferentCount.Count != template.Count)
+            {
+                return false;
+            }
+
+            foreach (List<int>[] corr in this.StrokeToStrokeCorrespondenceDifferentCount)
+            {
+                if (corr[0].Count != 1 || corr[1].Count != 1)
+                {
+                    return false;
+                }
+            }
+
+            return true;*/
         }
 
         private bool JudgeStrokeOrder(List<SketchStroke> sample, List<SketchStroke> template)
@@ -46,13 +64,37 @@ namespace App2
                         return false;
                     }
                 }
-            }
 
-            return true;
+                return true;
+            }
+            else
+            {
+                this.PrintCorrespondence();
+
+                int prev = -1;
+                foreach (List<int>[] corr in this.StrokeToStrokeCorrespondenceDifferentCount)
+                {
+                    foreach (int curr in corr[1])
+                    {
+                        if (prev != -1)
+                        {
+                            if (curr != prev + 1)
+                            {
+                                return false;
+                            }
+                        }
+
+                        prev = curr;
+                    }
+                }
+
+                return prev == sample.Count - 1;
+            }
         }
 
         private bool JudgeStrokeDirection(List<SketchStroke> sample, List<SketchStroke> template)
         {
+            /*
             if (!IsCorrectStrokeCount) return false;
 
             int numStroke = template.Count;
@@ -80,6 +122,9 @@ namespace App2
             }
 
             return WrongDirectionStrokeIndices.Count == 0;
+            */
+
+            return true;
         }
 
         private bool JudgeIntersection(List<SketchStroke> sample, List<SketchStroke> template)
@@ -88,7 +133,7 @@ namespace App2
             {
                 return false;
             }
-
+            /*
             SampleIntersectionMatrix = SketchFeatureExtraction.IntersectionMatrix(sample, StrokeToStrokeCorrespondenceSameCount, WrongDirectionStrokeIndices);
             TemplateIntersectionMatrix = SketchFeatureExtraction.IntersectionMatrix(template);
 
@@ -102,11 +147,30 @@ namespace App2
                     }
                 }
             }
-
+            */
             return true;
         }
 
         #endregion
+
+        private void PrintCorrespondence()
+        {
+            foreach (List<int>[] corr in this.StrokeToStrokeCorrespondenceDifferentCount)
+            {
+                Debug.WriteLine("");
+                Debug.Write("Template: ");
+                foreach (int tempIndex in corr[0])
+                {
+                    Debug.Write(tempIndex + ", ");
+                }
+                Debug.Write(".........Sample: ");
+                foreach (int sampIndex in corr[1])
+                {
+                    Debug.Write(sampIndex + ", ");
+                }
+            }
+            Debug.WriteLine("");
+        }
 
         #region properties
 

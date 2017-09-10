@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
@@ -60,7 +61,7 @@ namespace App2
             this.timeCollection = new List<List<long>>();
             this.sketchStrokes = new List<SketchStroke>();
 
-            HidePlayButtons();
+            this.HidePlayButtons();
         }
 
         private void InitializeWritingInkCanvas()
@@ -97,6 +98,8 @@ namespace App2
             {
                 targetFiles.Add(file);
             }
+
+            Debug.WriteLine("Number of questions: " + targetFiles.Count);
         }
 
         private async void LoadTemplates()
@@ -179,6 +182,8 @@ namespace App2
             {
                 this.currentTemplateSketch = strokeTemplates[answer];
                 this.currentTemplateSketchStrokes = SketchPreprocessing.ScaleToFrame(currentTemplateSketch, writingFrameLength);
+
+                this.bpntTechAssessor = new BoponotoTechniqueAssessor(sketchStrokes, currentTemplateSketchStrokes);
 
                 this.techAssessor = new TechniqueAssessor(sketchStrokes, currentTemplateSketchStrokes);
                 this.isWrittenCorrectly = techAssessor.IsCorrectOverall;
@@ -512,6 +517,7 @@ namespace App2
         private BitmapImage currentImageTemplate;
         private bool isWrittenCorrectly;
         private int currentQuestionIndex;
+        private BoponotoTechniqueAssessor bpntTechAssessor;
         private TechniqueAssessor techAssessor;
         private VisionAssessor visAssessor;
 

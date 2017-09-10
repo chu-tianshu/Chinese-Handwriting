@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Windows.Foundation;
 using Windows.UI;
 using Windows.UI.Input.Inking;
@@ -33,8 +34,8 @@ namespace App2
         }
 
         /// <summary>
-        /// Demos correct stroke counts. For one-to-many errors, we concatenate the broken strokes and demo smooth stroke. For extra strokes, we
-        /// highlight them. For many-to-one errors, we try to break those too-long strokes and make demo the correct parts one by one.
+        /// Demos correct stroke counts. For one-to-many errors, we concatenate the broken strokes and demo a smooth stroke. For extra strokes, we
+        /// highlight them. For many-to-one errors, we try to break those too-long strokes and demo the correct parts one by one.
         /// </summary>
         /// <param name="canvas">animation canvas</param>
         /// <param name="inkCanvas">ink canvas</param>
@@ -89,6 +90,26 @@ namespace App2
             foreach (var sb in storyboards)
             {
                 sb.Begin();
+            }
+
+            // Feedback for sticky strokes
+            HashSet<int> stickyStrokes = new HashSet<int>();
+            foreach (List<int>[] pair in correspondence)
+            {
+                if (pair[0].Count > 1)
+                {
+                    stickyStrokes.Add(pair[1][0]);
+                }
+            }
+
+            foreach (int stickyIndex in stickyStrokes)
+            {
+                InkStroke stickyStroke = inkCanvas.InkPresenter.StrokeContainer.GetStrokes()[stickyIndex];
+                InkDrawingAttributes drawingAttributes = new InkDrawingAttributes();
+                drawingAttributes.Color = Windows.UI.Colors.Yellow;
+                drawingAttributes.PenTip = PenTipShape.Circle;
+                drawingAttributes.Size = new Size(20, 20);
+                stickyStroke.DrawingAttributes = drawingAttributes;
             }
         }
 

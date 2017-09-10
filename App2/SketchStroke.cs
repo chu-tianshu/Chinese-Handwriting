@@ -111,7 +111,8 @@ namespace App2
         public int TimesCount { get { return this.timeStamp.Count; } }
         public List<SketchPoint> Points { get { return this.points; } }
         public SketchPoint StartPoint { get { return this.points[0]; } }
-        public SketchPoint EndPoint { get { return this.points[Points.Count - 1]; } }
+        public SketchPoint MidPoint { get { return this.points[this.points.Count / 2]; } }
+        public SketchPoint EndPoint { get { return this.points[this.points.Count - 1]; } }
         public List<long> TimeStamp { get { return this.timeStamp; } set { this.timeStamp = value; } }
         #endregion
 
