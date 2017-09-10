@@ -176,6 +176,8 @@ namespace App2
             this.pDollarClassifier.run(sketchStrokes);
             List<string> resultLabels = pDollarClassifier.Labels;
 
+            Debug.WriteLine("recognition result: " + resultLabels[resultLabels.Count - 1]);
+
             if (answer == resultLabels[resultLabels.Count - 1] || 
                 answer == resultLabels[resultLabels.Count - 2] || 
                 answer == resultLabels[resultLabels.Count - 3])
