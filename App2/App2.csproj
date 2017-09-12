@@ -161,6 +161,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BopoNotoClassifier.cs" />
     <Compile Include="BoponotoTechniqueAssessor.cs" />
     <Compile Include="BoundingBox.cs" />
     <Compile Include="Fuzzy.cs" />

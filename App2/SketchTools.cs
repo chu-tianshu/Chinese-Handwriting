@@ -79,7 +79,23 @@ namespace App2
 
         public static double HausdorffDistance(SketchStroke strokeA, SketchStroke strokeB)
         {
-            return (HausdorffDistance(strokeA.Points, strokeB.Points));
+            return (SketchTools.HausdorffDistance(strokeA.Points, strokeB.Points));
+        }
+
+        public static double HausdorffDistance(List<SketchStroke> strokesA, List<SketchStroke> strokesB)
+        {
+            List<SketchPoint> pointsA = new List<SketchPoint>();
+            List<SketchPoint> pointsB = new List<SketchPoint>();
+            foreach (SketchStroke stroke in strokesA)
+            {
+                pointsA.AddRange(stroke.Points);
+            }
+            foreach (SketchStroke stroke in strokesB)
+            {
+                pointsB.AddRange(stroke.Points);
+            }
+
+            return SketchTools.HausdorffDistance(pointsA, pointsB);
         }
 
         public static double HausdorffDistance(List<SketchPoint> pointSetA, List<SketchPoint> pointSetB)

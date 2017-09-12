@@ -23,6 +23,10 @@ namespace App2
 
         public MainPage()
         {
+            this.pdollarRecCount = 0;
+            this.bpntRecCount = 0;
+            this.total = 0;
+
             this.ShowUserInformationDialog();
 
             InitializeComponent();
@@ -178,10 +182,6 @@ namespace App2
 
         private void FinishButton_Click(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("user name: " + this.UserName);
-            Debug.WriteLine("user mother language: " + this.UserMotherLanguage);
-            Debug.WriteLine("user fluency: " + this.UserFluency);
-
             this.CaptureSketchStrokes();
             this.WriteSampleXml();
 
@@ -189,11 +189,35 @@ namespace App2
             this.LoadTemplateImage(answer);
 
             // recognizes with $P
-            this.pDollarClassifier = new PDollarClassifier(NumResampleForPDollar, SizeScaleForPDollar, new SketchPoint(0, 0), strokeTemplates);
-            this.pDollarClassifier.run(sketchStrokes);
+            PDollarClassifier pDollarClassifier = new PDollarClassifier(NumResampleForPDollar, SizeScaleForPDollar, new SketchPoint(0, 0), this.strokeTemplates);
+            pDollarClassifier.run(this.sketchStrokes);
             List<string> resultLabels = pDollarClassifier.Labels;
+            string result = resultLabels[resultLabels.Count - 1];
 
-            // Debug.WriteLine("recognition result: " + resultLabels[resultLabels.Count - 1]);
+            // recognizes with BopoNoto
+            BopoNotoClassifier bpntClassifier = new BopoNotoClassifier(NumResampleForPDollar, SizeScaleForPDollar, new SketchPoint(0, 0), this.strokeTemplates);
+            bpntClassifier.run(this.sketchStrokes);
+            List<string> bpntResultLabels = bpntClassifier.Labels;
+            string bpntResult = bpntResultLabels[bpntResultLabels.Count - 1];
+
+            //Debug.WriteLine("bpnt recognition result: " + bpntResultLabels[bpntResultLabels.Count - 1]);
+            //Debug.WriteLine("recognition result: " + resultLabels[resultLabels.Count - 1]);
+
+            this.total++;
+
+            if (result == answer)
+            {
+                this.pdollarRecCount++;
+            }
+
+            if (bpntResult == answer)
+            {
+                this.bpntRecCount++;
+            }
+
+            Debug.Write("P dollar success: " + this.pdollarRecCount + " ");
+            Debug.Write("bpnt success: " + this.bpntRecCount + " ");
+            Debug.Write("total: " + this.total + "\n");
 
             if (answer == resultLabels[resultLabels.Count - 1] || 
                 answer == resultLabels[resultLabels.Count - 2] || 
@@ -400,7 +424,7 @@ namespace App2
 
             Debug.WriteLine(fluencyFolder.Path);
 
-            string fileName = this.currentQuestion.Answer + "_" + DateTime.Now.Ticks + ".xml";
+            string fileName = this.UserName + "_" + this.currentQuestion.Answer + "_" + DateTime.Now.Ticks + ".xml";
             StorageFile userFile = await fluencyFolder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
 
             XMLHelpers.SketchToXml(userFile, this.currentQuestion.Answer, this.UserName, this.UserMotherLanguage, this.UserFluency, 0, 0, this.WritingInkCanvas.ActualWidth, this.WritingInkCanvas.ActualHeight, this.sketchStrokes);
@@ -543,7 +567,6 @@ namespace App2
         private Dictionary<string, Sketch> strokeTemplates;
         private Dictionary<string, StorageFile> templateImageFiles;
         private List<SketchStroke> sketchStrokes;
-        private PDollarClassifier pDollarClassifier;
         private List<StorageFile> questionFiles;
         private List<Question> questions;
         private Question currentQuestion;
@@ -558,6 +581,10 @@ namespace App2
         private string UserName;
         private string UserMotherLanguage;
         private string UserFluency;
+
+        private int pdollarRecCount;
+        private int bpntRecCount;
+        private int total;
 
         #endregion
 
