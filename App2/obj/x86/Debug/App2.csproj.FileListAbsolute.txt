@@ -390,3 +390,8 @@ C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\ob
 C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\obj\x86\Debug\qualifiers.txt.intermediate
 C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\obj\x86\Debug\MultipleQualifiersPerDimensionFound.txt
 C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\obj\x86\Debug\ProjectArchitectures.txt
+C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\bin\x86\Debug\UserInformationDialog.xbf
+C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\obj\x86\Debug\UserInformationDialog.g.i.cs
+C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\obj\x86\Debug\UserInformationDialog.g.cs
+C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\obj\x86\Debug\UserInformationDialog.xaml
+C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\obj\x86\Debug\UserInformationDialog.xbf

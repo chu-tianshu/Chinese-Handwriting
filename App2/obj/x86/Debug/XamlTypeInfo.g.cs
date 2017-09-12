@@ -132,15 +132,23 @@ namespace App2.App2_XamlTypeInfo
 
         private void InitTypeTables()
         {
-            _typeNameTable = new string[3];
+            _typeNameTable = new string[7];
             _typeNameTable[0] = "App2.MainPage";
             _typeNameTable[1] = "Windows.UI.Xaml.Controls.Page";
             _typeNameTable[2] = "Windows.UI.Xaml.Controls.UserControl";
+            _typeNameTable[3] = "App2.UserInformationDialog";
+            _typeNameTable[4] = "Windows.UI.Xaml.Controls.ContentDialog";
+            _typeNameTable[5] = "Windows.UI.Xaml.Controls.ContentControl";
+            _typeNameTable[6] = "String";
 
-            _typeTable = new global::System.Type[3];
+            _typeTable = new global::System.Type[7];
             _typeTable[0] = typeof(global::App2.MainPage);
             _typeTable[1] = typeof(global::Windows.UI.Xaml.Controls.Page);
             _typeTable[2] = typeof(global::Windows.UI.Xaml.Controls.UserControl);
+            _typeTable[3] = typeof(global::App2.UserInformationDialog);
+            _typeTable[4] = typeof(global::Windows.UI.Xaml.Controls.ContentDialog);
+            _typeTable[5] = typeof(global::Windows.UI.Xaml.Controls.ContentControl);
+            _typeTable[6] = typeof(global::System.String);
         }
 
         private int LookupTypeIndexByName(string typeName)
@@ -176,6 +184,7 @@ namespace App2.App2_XamlTypeInfo
         }
 
         private object Activate_0_MainPage() { return new global::App2.MainPage(); }
+        private object Activate_3_UserInformationDialog() { return new global::App2.UserInformationDialog(); }
 
         private global::Windows.UI.Xaml.Markup.IXamlType CreateXamlType(int typeIndex)
         {
@@ -201,16 +210,75 @@ namespace App2.App2_XamlTypeInfo
             case 2:   //  Windows.UI.Xaml.Controls.UserControl
                 xamlType = new global::App2.App2_XamlTypeInfo.XamlSystemBaseType(typeName, type);
                 break;
+
+            case 3:   //  App2.UserInformationDialog
+                userType = new global::App2.App2_XamlTypeInfo.XamlUserType(this, typeName, type, GetXamlTypeByName("Windows.UI.Xaml.Controls.ContentDialog"));
+                userType.Activator = Activate_3_UserInformationDialog;
+                userType.AddMemberName("UserName");
+                userType.AddMemberName("UserMotherLanguage");
+                userType.AddMemberName("UserFluency");
+                userType.SetIsLocalType();
+                xamlType = userType;
+                break;
+
+            case 4:   //  Windows.UI.Xaml.Controls.ContentDialog
+                xamlType = new global::App2.App2_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                break;
+
+            case 5:   //  Windows.UI.Xaml.Controls.ContentControl
+                xamlType = new global::App2.App2_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                break;
+
+            case 6:   //  String
+                xamlType = new global::App2.App2_XamlTypeInfo.XamlSystemBaseType(typeName, type);
+                break;
             }
             return xamlType;
         }
 
 
+        private object get_0_UserInformationDialog_UserName(object instance)
+        {
+            var that = (global::App2.UserInformationDialog)instance;
+            return that.UserName;
+        }
+        private object get_1_UserInformationDialog_UserMotherLanguage(object instance)
+        {
+            var that = (global::App2.UserInformationDialog)instance;
+            return that.UserMotherLanguage;
+        }
+        private object get_2_UserInformationDialog_UserFluency(object instance)
+        {
+            var that = (global::App2.UserInformationDialog)instance;
+            return that.UserFluency;
+        }
 
         private global::Windows.UI.Xaml.Markup.IXamlMember CreateXamlMember(string longMemberName)
         {
             global::App2.App2_XamlTypeInfo.XamlMember xamlMember = null;
-            // No Local Properties
+            global::App2.App2_XamlTypeInfo.XamlUserType userType;
+
+            switch (longMemberName)
+            {
+            case "App2.UserInformationDialog.UserName":
+                userType = (global::App2.App2_XamlTypeInfo.XamlUserType)GetXamlTypeByName("App2.UserInformationDialog");
+                xamlMember = new global::App2.App2_XamlTypeInfo.XamlMember(this, "UserName", "String");
+                xamlMember.Getter = get_0_UserInformationDialog_UserName;
+                xamlMember.SetIsReadOnly();
+                break;
+            case "App2.UserInformationDialog.UserMotherLanguage":
+                userType = (global::App2.App2_XamlTypeInfo.XamlUserType)GetXamlTypeByName("App2.UserInformationDialog");
+                xamlMember = new global::App2.App2_XamlTypeInfo.XamlMember(this, "UserMotherLanguage", "String");
+                xamlMember.Getter = get_1_UserInformationDialog_UserMotherLanguage;
+                xamlMember.SetIsReadOnly();
+                break;
+            case "App2.UserInformationDialog.UserFluency":
+                userType = (global::App2.App2_XamlTypeInfo.XamlUserType)GetXamlTypeByName("App2.UserInformationDialog");
+                xamlMember = new global::App2.App2_XamlTypeInfo.XamlMember(this, "UserFluency", "String");
+                xamlMember.Getter = get_2_UserInformationDialog_UserFluency;
+                xamlMember.SetIsReadOnly();
+                break;
+            }
             return xamlMember;
         }
     }

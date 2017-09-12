@@ -151,6 +151,10 @@
     <Content Include="Templates\StrokeData\wu_636047663445530457.xml" />
     <Content Include="Templates\StrokeData\Yi_636047655336471458.xml" />
     <Content Include="Templates\StrokeData\zi_636047662297935457.xml" />
+    <Content Include="UserData\expert\somereason.txt" />
+    <Content Include="UserData\learner\somereason.txt" />
+    <Content Include="UserData\novice\somereason.txt" />
+    <Content Include="UserData\somereason.txt" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
@@ -179,6 +183,9 @@
     <Compile Include="SketchStrokePreprocessing.cs" />
     <Compile Include="SketchTools.cs" />
     <Compile Include="TechniqueAssessor.cs" />
+    <Compile Include="UserInformationDialog.xaml.cs">
+      <DependentUpon>UserInformationDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VisionAssessor.cs" />
     <Compile Include="VisionFeatureExtraction.cs" />
     <Compile Include="XMLHelpers.cs" />
@@ -208,8 +215,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UserInformationDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="UserData\expert\Tianshu\" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

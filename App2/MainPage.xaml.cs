@@ -23,6 +23,8 @@ namespace App2
 
         public MainPage()
         {
+            this.ShowUserInformationDialog();
+
             InitializeComponent();
             InitializeWritingInkCanvas();
 
@@ -64,6 +66,18 @@ namespace App2
             this.HidePlayButtons();
         }
 
+        private async void ShowUserInformationDialog()
+        {
+            UserInformationDialog dialog = new UserInformationDialog();
+            ContentDialogResult result = await dialog.ShowAsync();
+            if (result == ContentDialogResult.Primary)
+            {
+                this.UserName = dialog.UserName;
+                this.UserMotherLanguage = dialog.UserMotherLanguage;
+                this.UserFluency = dialog.UserFluency;
+            }
+        }
+
         private void InitializeWritingInkCanvas()
         {
             this.WritingInkCanvas.InkPresenter.InputDeviceTypes = Windows.UI.Core.CoreInputDeviceTypes.Mouse 
@@ -98,15 +112,13 @@ namespace App2
             {
                 targetFiles.Add(file);
             }
-
-            Debug.WriteLine("Number of questions: " + targetFiles.Count);
         }
 
+        /// <summary>
+        /// Load both sketch and image templates
+        /// </summary>
         private async void LoadTemplates()
         {
-            /*
-             * Loads both sketch and image templates
-             **/
             StorageFolder localFolder = Package.Current.InstalledLocation;
             StorageFolder templatesFolder = await localFolder.GetFolderAsync("Templates");
             StorageFolder strokeTemplateFolder = await templatesFolder.GetFolderAsync("StrokeData");
@@ -166,7 +178,12 @@ namespace App2
 
         private void FinishButton_Click(object sender, RoutedEventArgs e)
         {
+            Debug.WriteLine("user name: " + this.UserName);
+            Debug.WriteLine("user mother language: " + this.UserMotherLanguage);
+            Debug.WriteLine("user fluency: " + this.UserFluency);
+
             this.CaptureSketchStrokes();
+            this.WriteSampleXml();
 
             string answer = currentQuestion.Answer;
             this.LoadTemplateImage(answer);
@@ -176,7 +193,7 @@ namespace App2
             this.pDollarClassifier.run(sketchStrokes);
             List<string> resultLabels = pDollarClassifier.Labels;
 
-            Debug.WriteLine("recognition result: " + resultLabels[resultLabels.Count - 1]);
+            // Debug.WriteLine("recognition result: " + resultLabels[resultLabels.Count - 1]);
 
             if (answer == resultLabels[resultLabels.Count - 1] || 
                 answer == resultLabels[resultLabels.Count - 2] || 
@@ -250,12 +267,12 @@ namespace App2
 
         private void StrokeIntersectionPlayButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!techAssessor.IsCorrectStrokeCount)
+            if (!this.techAssessor.IsCorrectStrokeCount)
             {
                 return;
             }
 
-            AnimationCanvas.Children.Clear();
+            this.AnimationCanvas.Children.Clear();
 
             int[] correspondance = techAssessor.StrokeToStrokeCorrespondenceSameCount;
 
@@ -315,6 +332,9 @@ namespace App2
 
         #region helper methods
 
+        /// <summary>
+        /// Store stroke data in variable this.sketchStokes
+        /// </summary>
         private void CaptureSketchStrokes()
         {
             var strokes = WritingInkCanvas.InkPresenter.StrokeContainer.GetStrokes();
@@ -371,6 +391,19 @@ namespace App2
         {
             Sketch sketch = await XMLHelpers.XMLToSketch(file);
             strokeTemplates.Add(sketch.Label, sketch);
+        }
+
+        private async void WriteSampleXml()
+        {
+            StorageFolder saveFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
+            StorageFolder fluencyFolder = await saveFolder.CreateFolderAsync(this.UserFluency, CreationCollisionOption.OpenIfExists);
+
+            Debug.WriteLine(fluencyFolder.Path);
+
+            string fileName = this.currentQuestion.Answer + "_" + DateTime.Now.Ticks + ".xml";
+            StorageFile userFile = await fluencyFolder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
+
+            XMLHelpers.SketchToXml(userFile, this.currentQuestion.Answer, this.UserName, this.UserMotherLanguage, this.UserFluency, 0, 0, this.WritingInkCanvas.ActualWidth, this.WritingInkCanvas.ActualHeight, this.sketchStrokes);
         }
 
         private void UpdateTime(bool hasStarted, bool hasEnded)
@@ -522,6 +555,9 @@ namespace App2
         private BoponotoTechniqueAssessor bpntTechAssessor;
         private TechniqueAssessor techAssessor;
         private VisionAssessor visAssessor;
+        private string UserName;
+        private string UserMotherLanguage;
+        private string UserFluency;
 
         #endregion
 
