@@ -353,6 +353,53 @@ namespace App2
 
             return result;
         }
+
+        /// <summary>
+        /// one sample stroke contains many template strokes
+        /// </summary>
+        /// <param name="sample"></param>
+        /// <param name="template"></param>
+        /// <returns>stroke index -> list of template indices it contains</returns>
+        public static List<List<int>> StrokeToStrokeCorrespondenceConcatenating(List<SketchStroke> sample, List<SketchStroke> template)
+        {
+            List<List<int>> result = new List<List<int>>();
+
+            List<KeyValuePair<SketchStroke, int>> templateStrokeToIndex = new List<KeyValuePair<SketchStroke, int>>();
+            for (int i = 0; i < template.Count; i++)
+            {
+                templateStrokeToIndex.Add(new KeyValuePair<SketchStroke, int>(template[i], i));
+            }
+
+            foreach (SketchStroke sampleStroke in sample)
+            {
+                templateStrokeToIndex.Sort((t1, t2) => SketchTools.DirectedHausdorffDistance(t1.Key.Points, sampleStroke.Points).CompareTo(SketchTools.DirectedHausdorffDistance(t2.Key.Points, sampleStroke.Points)));
+
+                double currHausdorffFromSampleToTemplateList = double.MaxValue;
+                SketchStroke currConcatenated = new SketchStroke();
+                List<int> currListIndices = new List<int>();
+                foreach (KeyValuePair<SketchStroke, int> pair in templateStrokeToIndex)
+                {
+                    SketchStroke newConcatenated = SketchStroke.ConcatenateStrokes(pair.Key, currConcatenated);
+                    double newDistance = SketchTools.HausdorffDistance(sampleStroke, newConcatenated);
+                    if (newDistance < currHausdorffFromSampleToTemplateList)
+                    {
+                        currHausdorffFromSampleToTemplateList = newDistance;
+                        currConcatenated = newConcatenated;
+                        currListIndices.Add(pair.Value);
+                    }
+                }
+
+                result.Add(currListIndices);
+
+                foreach (int currIndex in currListIndices)
+                {
+                    templateStrokeToIndex.Remove(new KeyValuePair<SketchStroke, int>(template[currIndex], currIndex));
+                }
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// one to one, one to many, or many to one, result is from template to sample strokes
         /// </summary>

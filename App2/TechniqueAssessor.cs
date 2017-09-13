@@ -12,6 +12,17 @@ namespace App2
         {
             // this.StrokeToStrokeCorrespondenceDifferentCount = SketchFeatureExtraction.StrokeToStrokeCorrespondenceDifferentCountStartFromSample(sample, template);
 
+            List<List<int>> concatenatingCorrespondence = SketchFeatureExtraction.StrokeToStrokeCorrespondenceConcatenating(sample, template);
+            foreach (List<int> templateIndices in concatenatingCorrespondence)
+            {
+                Debug.Write("Sample: ");
+                foreach (int templateIndex in templateIndices)
+                {
+                    Debug.Write(templateIndex + ", ");
+                }
+                Debug.WriteLine("");
+            }
+
             if (sample.Count == template.Count)
             {
                 this.StrokeToStrokeCorrespondenceSameCount = SketchFeatureExtraction.StrokeToStrokeCorrespondenceSameCount(sample, template);
@@ -69,7 +80,7 @@ namespace App2
             }
             else
             {
-                this.PrintCorrespondence();
+                // this.PrintCorrespondence();
 
                 int prev = -1;
                 foreach (List<int>[] corr in this.StrokeToStrokeCorrespondenceDifferentCount)

@@ -27,7 +27,7 @@ namespace App2
             this.bpntRecCount = 0;
             this.total = 0;
 
-            this.ShowUserInformationDialog();
+            // this.ShowUserInformationDialog();
 
             InitializeComponent();
             InitializeWritingInkCanvas();
@@ -182,8 +182,13 @@ namespace App2
 
         private void FinishButton_Click(object sender, RoutedEventArgs e)
         {
+            if (this.WritingInkCanvas.InkPresenter.StrokeContainer.GetStrokes().Count == 0)
+            {
+                this.ShowWrongAnswerWarning();
+            }
+
             this.CaptureSketchStrokes();
-            this.WriteSampleXml();
+            // this.WriteSampleXml();
 
             string answer = currentQuestion.Answer;
             this.LoadTemplateImage(answer);
