@@ -222,6 +222,21 @@ namespace App2
             return storyboards;
         }
 
+        public static void ShowStroke(Canvas canvas, SketchStroke stroke)
+        {
+            for (int i = 0; i < stroke.PointsCount - 1; i++)
+            {
+                Line line = new Line();
+                line.X1 = stroke.Points[i].X;
+                line.Y1 = stroke.Points[i].Y;
+                line.X2 = stroke.Points[i + 1].X;
+                line.Y2 = stroke.Points[i + 1].Y;
+                line.StrokeThickness = 40;
+                line.Stroke = new SolidColorBrush(Colors.Blue);
+                canvas.Children.Add(line);
+            }
+        }
+
         public static void ShowTemplateImage(Image templateImage, BitmapImage currentImageTemplate)
         {
             templateImage.Source = currentImageTemplate;

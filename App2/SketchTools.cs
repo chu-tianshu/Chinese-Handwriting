@@ -110,14 +110,16 @@ namespace App2
             foreach(SketchPoint pa in pointSetA)
             {
                 double minDis = double.MaxValue;
-
                 foreach(SketchPoint pb in pointSetB)
                 {
                     double currentDistance = MathHelpers.EuclideanDistance(pa, pb);
                     if (currentDistance < minDis) minDis = currentDistance;
                 }
 
-                if (minDis > maxDis) maxDis = minDis;
+                if (minDis > maxDis)
+                {
+                    maxDis = minDis;
+                }
             }
 
             return maxDis;

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace App2
 {
-    public class BopoNotoClassifier
+    public class BoponotoClassifier
     {
-        public BopoNotoClassifier(int n, double size, SketchPoint point, Dictionary<string, Sketch> templates)
+        public BoponotoClassifier(int n, double size, SketchPoint point, Dictionary<string, Sketch> templates)
         {
             this.N = n;
             this.Size = size;

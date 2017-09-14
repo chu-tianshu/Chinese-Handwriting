@@ -27,7 +27,7 @@ namespace App2
             this.bpntRecCount = 0;
             this.total = 0;
 
-            // this.ShowUserInformationDialog();
+            this.ShowUserInformationDialog();
 
             InitializeComponent();
             InitializeWritingInkCanvas();
@@ -42,6 +42,14 @@ namespace App2
             double writingBorderWidth = WritingBorder.ActualWidth;
             this.writingFrameLength = writingBorderHeight < writingBorderWidth ? writingBorderHeight : writingBorderWidth;
             this.WritingBorder.Height = WritingBorder.Width = writingFrameLength;
+
+            // Load templates
+            this.strokeTemplates = new Dictionary<string, Sketch>();
+            this.templateImageFiles = new Dictionary<string, StorageFile>();
+            Task taskLoad = Task.Run(async () => await this.LoadTemplates());
+            taskLoad.Wait();
+
+            Debug.WriteLine(this.strokeTemplates.Count);
 
             // Load questions
             this.LoadQuestions(out questionFiles);
@@ -58,11 +66,6 @@ namespace App2
             this.currentQuestionIndex = 0;
             this.LoadQuestion(0);
 
-            // Load templates
-            this.strokeTemplates = new Dictionary<string, Sketch>();
-            this.templateImageFiles = new Dictionary<string, StorageFile>();
-            this.LoadTemplates();
-
             // Initialize user input
             this.timeCollection = new List<List<long>>();
             this.sketchStrokes = new List<SketchStroke>();
@@ -76,9 +79,9 @@ namespace App2
             ContentDialogResult result = await dialog.ShowAsync();
             if (result == ContentDialogResult.Primary)
             {
-                this.UserName = dialog.UserName;
-                this.UserMotherLanguage = dialog.UserMotherLanguage;
-                this.UserFluency = dialog.UserFluency;
+                this.userName = dialog.UserName;
+                this.userMotherLanguage = dialog.UserMotherLanguage;
+                this.userFluency = dialog.UserFluency;
             }
         }
 
@@ -90,6 +93,7 @@ namespace App2
             this.WritingInkCanvas.InkPresenter.StrokeInput.StrokeStarted += StrokeInput_StrokeStarted;
             this.WritingInkCanvas.InkPresenter.StrokeInput.StrokeContinued += StrokeInput_StrokeContinued;
             this.WritingInkCanvas.InkPresenter.StrokeInput.StrokeEnded += StrokeInput_StrokeEnded;
+            this.WritingInkCanvas.InkPresenter.StrokesCollected += StrokeInput_StrokesCollected;
 
             this.StrokeVisuals = new InkDrawingAttributes();
             this.StrokeVisuals.Color = Colors.Purple;
@@ -121,11 +125,12 @@ namespace App2
         /// <summary>
         /// Load both sketch and image templates
         /// </summary>
-        private async void LoadTemplates()
+        private async Task LoadTemplates()
         {
             StorageFolder localFolder = Package.Current.InstalledLocation;
             StorageFolder templatesFolder = await localFolder.GetFolderAsync("Templates");
-            StorageFolder strokeTemplateFolder = await templatesFolder.GetFolderAsync("StrokeData");
+            // StorageFolder strokeTemplateFolder = await templatesFolder.GetFolderAsync("StrokeData");
+            StorageFolder strokeTemplateFolder = await templatesFolder.GetFolderAsync("ExpertStrokes");
             StorageFolder imageTemplateFolder = await templatesFolder.GetFolderAsync("Images");
 
             var strokeTemplateFileList = await strokeTemplateFolder.GetFilesAsync();
@@ -182,16 +187,23 @@ namespace App2
 
         private void FinishButton_Click(object sender, RoutedEventArgs e)
         {
-            if (this.WritingInkCanvas.InkPresenter.StrokeContainer.GetStrokes().Count == 0)
+            Debug.WriteLine("inkstroke count: " + this.WritingInkCanvas.InkPresenter.StrokeContainer.GetStrokes().Count);
+            Debug.WriteLine("sketchstroke count: " + this.sketchStrokes.Count);
+
+            if (this.WritingInkCanvas.InkPresenter.StrokeContainer.GetStrokes().Count == 0 && this.isSkritter == false)
             {
-                this.ShowWrongAnswerWarning();
+                this.LoadFeedback("wrong");
+                return;
             }
 
-            this.CaptureSketchStrokes();
-            // this.WriteSampleXml();
+            if (this.isSkritter == false)
+            {
+                this.CaptureSketchStrokes();
+            }
 
-            string answer = currentQuestion.Answer;
-            this.LoadTemplateImage(answer);
+            this.WriteSampleXml();
+
+            string answer = this.currentQuestion.Answer;
 
             // recognizes with $P
             PDollarClassifier pDollarClassifier = new PDollarClassifier(NumResampleForPDollar, SizeScaleForPDollar, new SketchPoint(0, 0), this.strokeTemplates);
@@ -200,13 +212,13 @@ namespace App2
             string result = resultLabels[resultLabels.Count - 1];
 
             // recognizes with BopoNoto
-            BopoNotoClassifier bpntClassifier = new BopoNotoClassifier(NumResampleForPDollar, SizeScaleForPDollar, new SketchPoint(0, 0), this.strokeTemplates);
+            BoponotoClassifier bpntClassifier = new BoponotoClassifier(NumResampleForPDollar, SizeScaleForPDollar, new SketchPoint(0, 0), this.strokeTemplates);
             bpntClassifier.run(this.sketchStrokes);
             List<string> bpntResultLabels = bpntClassifier.Labels;
             string bpntResult = bpntResultLabels[bpntResultLabels.Count - 1];
 
-            //Debug.WriteLine("bpnt recognition result: " + bpntResultLabels[bpntResultLabels.Count - 1]);
-            //Debug.WriteLine("recognition result: " + resultLabels[resultLabels.Count - 1]);
+            Debug.WriteLine("bpnt recognition result: " + bpntResultLabels[bpntResultLabels.Count - 1]);
+            Debug.WriteLine("recognition result: " + resultLabels[resultLabels.Count - 1]);
 
             this.total++;
 
@@ -228,9 +240,6 @@ namespace App2
                 answer == resultLabels[resultLabels.Count - 2] || 
                 answer == resultLabels[resultLabels.Count - 3])
             {
-                this.currentTemplateSketch = strokeTemplates[answer];
-                this.currentTemplateSketchStrokes = SketchPreprocessing.ScaleToFrame(currentTemplateSketch, writingFrameLength);
-
                 this.bpntTechAssessor = new BoponotoTechniqueAssessor(sketchStrokes, currentTemplateSketchStrokes);
 
                 this.techAssessor = new TechniqueAssessor(sketchStrokes, currentTemplateSketchStrokes);
@@ -353,9 +362,42 @@ namespace App2
 
         #region stroke interaction methods
 
-        private void StrokeInput_StrokeStarted(InkStrokeInput sender, Windows.UI.Core.PointerEventArgs args) { UpdateTime(true, false); }
-        private void StrokeInput_StrokeContinued(InkStrokeInput sender, Windows.UI.Core.PointerEventArgs args) { UpdateTime(false, false); }
-        private void StrokeInput_StrokeEnded(InkStrokeInput sender, Windows.UI.Core.PointerEventArgs args) { UpdateTime(false, true); }
+        private void StrokeInput_StrokeStarted(InkStrokeInput sender, Windows.UI.Core.PointerEventArgs args)
+        {
+            UpdateTime(true, false);
+        }
+
+        private void StrokeInput_StrokeContinued(InkStrokeInput sender, Windows.UI.Core.PointerEventArgs args)
+        {
+            UpdateTime(false, false);
+        }
+
+        private void StrokeInput_StrokeEnded(InkStrokeInput sender, Windows.UI.Core.PointerEventArgs args)
+        {
+            UpdateTime(false, true);
+        }
+
+        private void StrokeInput_StrokesCollected(InkPresenter sender, InkStrokesCollectedEventArgs args)
+        {
+            if (this.isSkritter == true)
+            {
+                var strokes = this.WritingInkCanvas.InkPresenter.StrokeContainer.GetStrokes();
+                SketchStroke lastStroke = new SketchStroke(strokes[strokes.Count - 1], this.timeCollection[this.timeCollection.Count - 1]);
+
+                if (SkritterHelpers.ValidateStroke(lastStroke, this.currentTemplateSketchStrokes[this.sketchStrokes.Count]) == true)
+                {
+                    this.sketchStrokes.Add(lastStroke);
+                    InteractionTools.ShowStroke(this.AnimationCanvas, this.currentTemplateSketchStrokes[this.sketchStrokes.Count - 1]);
+                }
+                else
+                {
+                    this.timeCollection.RemoveAt(this.timeCollection.Count - 1);
+                }
+
+                strokes[strokes.Count - 1].Selected = true;
+                this.WritingInkCanvas.InkPresenter.StrokeContainer.DeleteSelected();
+            }
+        }
 
         #endregion
 
@@ -404,16 +446,19 @@ namespace App2
 
         private void LoadQuestion(int questionIndex)
         {
-            currentQuestion = questions[questionIndex];
-            InstructionTextBlock.Text = currentQuestion.Text;
+            this.currentQuestion = this.questions[questionIndex];
+            this.InstructionTextBlock.Text = this.currentQuestion.Text;
+            this.currentTemplateSketch = this.strokeTemplates[this.currentQuestion.Answer];
+            this.currentTemplateSketchStrokes = SketchPreprocessing.ScaleToFrame(currentTemplateSketch, writingFrameLength);
+            this.LoadTemplateImage(this.currentQuestion.Answer);
         }
 
         private async void LoadTemplateImage(string answer)
         {
-            currentImageTemplate = new BitmapImage();
+            this.currentImageTemplate = new BitmapImage();
             StorageFile currentImageTemplateFile = templateImageFiles[answer];
             FileRandomAccessStream stream = (FileRandomAccessStream) await currentImageTemplateFile.OpenAsync(FileAccessMode.Read);
-            currentImageTemplate.SetSource(stream);
+            this.currentImageTemplate.SetSource(stream);
         }
 
         private async void ReadInTemplateXML(StorageFile file)
@@ -425,14 +470,14 @@ namespace App2
         private async void WriteSampleXml()
         {
             StorageFolder saveFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
-            StorageFolder fluencyFolder = await saveFolder.CreateFolderAsync(this.UserFluency, CreationCollisionOption.OpenIfExists);
+            StorageFolder fluencyFolder = await saveFolder.CreateFolderAsync(this.userFluency, CreationCollisionOption.OpenIfExists);
 
-            Debug.WriteLine(fluencyFolder.Path);
+            // Debug.WriteLine(fluencyFolder.Path);
 
-            string fileName = this.UserName + "_" + this.currentQuestion.Answer + "_" + DateTime.Now.Ticks + ".xml";
+            string fileName = this.userName + "_" + this.currentQuestion.Answer + "_" + DateTime.Now.Ticks + (this.isSkritter ? "_skritter" : string.Empty) + ".xml";
             StorageFile userFile = await fluencyFolder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
 
-            XMLHelpers.SketchToXml(userFile, this.currentQuestion.Answer, this.UserName, this.UserMotherLanguage, this.UserFluency, 0, 0, this.WritingInkCanvas.ActualWidth, this.WritingInkCanvas.ActualHeight, this.sketchStrokes);
+            XMLHelpers.SketchToXml(userFile, this.currentQuestion.Answer, this.userName, this.userMotherLanguage, this.userFluency, 0, 0, this.WritingInkCanvas.ActualWidth, this.WritingInkCanvas.ActualHeight, this.sketchStrokes);
         }
 
         private void UpdateTime(bool hasStarted, bool hasEnded)
@@ -444,15 +489,15 @@ namespace App2
 
             if (hasStarted)
             {
-                times = new List<long>();
+                this.times = new List<long>();
             }
 
             long time = DateTime.Now.Ticks - DateTimeOffset;
-            times.Add(time);
+            this.times.Add(time);
 
             if (hasEnded)
             {
-                timeCollection.Add(times);
+                this.timeCollection.Add(times);
             }
         }
 
@@ -543,7 +588,7 @@ namespace App2
             }
             if (result == showAnswerCommand)
             {
-                InteractionTools.ShowTemplateImage(TemplateImage, currentImageTemplate);
+                InteractionTools.ShowTemplateImage(this.TemplateImage, this.currentImageTemplate);
             }
         }
 
@@ -583,9 +628,10 @@ namespace App2
         private BoponotoTechniqueAssessor bpntTechAssessor;
         private TechniqueAssessor techAssessor;
         private VisionAssessor visAssessor;
-        private string UserName;
-        private string UserMotherLanguage;
-        private string UserFluency;
+
+        private string userName;
+        private string userMotherLanguage;
+        private string userFluency;
 
         private int pdollarRecCount;
         private int bpntRecCount;
@@ -595,6 +641,7 @@ namespace App2
 
         #region read only fields
 
+        private readonly bool isSkritter = true;
         private readonly int NumResampleForPDollar = 128;
         private readonly double SizeScaleForPDollar = 500;
 

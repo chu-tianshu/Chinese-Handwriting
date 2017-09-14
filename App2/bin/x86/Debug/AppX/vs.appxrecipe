@@ -28,13 +28,13 @@
     <AppXManifest Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\bin\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-09-12T22:58:58.762</Modified>
+      <Modified>2017-09-14T07:11:18.547</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\bin\x86\Debug\App2.exe">
       <PackagePath>entrypoint\App2.exe</PackagePath>
-      <Modified>2017-09-12T22:58:57.833</Modified>
+      <Modified>2017-09-14T07:11:18.158</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\.nuget\packages\Microsoft.ApplicationInsights\1.0.0\lib\portable-win81+wpa81\Microsoft.ApplicationInsights.dll">
       <PackagePath>Microsoft.ApplicationInsights.dll</PackagePath>
@@ -540,6 +540,146 @@
       <PackagePath>Questions\019.xml.xml</PackagePath>
       <Modified>2017-09-10T01:04:19.794</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\020.xml.xml">
+      <PackagePath>Questions\020.xml.xml</PackagePath>
+      <Modified>2017-09-14T06:13:46.764</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\021.xml.xml">
+      <PackagePath>Questions\021.xml.xml</PackagePath>
+      <Modified>2017-09-14T06:14:39.742</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\022.xml.xml">
+      <PackagePath>Questions\022.xml.xml</PackagePath>
+      <Modified>2017-09-14T06:15:04.967</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\023.xml.xml">
+      <PackagePath>Questions\023.xml.xml</PackagePath>
+      <Modified>2017-09-14T06:15:37.141</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\024.xml.xml">
+      <PackagePath>Questions\024.xml.xml</PackagePath>
+      <Modified>2017-09-14T06:16:15.286</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\025.xml.xml">
+      <PackagePath>Questions\025.xml.xml</PackagePath>
+      <Modified>2017-09-14T06:16:50.901</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\026.xml.xml">
+      <PackagePath>Questions\026.xml.xml</PackagePath>
+      <Modified>2017-09-14T06:17:07.945</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Questions\027.xml.xml">
+      <PackagePath>Questions\027.xml.xml</PackagePath>
+      <Modified>2017-09-14T06:18:08.409</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\ExpertStrokes\Expert_ba_636409398413509497.xml">
+      <PackagePath>Templates\ExpertStrokes\Expert_ba_636409398413509497.xml</PackagePath>
+      <Modified>2017-09-14T03:50:41.354</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\ExpertStrokes\Expert_bu_636409399656943781.xml">
+      <PackagePath>Templates\ExpertStrokes\Expert_bu_636409399656943781.xml</PackagePath>
+      <Modified>2017-09-14T03:52:45.699</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\ExpertStrokes\Expert_che_636409489266619357.xml">
+      <PackagePath>Templates\ExpertStrokes\Expert_che_636409489266619357.xml</PackagePath>
+      <Modified>2017-09-14T06:25:48.565</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\ExpertStrokes\Expert_da_636409490576345407.xml">
+      <PackagePath>Templates\ExpertStrokes\Expert_da_636409490576345407.xml</PackagePath>
+      <Modified>2017-09-14T06:25:48.547</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\ExpertStrokes\Expert_er_636409399850782741.xml">
+      <PackagePath>Templates\ExpertStrokes\Expert_er_636409399850782741.xml</PackagePath>
+      <Modified>2017-09-14T03:53:05.083</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\ExpertStrokes\Expert_hao_636409400108941774.xml">
+      <PackagePath>Templates\ExpertStrokes\Expert_hao_636409400108941774.xml</PackagePath>
+      <Modified>2017-09-14T03:53:30.900</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\ExpertStrokes\Expert_jin_636409490391745970.xml">
+      <PackagePath>Templates\ExpertStrokes\Expert_jin_636409490391745970.xml</PackagePath>
+      <Modified>2017-09-14T06:25:48.551</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\ExpertStrokes\Expert_jiu_636409491073038598.xml">
+      <PackagePath>Templates\ExpertStrokes\Expert_jiu_636409491073038598.xml</PackagePath>
+      <Modified>2017-09-14T06:25:48.541</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\ExpertStrokes\Expert_liu_636409400361671265.xml">
+      <PackagePath>Templates\ExpertStrokes\Expert_liu_636409400361671265.xml</PackagePath>
+      <Modified>2017-09-14T03:53:56.173</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\ExpertStrokes\Expert_ma_636409400483137175.xml">
+      <PackagePath>Templates\ExpertStrokes\Expert_ma_636409400483137175.xml</PackagePath>
+      <Modified>2017-09-14T03:54:08.318</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\ExpertStrokes\Expert_niu_636409401937550069.xml">
+      <PackagePath>Templates\ExpertStrokes\Expert_niu_636409401937550069.xml</PackagePath>
+      <Modified>2017-09-14T03:56:33.759</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\ExpertStrokes\Expert_ni_636409401813151869.xml">
+      <PackagePath>Templates\ExpertStrokes\Expert_ni_636409401813151869.xml</PackagePath>
+      <Modified>2017-09-14T03:56:21.323</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\ExpertStrokes\Expert_nv_636409398589292950.xml">
+      <PackagePath>Templates\ExpertStrokes\Expert_nv_636409398589292950.xml</PackagePath>
+      <Modified>2017-09-14T03:50:58.934</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\ExpertStrokes\Expert_qian_636409489561834281.xml">
+      <PackagePath>Templates\ExpertStrokes\Expert_qian_636409489561834281.xml</PackagePath>
+      <Modified>2017-09-14T06:25:48.557</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\ExpertStrokes\Expert_qi_636409402118747393.xml">
+      <PackagePath>Templates\ExpertStrokes\Expert_qi_636409402118747393.xml</PackagePath>
+      <Modified>2017-09-14T03:56:51.880</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\ExpertStrokes\Expert_ren_636409402341386614.xml">
+      <PackagePath>Templates\ExpertStrokes\Expert_ren_636409402341386614.xml</PackagePath>
+      <Modified>2017-09-14T03:57:14.143</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\ExpertStrokes\Expert_san_636409398713198815.xml">
+      <PackagePath>Templates\ExpertStrokes\Expert_san_636409398713198815.xml</PackagePath>
+      <Modified>2017-09-14T03:51:11.326</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\ExpertStrokes\Expert_shi_636409402425356283.xml">
+      <PackagePath>Templates\ExpertStrokes\Expert_shi_636409402425356283.xml</PackagePath>
+      <Modified>2017-09-14T03:57:22.541</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\ExpertStrokes\Expert_si_636409399264127433.xml">
+      <PackagePath>Templates\ExpertStrokes\Expert_si_636409399264127433.xml</PackagePath>
+      <Modified>2017-09-14T03:52:06.418</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\ExpertStrokes\Expert_ta_636409403405492399.xml">
+      <PackagePath>Templates\ExpertStrokes\Expert_ta_636409403405492399.xml</PackagePath>
+      <Modified>2017-09-14T03:59:00.555</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\ExpertStrokes\Expert_wan_636409489449453291.xml">
+      <PackagePath>Templates\ExpertStrokes\Expert_wan_636409489449453291.xml</PackagePath>
+      <Modified>2017-09-14T06:25:48.561</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\ExpertStrokes\Expert_wen_636409490123506335.xml">
+      <PackagePath>Templates\ExpertStrokes\Expert_wen_636409490123506335.xml</PackagePath>
+      <Modified>2017-09-14T06:25:48.554</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\ExpertStrokes\Expert_wo_636409403612170277.xml">
+      <PackagePath>Templates\ExpertStrokes\Expert_wo_636409403612170277.xml</PackagePath>
+      <Modified>2017-09-14T03:59:21.222</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\ExpertStrokes\Expert_wu_636409398334303792.xml">
+      <PackagePath>Templates\ExpertStrokes\Expert_wu_636409398334303792.xml</PackagePath>
+      <Modified>2017-09-14T03:50:33.462</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\ExpertStrokes\Expert_xiao_636409490687811949.xml">
+      <PackagePath>Templates\ExpertStrokes\Expert_xiao_636409490687811949.xml</PackagePath>
+      <Modified>2017-09-14T06:25:48.544</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\ExpertStrokes\Expert_Yi_636409403713087144.xml">
+      <PackagePath>Templates\ExpertStrokes\Expert_Yi_636409403713087144.xml</PackagePath>
+      <Modified>2017-09-14T03:59:31.314</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\ExpertStrokes\Expert_zi_636409404108150197.xml">
+      <PackagePath>Templates\ExpertStrokes\Expert_zi_636409404108150197.xml</PackagePath>
+      <Modified>2017-09-14T04:00:10.822</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\StrokeData\ba_636047663981101947.xml">
       <PackagePath>Templates\StrokeData\ba_636047663981101947.xml</PackagePath>
       <Modified>2017-01-03T21:50:27.827</Modified>
@@ -632,6 +772,14 @@
       <PackagePath>Templates\Images\bu.png</PackagePath>
       <Modified>2017-01-03T21:50:27.796</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\Images\che.PNG">
+      <PackagePath>Templates\Images\che.PNG</PackagePath>
+      <Modified>2017-09-14T06:07:05.301</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\Images\da.PNG">
+      <PackagePath>Templates\Images\da.PNG</PackagePath>
+      <Modified>2017-09-14T06:08:25.599</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\Images\er.png">
       <PackagePath>Templates\Images\er.png</PackagePath>
       <Modified>2017-01-03T21:50:27.796</Modified>
@@ -639,6 +787,10 @@
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\Images\hao.png">
       <PackagePath>Templates\Images\hao.png</PackagePath>
       <Modified>2017-01-03T21:50:27.796</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\Images\jin.PNG">
+      <PackagePath>Templates\Images\jin.PNG</PackagePath>
+      <Modified>2017-09-14T06:07:48.908</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\Images\jiu.png">
       <PackagePath>Templates\Images\jiu.png</PackagePath>
@@ -668,6 +820,10 @@
       <PackagePath>Templates\Images\qi.png</PackagePath>
       <Modified>2017-01-03T21:50:27.796</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\Images\qian.PNG">
+      <PackagePath>Templates\Images\qian.PNG</PackagePath>
+      <Modified>2017-09-14T05:03:07.179</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\Images\ren.png">
       <PackagePath>Templates\Images\ren.png</PackagePath>
       <Modified>2017-01-03T21:50:27.796</Modified>
@@ -688,6 +844,14 @@
       <PackagePath>Templates\Images\ta.png</PackagePath>
       <Modified>2017-01-03T21:50:27.812</Modified>
     </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\Images\wan.PNG">
+      <PackagePath>Templates\Images\wan.PNG</PackagePath>
+      <Modified>2017-09-14T05:01:07.946</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\Images\wen.PNG">
+      <PackagePath>Templates\Images\wen.PNG</PackagePath>
+      <Modified>2017-09-14T06:05:50.970</Modified>
+    </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\Images\wo.png">
       <PackagePath>Templates\Images\wo.png</PackagePath>
       <Modified>2017-01-03T21:50:27.812</Modified>
@@ -695,6 +859,10 @@
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\Images\wu.png">
       <PackagePath>Templates\Images\wu.png</PackagePath>
       <Modified>2017-01-03T21:50:27.812</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\Images\xiao.PNG">
+      <PackagePath>Templates\Images\xiao.PNG</PackagePath>
+      <Modified>2017-09-14T06:09:35.402</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\Templates\Images\Yi.png">
       <PackagePath>Templates\Images\Yi.png</PackagePath>
@@ -765,11 +933,11 @@
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\bin\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-09-12T05:36:27.882</Modified>
+      <Modified>2017-09-14T06:27:04.347</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\bin\x86\Debug\Core\App2.exe">
       <PackagePath>App2.exe</PackagePath>
-      <Modified>2017-09-12T22:58:58.754</Modified>
+      <Modified>2017-09-14T07:11:18.541</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>
