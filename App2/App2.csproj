@@ -206,6 +206,7 @@
     <Compile Include="BopoNotoClassifier.cs" />
     <Compile Include="BoponotoTechniqueAssessor.cs" />
     <Compile Include="BoundingBox.cs" />
+    <Compile Include="DtwClassifier.cs" />
     <Compile Include="Fuzzy.cs" />
     <Compile Include="InteractionTools.cs" />
     <Compile Include="MainPage.xaml.cs">

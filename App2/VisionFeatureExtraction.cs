@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace App2
 {
@@ -13,9 +14,18 @@ namespace App2
             {
                 foreach (SketchPoint point in stroke.Points)
                 {
-                    if (IsInsideBoard(point, length))
+                    int currX = (int)point.X;
+                    int currY = (int)point.Y;
+
+                    for (int x = currX - 10; x < currX + 10; x++)
                     {
-                        array[(int)point.X, (int)point.Y] = true;
+                        for (int y = currY - 10; y < currY + 10; y++)
+                        {
+                            if (IsInsideBoard(x, y, length))
+                            {
+                                array[x, y] = true;
+                            }
+                        }
                     }
                 }
             }
@@ -25,7 +35,12 @@ namespace App2
 
         private static bool IsInsideBoard(SketchPoint point, int length)
         {
-            return (point.X >= 0 && point.X <= length - 1 && point.Y >= 0 && point.Y <= length - 1);
+            return IsInsideBoard((int)point.X, (int)point.Y, length);
+        }
+
+        private static bool IsInsideBoard(int x, int y, int length)
+        {
+            return (x >= 0 && x <= length - 1 && y >= 0 && y <= length - 1);
         }
 
         public static bool[,] Scale(bool[,] array, int scaledLength)
@@ -97,6 +112,20 @@ namespace App2
             }
 
             return new BoundingBox(minX, minY, maxX, maxY);
+        }
+
+        public static int[] TrimProjection(int[] projection)
+        {
+            int startIndex = 0;
+            while (projection[startIndex++] == 0) { }
+            int endIndex = projection.Length - 1;
+            while (projection[endIndex--] == 0) { }
+            int[] trimmedProjection = new int[endIndex - startIndex + 1];
+            for (int i = 0; i < trimmedProjection.Length; i++)
+            {
+                trimmedProjection[i] = projection[i + startIndex];
+            }
+            return trimmedProjection;
         }
 
         public static int[] HorizontalProjection(bool[,] array)

@@ -25,6 +25,8 @@ namespace App2
             this.comboBoxFluency.Items.Add("novice");
             this.comboBoxFluency.Items.Add("learner");
             this.comboBoxFluency.Items.Add("expert");
+            this.comboBoxGender.Items.Add("male");
+            this.comboBoxGender.Items.Add("female");
 
             this.UserName = string.Empty;
             this.UserMotherLanguage = string.Empty;
@@ -41,9 +43,14 @@ namespace App2
             this.UserMotherLanguage = this.textBoxMotherLanguage.Text.Trim();
         }
 
-        private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void comboBoxFluency_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             this.UserFluency = (string)this.comboBoxFluency.SelectedItem;
+        }
+
+        private void comboBoxGender_SelectionChanged(object sernder, SelectionChangedEventArgs e)
+        {
+            this.UserGender = (string)this.comboBoxGender.SelectedItem;
         }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -56,6 +63,7 @@ namespace App2
 
         public string UserName { get; private set; }
         public string UserMotherLanguage { get; private set; }
+        public string UserGender { get; private set; }
         public string UserFluency { get; private set; }
     }
 }

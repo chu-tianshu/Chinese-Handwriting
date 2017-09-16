@@ -33,6 +33,7 @@ namespace App2
             }
         }
 
+        /*
         /// <summary>
         /// Demos correct stroke counts. For one-to-many errors, we concatenate the broken strokes and demo a smooth stroke. For extra strokes, we
         /// highlight them. For many-to-one errors, we try to break those too-long strokes and demo the correct parts one by one.
@@ -112,6 +113,68 @@ namespace App2
                 stickyStroke.DrawingAttributes = drawingAttributes;
             }
         }
+        */
+
+        /// <summary>
+        /// demos either concatenating strokes or broken strokes
+        /// </summary>
+        /// <param name="canvas"></param>
+        /// <param name="inkCanvas"></param>
+        /// <param name="strokes"></param>
+        /// <param name="correspondence"></param>
+        /// <param name="errorType"></param>
+        public static void DemoStrokeCount(Canvas canvas, InkCanvas inkCanvas, List<List<int>> correspondence, string errorType)
+        {
+            if (errorType == "concatenating")
+            {
+                for (int i = 0; i < correspondence.Count; i++)
+                {
+                    if (correspondence[i].Count == 0) // extra stroke
+                    {
+                        InkStroke extraStroke = inkCanvas.InkPresenter.StrokeContainer.GetStrokes()[i];
+                        InkDrawingAttributes drawingAttributes = new InkDrawingAttributes();
+                        drawingAttributes.Color = Windows.UI.Colors.Red;
+                        drawingAttributes.PenTip = PenTipShape.Circle;
+                        drawingAttributes.Size = new Size(20, 20);
+                        extraStroke.DrawingAttributes = drawingAttributes;
+                    }
+                    else if (correspondence[i].Count > 1) // concatenating stroke
+                    {
+                        InkStroke concatenatingStroke = inkCanvas.InkPresenter.StrokeContainer.GetStrokes()[i];
+                        InkDrawingAttributes drawingAttributes = new InkDrawingAttributes();
+                        drawingAttributes.Color = Windows.UI.Colors.Yellow;
+                        drawingAttributes.PenTip = PenTipShape.Circle;
+                        drawingAttributes.Size = new Size(20, 20);
+                        concatenatingStroke.DrawingAttributes = drawingAttributes;
+                    }
+                }
+
+                return;
+            }
+
+            if (errorType == "broken")
+            {
+                for (int i = 0; i < correspondence.Count; i++)
+                {
+                    if (correspondence[i].Count > 1) // broken stroke
+                    {
+                        foreach (int sampleIndex in correspondence[i])
+                        {
+                            InkStroke concatenatingStroke = inkCanvas.InkPresenter.StrokeContainer.GetStrokes()[sampleIndex];
+                            InkDrawingAttributes drawingAttributes = new InkDrawingAttributes();
+                            drawingAttributes.Color = Windows.UI.Colors.Yellow;
+                            drawingAttributes.PenTip = PenTipShape.Circle;
+                            drawingAttributes.Size = new Size(20, 20);
+                            concatenatingStroke.DrawingAttributes = drawingAttributes;
+                        }
+                    }
+                }
+
+                return;
+            }
+
+            return;
+        }
 
         public static void DemoStrokeDirection(Canvas canvas, List<SketchStroke> strokes, HashSet<int> wrongDirectionStrokeIndices)
         {
@@ -132,6 +195,22 @@ namespace App2
             foreach (var sb in storyboards)
             {
                 sb.Begin();
+            }
+        }
+
+        public static void DemoStrokeOrder(Canvas canvas, InkCanvas inkCanvas, int[] correspondence)
+        {
+            for (int i = 0; i < correspondence.Length; i++)
+            {
+                if (correspondence[i] != i)
+                {
+                    InkStroke wrongOrderStroke = inkCanvas.InkPresenter.StrokeContainer.GetStrokes()[i];
+                    InkDrawingAttributes drawingAttributes = new InkDrawingAttributes();
+                    drawingAttributes.Color = Windows.UI.Colors.Orange;
+                    drawingAttributes.PenTip = PenTipShape.Circle;
+                    drawingAttributes.Size = new Size(20, 20);
+                    wrongOrderStroke.DrawingAttributes = drawingAttributes;
+                }
             }
         }
 
@@ -240,6 +319,18 @@ namespace App2
         public static void ShowTemplateImage(Image templateImage, BitmapImage currentImageTemplate)
         {
             templateImage.Source = currentImageTemplate;
+        }
+
+        public static void HighlightStrokes(Canvas canvas, InkCanvas inkCanvas, int realI, int realJ)
+        {
+            InkStroke strokeI = inkCanvas.InkPresenter.StrokeContainer.GetStrokes()[realI];
+            InkStroke strokeJ = inkCanvas.InkPresenter.StrokeContainer.GetStrokes()[realJ];
+            InkDrawingAttributes drawingAttributes = new InkDrawingAttributes();
+            drawingAttributes.Color = Windows.UI.Colors.Blue;
+            drawingAttributes.PenTip = PenTipShape.Circle;
+            drawingAttributes.Size = new Size(20, 20);
+            strokeI.DrawingAttributes = drawingAttributes;
+            strokeJ.DrawingAttributes = drawingAttributes;
         }
 
         #region readonly fields

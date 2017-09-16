@@ -25,6 +25,7 @@ namespace App2
         {
             this.pdollarRecCount = 0;
             this.bpntRecCount = 0;
+            this.dtwRecCount = 0;
             this.total = 0;
 
             this.ShowUserInformationDialog();
@@ -81,6 +82,7 @@ namespace App2
             {
                 this.userName = dialog.UserName;
                 this.userMotherLanguage = dialog.UserMotherLanguage;
+                this.userGender = dialog.UserGender;
                 this.userFluency = dialog.UserFluency;
             }
         }
@@ -187,16 +189,13 @@ namespace App2
 
         private void FinishButton_Click(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("inkstroke count: " + this.WritingInkCanvas.InkPresenter.StrokeContainer.GetStrokes().Count);
-            Debug.WriteLine("sketchstroke count: " + this.sketchStrokes.Count);
-
-            if (this.WritingInkCanvas.InkPresenter.StrokeContainer.GetStrokes().Count == 0 && this.isSkritter == false)
+            if (this.WritingInkCanvas.InkPresenter.StrokeContainer.GetStrokes().Count == 0 && this.IsSkritter == false)
             {
                 this.LoadFeedback("wrong");
                 return;
             }
 
-            if (this.isSkritter == false)
+            if (this.IsSkritter == false)
             {
                 this.CaptureSketchStrokes();
             }
@@ -217,8 +216,20 @@ namespace App2
             List<string> bpntResultLabels = bpntClassifier.Labels;
             string bpntResult = bpntResultLabels[bpntResultLabels.Count - 1];
 
+            // recognizes with dynamic time warping
+            DtwClassifier dtwClassifier = new DtwClassifier(this.strokeTemplates, (int)this.WritingInkCanvas.ActualHeight);
+            dtwClassifier.run(this.sketchStrokes);
+            List<string> dtwResultLabels = dtwClassifier.Labels;
+            string dtwResult = dtwResultLabels[dtwResultLabels.Count - 1];
+
             Debug.WriteLine("bpnt recognition result: " + bpntResultLabels[bpntResultLabels.Count - 1]);
-            Debug.WriteLine("recognition result: " + resultLabels[resultLabels.Count - 1]);
+            Debug.WriteLine("$p recognition result: " + resultLabels[resultLabels.Count - 1]);
+            Debug.WriteLine("dtw recognition result: " + dtwResultLabels[dtwResultLabels.Count - 1]);
+
+            //for (int i = dtwResultLabels.Count - 1; i >= 0; i--)
+            //{
+            //    Debug.Write(dtwResultLabels[i] + ", ");
+            //}
 
             this.total++;
 
@@ -232,8 +243,14 @@ namespace App2
                 this.bpntRecCount++;
             }
 
+            if (dtwResult == answer)
+            {
+                this.dtwRecCount++;
+            }
+
             Debug.Write("P dollar success: " + this.pdollarRecCount + " ");
             Debug.Write("bpnt success: " + this.bpntRecCount + " ");
+            Debug.Write("dtw success: " + this.dtwRecCount + " ");
             Debug.Write("total: " + this.total + "\n");
 
             if (answer == resultLabels[resultLabels.Count - 1] || 
@@ -245,11 +262,12 @@ namespace App2
                 this.techAssessor = new TechniqueAssessor(sketchStrokes, currentTemplateSketchStrokes);
                 this.isWrittenCorrectly = techAssessor.IsCorrectOverall;
 
+                this.EnablePlayButtons();
                 this.LoadFeedback("technique");
 
                 if (this.isWrittenCorrectly)
                 {
-                    this.visAssessor = new VisionAssessor(sketchStrokes, (int)writingFrameLength, currentTemplateSketch.Strokes, currentTemplateSketch.FrameMaxX - currentTemplateSketch.FrameMinX);
+                    this.visAssessor = new VisionAssessor(sketchStrokes, (int)this.WritingInkCanvas.ActualHeight, currentTemplateSketch.Strokes, currentTemplateSketch.FrameMaxX - currentTemplateSketch.FrameMinX);
                 }
             }
             else
@@ -272,10 +290,17 @@ namespace App2
         {
             this.AnimationCanvas.Children.Clear();
 
-            if (!this.techAssessor.IsCorrectStrokeCount)
+            if (this.techAssessor.ConcatenatingCorrespondence != null)
             {
                 this.DisablePlayButtons();
-                InteractionTools.DemoStrokeCount(this.AnimationCanvas, this.WritingInkCanvas, this.sketchStrokes, this.techAssessor.StrokeToStrokeCorrespondenceDifferentCount);
+                InteractionTools.DemoStrokeCount(this.AnimationCanvas, this.WritingInkCanvas, this.techAssessor.ConcatenatingCorrespondence, "concatenating");
+                this.EnablePlayButtons();
+            }
+
+            if (this.techAssessor.BrokenStrokeCorrespondence != null)
+            {
+                this.DisablePlayButtons();
+                InteractionTools.DemoStrokeCount(this.AnimationCanvas, this.WritingInkCanvas, this.techAssessor.BrokenStrokeCorrespondence, "broken");
                 this.EnablePlayButtons();
             }
         }
@@ -287,6 +312,7 @@ namespace App2
                 return;
             }
 
+            InteractionTools.DemoStrokeOrder(this.AnimationCanvas, this.WritingInkCanvas, this.techAssessor.StrokeToStrokeCorrespondenceSameCount);
             this.AnimationCanvas.Children.Clear();
         }
 
@@ -297,10 +323,10 @@ namespace App2
                 return;
             }
 
-            AnimationCanvas.Children.Clear();
-            DisablePlayButtons();
+            this.AnimationCanvas.Children.Clear();
+            this.DisablePlayButtons();
             InteractionTools.DemoStrokeDirection(this.AnimationCanvas, this.sketchStrokes, this.techAssessor.WrongDirectionStrokeIndices);
-            EnablePlayButtons();
+            this.EnablePlayButtons();
         }
 
         private void StrokeIntersectionPlayButton_Click(object sender, RoutedEventArgs e)
@@ -312,10 +338,9 @@ namespace App2
 
             this.AnimationCanvas.Children.Clear();
 
-            int[] correspondance = techAssessor.StrokeToStrokeCorrespondenceSameCount;
-
-            string[,] sampleIntersections = techAssessor.SampleIntersectionMatrix;
-            string[,] templateIntersections = techAssessor.TemplateIntersectionMatrix;
+            int[] correspondance = this.techAssessor.StrokeToStrokeCorrespondenceSameCount;
+            string[,] sampleIntersections = this.techAssessor.SampleIntersectionMatrix;
+            string[,] templateIntersections = this.techAssessor.TemplateIntersectionMatrix;
 
             for (int i = 0; i < sampleIntersections.GetLength(0); i++)
             {
@@ -343,15 +368,14 @@ namespace App2
                             }
                         }
 
-                        SketchPoint intersection = SketchStrokeFeatureExtraction.Intersection(sketchStrokes[realI], sketchStrokes[realJ]);
-
+                        SketchPoint intersection = SketchStrokeFeatureExtraction.Intersection(this.sketchStrokes[realI], this.sketchStrokes[realJ]);
                         if (intersection != null)
                         {
-                            InteractionTools.HighlightWrongIntersection(AnimationCanvas, intersection);
+                            InteractionTools.HighlightWrongIntersection(this.AnimationCanvas, intersection);
                         }
                         else
                         {
-                            // Highlights the location where the intersection should be
+                            InteractionTools.HighlightStrokes(this.AnimationCanvas, this.WritingInkCanvas, realI, realJ);
                         }
                     }
                 }
@@ -379,7 +403,7 @@ namespace App2
 
         private void StrokeInput_StrokesCollected(InkPresenter sender, InkStrokesCollectedEventArgs args)
         {
-            if (this.isSkritter == true)
+            if (this.IsSkritter == true)
             {
                 var strokes = this.WritingInkCanvas.InkPresenter.StrokeContainer.GetStrokes();
                 SketchStroke lastStroke = new SketchStroke(strokes[strokes.Count - 1], this.timeCollection[this.timeCollection.Count - 1]);
@@ -422,21 +446,21 @@ namespace App2
             switch (option)
             {
                 case "wrong":
-                    ShowWrongAnswerWarning();
+                    this.ShowWrongAnswerWarning();
                     break;
                 case "technique":
-                    ShowPlayButtons();
-                    ShowTechniqueFeedback();
+                    this.ShowPlayButtons();
+                    this.ShowTechniqueFeedback();
                     break;
                 case "visual":
                     HidePlayButtons();
                     if (!isWrittenCorrectly)
                     {
-                        ShowIncorrectWritingWarning();
+                        this.ShowIncorrectWritingWarning();
                     }
                     else
                     {
-                        ShowVisualFeedback();
+                        this.ShowVisualFeedback();
                     }
                     break;
                 default:
@@ -451,6 +475,7 @@ namespace App2
             this.currentTemplateSketch = this.strokeTemplates[this.currentQuestion.Answer];
             this.currentTemplateSketchStrokes = SketchPreprocessing.ScaleToFrame(currentTemplateSketch, writingFrameLength);
             this.LoadTemplateImage(this.currentQuestion.Answer);
+            InteractionTools.ShowTemplateImage(this.SmallTemplateImage, this.currentImageTemplate);
         }
 
         private async void LoadTemplateImage(string answer)
@@ -474,7 +499,7 @@ namespace App2
 
             // Debug.WriteLine(fluencyFolder.Path);
 
-            string fileName = this.userName + "_" + this.currentQuestion.Answer + "_" + DateTime.Now.Ticks + (this.isSkritter ? "_skritter" : string.Empty) + ".xml";
+            string fileName = this.userName + "_" + this.userGender + "_" + this.currentQuestion.Answer + "_" + DateTime.Now.Ticks + (this.IsSkritter ? "_skritter" : string.Empty) + ".xml";
             StorageFile userFile = await fluencyFolder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
 
             XMLHelpers.SketchToXml(userFile, this.currentQuestion.Answer, this.userName, this.userMotherLanguage, this.userFluency, 0, 0, this.WritingInkCanvas.ActualWidth, this.WritingInkCanvas.ActualHeight, this.sketchStrokes);
@@ -503,10 +528,21 @@ namespace App2
 
         private void ShowTechniqueFeedback()
         {
-            StrokeCountFeedbackTextBlock.Text = ("Stroke count: " + "\n" + (techAssessor.IsCorrectStrokeCount ? "Correct" : "Incorrect") + "\n");
-            StrokeOrderFeedbackTextBlock.Text = ("Stroke order: " + "\n" + (techAssessor.IsCorrectStrokeOrder ? "Correct" : "Incorrect") + "\n");
-            StrokeDirectionFeedbackTextBlock.Text = ("Stroke directions: " + "\n" + (techAssessor.IsCorrectStrokeDirection ? "Correct" : "Incorrect") + "\n");
-            StrokeIntersectionFeedbackTextBlock.Text = ("Stroke intersections: " + "\n" + (techAssessor.IsCorrectIntersection ? "Correct" : "Incorrect") + "\n");
+            this.StrokeCountFeedbackTextBlock.Text = ("Stroke count: \n" + (techAssessor.IsCorrectStrokeCount ? "Correct" : "Incorrect") + "\n");
+            this.StrokeOrderFeedbackTextBlock.Text = ("Stroke order: \n" + (techAssessor.IsCorrectStrokeOrder ? "Correct" : "Incorrect") + "\n");
+
+            if (this.techAssessor.IsCorrectStrokeCount == true)
+            {
+                this.StrokeDirectionFeedbackTextBlock.Text = ("Stroke directions: " + "\n" + (techAssessor.IsCorrectStrokeDirection ? "Correct" : "Incorrect") + "\n");
+                this.StrokeIntersectionFeedbackTextBlock.Text = ("Stroke intersections: " + "\n" + (techAssessor.IsCorrectIntersection ? "Correct" : "Incorrect") + "\n");
+            }
+            else
+            {
+                this.StrokeDirectionFeedbackTextBlock.Text = "Stroke directions: \nNA\n";
+                this.StrokeIntersectionFeedbackTextBlock.Text = "Stroke intersections: \nNA\n";
+                this.StrokeDirectionPlayButton.IsEnabled = false;
+                this.StrokeIntersectionPlayButton.IsEnabled = false;
+            }
         }
 
         private void ShowVisualFeedback()
@@ -630,18 +666,20 @@ namespace App2
         private VisionAssessor visAssessor;
 
         private string userName;
+        private string userGender;
         private string userMotherLanguage;
         private string userFluency;
 
         private int pdollarRecCount;
         private int bpntRecCount;
+        private int dtwRecCount;
         private int total;
 
         #endregion
 
         #region read only fields
 
-        private readonly bool isSkritter = true;
+        private readonly bool IsSkritter = false;
         private readonly int NumResampleForPDollar = 128;
         private readonly double SizeScaleForPDollar = 500;
 

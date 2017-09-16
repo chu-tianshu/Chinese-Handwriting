@@ -43,6 +43,7 @@
                         </Viewbox>
                     </Grid>
                 </Border>
+                <Image x:Name="SmallTemplateImage" HorizontalAlignment="Left" Height="100" Margin="1003,10,0,0" VerticalAlignment="Top" Width="100"/>
             </Grid>
 
             <Grid Grid.Column="2">

@@ -355,6 +355,17 @@ namespace App2
         }
 
         /// <summary>
+        /// one template stroke is formed by many sample strokes
+        /// </summary>
+        /// <param name="sample"></param>
+        /// <param name="template"></param>
+        /// <returns>template index -> list of sample indices it contains</returns>
+        public static List<List<int>> StrokeToStrokeCorrespondenceBroken(List<SketchStroke> sample, List<SketchStroke> template)
+        {
+            return StrokeToStrokeCorrespondenceConcatenating(template, sample);
+        }
+
+        /// <summary>
         /// one sample stroke contains many template strokes
         /// </summary>
         /// <param name="sample"></param>

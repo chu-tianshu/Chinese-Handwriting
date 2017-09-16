@@ -216,6 +216,7 @@ namespace App2.App2_XamlTypeInfo
                 userType.Activator = Activate_3_UserInformationDialog;
                 userType.AddMemberName("UserName");
                 userType.AddMemberName("UserMotherLanguage");
+                userType.AddMemberName("UserGender");
                 userType.AddMemberName("UserFluency");
                 userType.SetIsLocalType();
                 xamlType = userType;
@@ -247,7 +248,12 @@ namespace App2.App2_XamlTypeInfo
             var that = (global::App2.UserInformationDialog)instance;
             return that.UserMotherLanguage;
         }
-        private object get_2_UserInformationDialog_UserFluency(object instance)
+        private object get_2_UserInformationDialog_UserGender(object instance)
+        {
+            var that = (global::App2.UserInformationDialog)instance;
+            return that.UserGender;
+        }
+        private object get_3_UserInformationDialog_UserFluency(object instance)
         {
             var that = (global::App2.UserInformationDialog)instance;
             return that.UserFluency;
@@ -272,10 +278,16 @@ namespace App2.App2_XamlTypeInfo
                 xamlMember.Getter = get_1_UserInformationDialog_UserMotherLanguage;
                 xamlMember.SetIsReadOnly();
                 break;
+            case "App2.UserInformationDialog.UserGender":
+                userType = (global::App2.App2_XamlTypeInfo.XamlUserType)GetXamlTypeByName("App2.UserInformationDialog");
+                xamlMember = new global::App2.App2_XamlTypeInfo.XamlMember(this, "UserGender", "String");
+                xamlMember.Getter = get_2_UserInformationDialog_UserGender;
+                xamlMember.SetIsReadOnly();
+                break;
             case "App2.UserInformationDialog.UserFluency":
                 userType = (global::App2.App2_XamlTypeInfo.XamlUserType)GetXamlTypeByName("App2.UserInformationDialog");
                 xamlMember = new global::App2.App2_XamlTypeInfo.XamlMember(this, "UserFluency", "String");
-                xamlMember.Getter = get_2_UserInformationDialog_UserFluency;
+                xamlMember.Getter = get_3_UserInformationDialog_UserFluency;
                 xamlMember.SetIsReadOnly();
                 break;
             }

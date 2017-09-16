@@ -28,13 +28,13 @@
     <AppXManifest Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\bin\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-09-14T07:11:18.547</Modified>
+      <Modified>2017-09-16T16:36:03.198</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\bin\x86\Debug\App2.exe">
       <PackagePath>entrypoint\App2.exe</PackagePath>
-      <Modified>2017-09-14T07:11:18.158</Modified>
+      <Modified>2017-09-16T16:36:02.550</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\.nuget\packages\Microsoft.ApplicationInsights\1.0.0\lib\portable-win81+wpa81\Microsoft.ApplicationInsights.dll">
       <PackagePath>Microsoft.ApplicationInsights.dll</PackagePath>
@@ -924,7 +924,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\bin\x86\Debug\App2.xr.xml">
       <PackagePath>App2.xr.xml</PackagePath>
-      <Modified>2017-09-11T23:06:44.540</Modified>
+      <Modified>2017-09-15T05:39:40.296</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\UnionMetadata\Windows.winmd">
       <PackagePath>WinMetadata\Windows.winmd</PackagePath>
@@ -933,11 +933,11 @@
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\bin\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2017-09-14T06:27:04.347</Modified>
+      <Modified>2017-09-16T01:41:44.992</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\chutianshu\Documents\SRL\ChineseHandwriting\Chinese-Handwriting\App2\bin\x86\Debug\Core\App2.exe">
       <PackagePath>App2.exe</PackagePath>
-      <Modified>2017-09-14T07:11:18.541</Modified>
+      <Modified>2017-09-16T16:36:03.191</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>

@@ -22,10 +22,10 @@ namespace App2
 
         public PDollarClassifier(int n, double size, SketchPoint point, Dictionary<string, Sketch> templates)
         {
-            N = n;
-            Size = size;
-            Origin = point;
-            Templates = templates;
+            this.N = n;
+            this.Size = size;
+            this.Origin = point;
+            this.Templates = templates;
         }
 
         #endregion

@@ -12,7 +12,7 @@
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
 
-    <Grid Height="209" Margin="0,0,0.333,0">
+    <Grid Height="275" Margin="0,0,0.333,0">
         <TextBlock x:Name="textBlockName" HorizontalAlignment="Left" Height="27" Margin="0,10,0,0" TextWrapping="Wrap" Text="Name:" VerticalAlignment="Top" Width="321"/>
         <TextBox x:Name="textBoxName" HorizontalAlignment="Left" Height="27" Margin="10,37,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="321" TextChanged="textBoxName_TextChanged"/>
         <TextBlock x:Name="textBlockMonterLanguage" HorizontalAlignment="Left" Height="27" Margin="0,74,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="321">
@@ -20,7 +20,12 @@
             <Run Text=":"/>
         </TextBlock>
         <TextBox x:Name="textBoxMotherLanguage" HorizontalAlignment="Left" Height="27" Margin="10,101,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="321" TextChanged="textBoxMotherLanguage_TextChanged"/>
-        <TextBlock x:Name="textBlockFluency" HorizontalAlignment="Left" Height="27" Margin="0,138,0,0" TextWrapping="Wrap" Text="Fluency in Chinese handwriting:" VerticalAlignment="Top" Width="321"/>
-        <ComboBox x:Name="comboBoxFluency" HorizontalAlignment="Left" Margin="10,165,0,0" VerticalAlignment="Top" Width="321" SelectionChanged="comboBox_SelectionChanged"/>
+        <TextBlock x:Name="textBlockFluency" HorizontalAlignment="Left" Height="27" Margin="0,202,0,0" TextWrapping="Wrap" Text="Fluency in Chinese handwriting:" VerticalAlignment="Top" Width="321"/>
+        <ComboBox x:Name="comboBoxFluency" HorizontalAlignment="Left" Margin="10,229,0,0" VerticalAlignment="Top" Width="321" SelectionChanged="comboBoxFluency_SelectionChanged"/>
+        <TextBlock x:Name="textBlockGender" HorizontalAlignment="Left" Height="27" Margin="0,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="321">
+            <Run Text="Gender"/>
+            <Run Text=":"/>
+        </TextBlock>
+        <ComboBox x:Name="comboBoxGender" HorizontalAlignment="Left" Margin="10,165,0,0" VerticalAlignment="Top" Width="321" SelectionChanged="comboBoxGender_SelectionChanged"/>
     </Grid>
 </ContentDialog>

@@ -10,33 +10,11 @@ namespace App2
 
         public TechniqueAssessor(List<SketchStroke> sample, List<SketchStroke> template)
         {
-            // this.StrokeToStrokeCorrespondenceDifferentCount = SketchFeatureExtraction.StrokeToStrokeCorrespondenceDifferentCountStartFromSample(sample, template);
-
-            List<List<int>> concatenatingCorrespondence = SketchFeatureExtraction.StrokeToStrokeCorrespondenceConcatenating(sample, template);
-            foreach (List<int> templateIndices in concatenatingCorrespondence)
-            {
-                Debug.Write("Sample: ");
-                foreach (int templateIndex in templateIndices)
-                {
-                    Debug.Write(templateIndex + ", ");
-                }
-                Debug.WriteLine("");
-            }
-
-            if (sample.Count == template.Count)
-            {
-                this.StrokeToStrokeCorrespondenceSameCount = SketchFeatureExtraction.StrokeToStrokeCorrespondenceSameCount(sample, template);
-            }
-            else
-            {
-                this.StrokeToStrokeCorrespondenceDifferentCount = SketchFeatureExtraction.StrokeToStrokeCorrespondenceDifferentCount(sample, template);
-            }
-
-            IsCorrectStrokeCount = JudgeStrokeCount(sample, template);
-            IsCorrectStrokeOrder = JudgeStrokeOrder(sample, template);
-            IsCorrectStrokeDirection = JudgeStrokeDirection(sample, template);
-            IsCorrectIntersection = JudgeIntersection(sample, template);
-            IsCorrectOverall = IsCorrectStrokeCount && IsCorrectStrokeDirection && IsCorrectStrokeOrder && IsCorrectIntersection;
+            this.IsCorrectStrokeCount = JudgeStrokeCount(sample, template);
+            this.IsCorrectStrokeOrder = JudgeStrokeOrder(sample, template);
+            this.IsCorrectStrokeDirection = JudgeStrokeDirection(sample, template);
+            this.IsCorrectIntersection = JudgeIntersection(sample, template);
+            this.IsCorrectOverall = IsCorrectStrokeCount && IsCorrectStrokeDirection && IsCorrectStrokeOrder && IsCorrectIntersection;
         }
 
         #endregion
@@ -45,32 +23,54 @@ namespace App2
 
         private bool JudgeStrokeCount(List<SketchStroke> sample, List<SketchStroke> template)
         {
-            return (sample.Count == template.Count);
+            this.SampleStrokeCount = sample.Count;
+            this.TemplateStrokeCount = template.Count;
 
-            /*
-            if (this.StrokeToStrokeCorrespondenceDifferentCount.Count != template.Count)
+            if (this.SampleStrokeCount == this.TemplateStrokeCount)
             {
+                this.StrokeToStrokeCorrespondenceSameCount = SketchFeatureExtraction.StrokeToStrokeCorrespondenceSameCount(sample, template);
+                return true;
+            }
+            else
+            {
+                if (sample.Count < template.Count) // Concatenating strokes
+                {
+                    this.ConcatenatingCorrespondence = SketchFeatureExtraction.StrokeToStrokeCorrespondenceConcatenating(sample, template);
+                    foreach (List<int> templateIndices in this.ConcatenatingCorrespondence)
+                    {
+                        Debug.Write("Sample: ");
+                        foreach (int templateIndex in templateIndices)
+                        {
+                            Debug.Write(templateIndex + ", ");
+                        }
+                        Debug.WriteLine("");
+                    }
+                }
+                else // Broken strokes
+                {
+                    this.BrokenStrokeCorrespondence = SketchFeatureExtraction.StrokeToStrokeCorrespondenceBroken(sample, template);
+                    foreach (List<int> sampleIndices in this.BrokenStrokeCorrespondence)
+                    {
+                        Debug.Write("Template: ");
+                        foreach (int sampleIndex in sampleIndices)
+                        {
+                            Debug.Write(sampleIndex + ", ");
+                        }
+                        Debug.WriteLine("");
+                    }
+                }
+
                 return false;
             }
-
-            foreach (List<int>[] corr in this.StrokeToStrokeCorrespondenceDifferentCount)
-            {
-                if (corr[0].Count != 1 || corr[1].Count != 1)
-                {
-                    return false;
-                }
-            }
-
-            return true;*/
         }
 
         private bool JudgeStrokeOrder(List<SketchStroke> sample, List<SketchStroke> template)
         {
-            if (IsCorrectStrokeCount)
+            if (this.IsCorrectStrokeCount)
             {
                 for (int i = 0; i < this.StrokeToStrokeCorrespondenceSameCount.Length; i++)
                 {
-                    if (StrokeToStrokeCorrespondenceSameCount[i] != i)
+                    if (this.StrokeToStrokeCorrespondenceSameCount[i] != i)
                     {
                         return false;
                     }
@@ -78,35 +78,71 @@ namespace App2
 
                 return true;
             }
-            else
+
+            if (this.SampleStrokeCount < this.TemplateStrokeCount) // concatenating strokes
             {
-                // this.PrintCorrespondence();
-
-                int prev = -1;
-                foreach (List<int>[] corr in this.StrokeToStrokeCorrespondenceDifferentCount)
+                int lastMax = -1;
+                for (int i = 0; i < this.ConcatenatingCorrespondence.Count; i++)
                 {
-                    foreach (int curr in corr[1])
+                    int currMin = int.MaxValue;
+                    int currMax = int.MinValue;
+                    foreach (int tempIndex in this.ConcatenatingCorrespondence[i])
                     {
-                        if (prev != -1)
+                        if (tempIndex < currMin)
                         {
-                            if (curr != prev + 1)
-                            {
-                                return false;
-                            }
+                            currMin = tempIndex;
                         }
-
-                        prev = curr;
+                        if (tempIndex > currMax)
+                        {
+                            currMax = tempIndex;
+                        }
                     }
-                }
 
-                return prev == sample.Count - 1;
+                    if (currMax - currMin != this.ConcatenatingCorrespondence[i].Count - 1 || currMin != lastMax + 1)
+                    {
+                        return false;
+                    }
+
+                    lastMax = currMax;
+                }
             }
+            else // broken strokes
+            {
+                int lastMax = -1;
+                for (int i = 0; i < this.BrokenStrokeCorrespondence.Count; i++)
+                {
+                    int currMin = int.MaxValue;
+                    int currMax = int.MinValue;
+                    foreach (int sampleIndex in this.BrokenStrokeCorrespondence[i])
+                    {
+                        if (sampleIndex < currMin)
+                        {
+                            currMin = sampleIndex;
+                        }
+                        if (sampleIndex > currMax)
+                        {
+                            currMax = sampleIndex;
+                        }
+                    }
+
+                    if (currMax - currMin != this.BrokenStrokeCorrespondence[i].Count - 1 || currMin != lastMax + 1)
+                    {
+                        return false;
+                    }
+
+                    lastMax = currMax;
+                }
+            }
+
+            return true;
         }
 
         private bool JudgeStrokeDirection(List<SketchStroke> sample, List<SketchStroke> template)
         {
-            /*
-            if (!IsCorrectStrokeCount) return false;
+            if (!IsCorrectStrokeCount)
+            {
+                return false;
+            }
 
             int numStroke = template.Count;
 
@@ -133,9 +169,6 @@ namespace App2
             }
 
             return WrongDirectionStrokeIndices.Count == 0;
-            */
-
-            return true;
         }
 
         private bool JudgeIntersection(List<SketchStroke> sample, List<SketchStroke> template)
@@ -144,9 +177,9 @@ namespace App2
             {
                 return false;
             }
-            /*
-            SampleIntersectionMatrix = SketchFeatureExtraction.IntersectionMatrix(sample, StrokeToStrokeCorrespondenceSameCount, WrongDirectionStrokeIndices);
-            TemplateIntersectionMatrix = SketchFeatureExtraction.IntersectionMatrix(template);
+
+            this.SampleIntersectionMatrix = SketchFeatureExtraction.IntersectionMatrix(sample, StrokeToStrokeCorrespondenceSameCount, WrongDirectionStrokeIndices);
+            this.TemplateIntersectionMatrix = SketchFeatureExtraction.IntersectionMatrix(template);
 
             for (int i = 0; i < sample.Count; i++)
             {
@@ -158,7 +191,7 @@ namespace App2
                     }
                 }
             }
-            */
+
             return true;
         }
 
@@ -190,7 +223,11 @@ namespace App2
         public bool IsCorrectStrokeDirection { get; private set; }
         public bool IsCorrectIntersection { get; private set; }
         public bool IsCorrectOverall { get; private set; }
+        public int SampleStrokeCount { get; private set; }
+        public int TemplateStrokeCount { get; private set; }
         public int[] StrokeToStrokeCorrespondenceSameCount { get; private set; }
+        public List<List<int>> ConcatenatingCorrespondence { get; private set; }
+        public List<List<int>> BrokenStrokeCorrespondence { get; private set; }
         public List<List<int>[]> StrokeToStrokeCorrespondenceDifferentCount { get; private set; }
         public Dictionary<int, SketchStroke> StrokeToSegmentCorrespondence { get; private set; }
         public HashSet<int> WrongDirectionStrokeIndices { get; private set; }
